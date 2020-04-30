@@ -5,12 +5,26 @@ class productTemplateInherit(models.Model):
     _inherit = 'product.template'
 
     igi = fields.Float(digits=(2, 4),string="IGI%", help="Porcentaje de IGI")
-    importation = fields.Float(digits=(2, 4),string="STD Importación%", help="Porcentaje de Importación")
-    precio_list = fields.Float(digits=(2, 4), string="Precio de Lista", help="Precio de lista")
+    importation = fields.Float(digits=(2, 2),string="STD Importación%", help="Porcentaje de Importación")
+    precio_list = fields.Float(digits=(2, 2), string="Precio de Lista", help="Precio de lista")
     te_max = fields.Integer(string="T.E MIN")
     te_min = fields.Integer(string="T.E MAX")
     etiqueta_a = fields.Char(string="Etiqueta A")
     etiqueta_b = fields.Char(string="Etiqueta B")
+    mult_min = fields.Char(string="Etiqueta B")
+
+
+
+#class purchaseOrderLineInherit(models.Model):
+#    _inherit = 'purchase.order.line'
+
+#    mult_std = fields.Float(digits=(2, 2), string="Mult STD", help="Multiplicador solicitado al proveedor")
+
+#    @api.onchange('mult_std','price_unit')
+#    def _onchange_mult_std(self):
+#         = self.mult_std *
+
+
 
 
 # class cotizador__airovac(models.Model):
