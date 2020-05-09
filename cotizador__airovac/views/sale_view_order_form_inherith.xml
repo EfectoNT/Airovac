@@ -1,0 +1,60 @@
+<odoo>
+    <data>
+    <record id="sale_view_order_form_inherith" model="ir.ui.view">
+            <field name="name">sale.view.order.form.inherith</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="arch" type="xml">
+                 <xpath expr="//form/sheet/group[1]" position="after">
+                    <group>
+                        <group >
+                            <field name="step_multiplier_id" />
+                        </group>
+                        <group>
+
+                        </group>
+                    </group>
+                </xpath>
+
+                  <!--<xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/control[1]/create[@name='add_note_control']" position="before">
+                    <create name="add_section_ocontrol" string="otra seccion" context="{'default_display_type': 'line_section'}"/>
+                  </xpath>-->
+
+                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='product_id']" position="after">
+                    <field name="e_etiqueta_line_a"/>
+                    <field name="e_etiqueta_line_b"/>
+                    <field name="e_te_line_max" optional="hide"/>
+                    <field name="e_te_line_min" optional="hide"/>
+                  </xpath>
+                  <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='name']" position="attributes">
+                    <attribute name="optional">hide</attribute>
+                  </xpath>
+                  <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='product_uom_qty']" position="after">
+                    <field name="e_descuento"/>
+                    <field name="e_multiplicador"/>
+                    <field name="e_precio_de_lista"/>
+                  </xpath>
+                  <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='price_unit']" position="after">
+                    <field name="e_mult_std" optional="hide"/>
+                    <field name="e_igi"/>
+                    <field name="e_g_m_l"/>
+                    <field name="e_importation" optional="hide"/>
+                  </xpath>
+                  <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='tax_id']" position="attributes">
+                    <attribute name="optional">hide</attribute>
+                  </xpath>
+                  <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='discount']" position="after">
+                    <field name="e_costo_unitario" optional="hide"/>
+                    <field name="e_costo_total" optional="hide"/>
+                    <field name="e_costo_total_imp" optional="hide"/>
+                  </xpath>
+                  <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='price_subtotal']" position="after">
+                    <field name="e_estimado_pro_l"/>
+                  </xpath>
+                  <xpath expr="//field[@name='amount_untaxed']" position="after">
+                    <field name="e_g_m_p"/>
+                  </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

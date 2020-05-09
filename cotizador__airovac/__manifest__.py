@@ -22,13 +22,18 @@
     # any module necessary for this one to work correctly
     'depends': ['base',
                 'product',
-                'purchase'],
+                'purchase',
+                'sale'],
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
         'views/views.xml',
+        'views/step_multiplier.xml',
         'views/templates.xml',
+        'views/sale_view_order_form_inherith.xml',
+        'views/product_inherit.xml',
+        'views/product_supplierinfo_inherit.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
