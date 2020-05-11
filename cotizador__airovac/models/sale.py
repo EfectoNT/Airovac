@@ -11,14 +11,26 @@ class SaleOrderInherit(models.Model):
     e_etiqueta_title_b = fields.Text(string="Titulo de Etiqueta B")
     e_desciption = fields.Char(string="Descripción")
 
-    e_g_m_p = fields.Monetary(string="G.M. del Proyecto:")
-    e_costo_total_obra = fields.Monetary(string="Costo Total Obra:")
-    e_costo_total_imp_obra = fields.Monetary(string="Costo Total Imp Obra:")
+    e_g_m_p = fields.Monetary(compute='_compute_e_g_m_p',string="G.M. del Proyecto",readonly="True")
+    e_costo_total_obra = fields.Monetary(compute='_compute_e_costo_total_obra',string="Costo Total Obra",readonly="True")
+    e_costo_total_imp_obra = fields.Monetary(string="Costo Total Imp Obra",readonly="True")
 
     step_multiplier_id = fields.Many2one('step.multiplier',
                                          ondelete='cascade',
                                          string="Etapa del proyecto",
                                          )
+
+    hide_fields = fields.Boolean(default = True)
+
+    def mostrar_detalles(self):
+        for order in self:
+            if not order.hide_fields:
+                order.update({'hide_fields': True})
+                print("True",order.hide_fields)
+                return
+        order.update({'hide_fields': False})
+        print("False", order.hide_fields)
+
 
     @api.onchange('step_multiplier_id')
     def _default_precio_lista(self):
@@ -52,6 +64,39 @@ class SaleOrderInherit(models.Model):
             print(self.step_multiplier_id.name)
             line.e_estimado_pro_l = (line.price_subtotal * 100)/ self.amount_untaxed
 
+    @api.depends('order_line.e_g_m_l')
+    def _compute_e_g_m_p(self):
+        print("que pedo carnal")
+        for order in self:
+            e_g_m_p = 0.0
+            for line in order.order_line:
+                e_g_m_p += line.e_g_m_l
+            print(e_g_m_p)
+            order.update({'e_g_m_p': e_g_m_p})
+
+    @api.depends('order_line.e_costo_total')
+    def _compute_e_costo_total_obra(self):
+        print("compute_e_costo_total")
+        for order in self:
+            e_costo_total_obra = 0.0
+            for line in order.order_line:
+                e_costo_total_obra += line.e_costo_total
+            print(e_costo_total_obra)
+            order.update({'e_costo_total_obra': e_costo_total_obra})
+
+
+    @api.depends('order_line.e_costo_total_imp')
+    def _compute_e_costo_total_imp(self):
+        print("que pedo carnal")
+        for order in self:
+            e_costo_total_imp_obra = 0.0
+            for line in order.order_line:
+                e_costo_total_imp_obra += line.e_costo_total_imp
+            print('costo total impor',e_costo_total_imp_obra)
+            order.update({'e_costo_total_imp_obra': e_costo_total_imp_obra})
+
+
+
 
 
 class SaleOrderLineInherit(models.Model):
@@ -76,6 +121,13 @@ class SaleOrderLineInherit(models.Model):
     e_costo_total_imp = fields.Float(digits=(1, 2),Default = 0, store=True, string="Costo Total", help="Importacion * (PL * Mult. STD) * Cantidad")
     e_g_m_l = fields.Float(digits=(1, 2),Default = 0, store=True, string="G . M ", help="COSTO TOTAL / Subtotal")
     e_estimado_pro_l = fields.Float(digits=(1, 2), Default=0, store=True, string="S.T.P %", help="% Sobre total de propuesta")
+    e_asociar = fields.Boolean( Default=False,string="asociar",help="aver que pedo")
+
+    display_type = fields.Selection([
+        ('line_section_procuct', "Sección de producto"),
+        ('line_section', "Section"),
+        ('line_note', "Note")], default=False, help="Technical field for UX purpose.")
+
 
     @api.onchange('e_costo_unitario', 'product_uom_qty')
     def compute_costo_total(self):
@@ -171,21 +223,6 @@ class SaleOrderLineInherit(models.Model):
             return 0
         self.e_g_m_l = self.e_costo_total / (self.price_unit * self.product_uom_qty)
 
-    @api.onchange('e_costo_total','e_g_m_l')
-    def updat_e_g_m_p(self):
-        print('Nombre:',self.order_id)
-        self.order_id.e_costo_total_obra = 0
-        self.order_id.e_g_m_p = 0
-        for line in self.order_id.order_line:
-            print(line.product_id , line.e_g_m_l)
-            self.order_id.e_g_m_p += line.e_g_m_l
-
-    @api.onchange('e_costo_total_imp')
-    def updat_e_g_m_p(self):
-        print('Nombre:', self.order_id)
-        self.order_id.e_costo_total_imp_obra = 0
-        for line in self.order_id.order_line:
-            self.order_id.e_costo_total_imp_obra = self.order_id.e_costo_total_imp_obra + line.e_costo_total_imp
 
 
 

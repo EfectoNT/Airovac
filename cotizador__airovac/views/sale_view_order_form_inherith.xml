@@ -5,24 +5,32 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form" />
             <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="e_desciption"/>
+                </xpath>
                  <xpath expr="//form/sheet/group[1]" position="after">
                     <group>
                         <group >
                             <field name="step_multiplier_id" />
                         </group>
                         <group>
-
+                            <field name="e_etiqueta_title_a" />
+                            <field name="e_etiqueta_title_b" />
                         </group>
                     </group>
                 </xpath>
+                <xpath expr="//header" position='inside'>
+                     <button string="ver detalles" type="object" name="mostrar_detalles"  attrs="{'invisible': [('hide_fields', '=', True)]}" />
+                     <button string="ocultar detalles" type="object" name="mostrar_detalles"   attrs="{'invisible': [('hide_fields', '=', False)]}" />
+                </xpath>
 
-                  <!--<xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/control[1]/create[@name='add_note_control']" position="before">
-                    <create name="add_section_ocontrol" string="otra seccion" context="{'default_display_type': 'line_section'}"/>
+                 <!-- <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/control[1]/create[@name='add_note_control']" position="before">
+                    <create name="add_section_control" string="otra seccion" context="{'default_display_type': 'line_section_procuct'}"/>
                   </xpath>-->
 
                 <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='product_id']" position="after">
-                    <field name="e_etiqueta_line_a"/>
-                    <field name="e_etiqueta_line_b"/>
+                    <field name="e_etiqueta_line_a" optional="hide"/>
+                    <field name="e_etiqueta_line_b" optional="hide"/>
                     <field name="e_te_line_max" optional="hide"/>
                     <field name="e_te_line_min" optional="hide"/>
                   </xpath>
@@ -36,25 +44,56 @@
                   </xpath>
                   <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='price_unit']" position="after">
                     <field name="e_mult_std" optional="hide"/>
-                    <field name="e_igi"/>
-                    <field name="e_g_m_l"/>
-                    <field name="e_importation" optional="hide"/>
+                    <field name="e_igi"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" />
+                    <field name="e_g_m_l"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" />
+                    <field name="e_importation"   optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" />
                   </xpath>
                   <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='tax_id']" position="attributes">
                     <attribute name="optional">hide</attribute>
                   </xpath>
                   <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='discount']" position="after">
-                    <field name="e_costo_unitario" optional="hide"/>
-                    <field name="e_costo_total" optional="hide"/>
-                    <field name="e_costo_total_imp" optional="hide"/>
+                    <field name="e_costo_unitario"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" />
+                    <field name="e_costo_total"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" />
+                    <field name="e_costo_total_imp"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" />
                   </xpath>
                   <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='price_subtotal']" position="after">
                     <field name="e_estimado_pro_l"/>
                   </xpath>
-                  <xpath expr="//field[@name='amount_untaxed']" position="after">
-                    <field name="e_g_m_p"/>
+
+                 <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='sequence']" position="after">
+                    <field name="e_asociar"/>
+                </xpath>
+
+
+                 <xpath expr="//group[@name='note_group']" position="after">
+                     <group name="note_group" col="6" >
+                                <group colspan="4">
+                                     <field name="hide_fields" invisible="1" />
+                                </group>
+                                <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                    <field name="e_costo_total_imp_obra" widget="monetary"  options="{'currency_field': 'currency_id'}" attrs="{'invisible': [('hide_fields', '=', False)]}"/>
+                                    <field name="e_costo_total_obra" widget="monetary" options="{'currency_field': 'currency_id'}" attrs="{'invisible': [('hide_fields', '=', False)]}"/>
+                                    <field name="e_g_m_p" widget="monetary" options="{'currency_field': 'currency_id'}" />
+                                </group>
+                                <div class="oe_clear"/>
+                     </group>
                   </xpath>
             </field>
         </record>
+
+
+
+        <record id="sale_order_tree_inherith" model="ir.ui.view">
+            <field name="name">sale.order.tree.inherith</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding" />
+            <field name="arch" type="xml">
+                <xpath expr="//tree[1]/field[@name='name']" position="after">
+                    <field name="e_desciption"/>
+                </xpath>
+            </field>
+        </record>
+
+
     </data>
 </odoo>

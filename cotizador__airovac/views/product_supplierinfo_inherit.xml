@@ -16,5 +16,26 @@
                   </xpath>
             </field>
          </record>
-   </data>
+
+        <record id="purchase_purchase_order_form_inherit_efecto" model="ir.ui.view">
+       <field name="name">purchase.purchase_order_form_inherit_efecto</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='order_line']/tree[1]/field[@name='product_qty']" position="after">
+                    <field name="e_mult_std"/>
+                  </xpath>
+                  <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='order_line']/tree[1]/field[@name='price_unit']" position="attributes">
+                    <attribute name="string">P . L</attribute>
+                  </xpath>
+                  <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='order_line']/tree[1]/field[@name='price_unit']" position="after">
+                    <field name="e_cost_exwork"/>
+                  </xpath>
+                  <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='order_line']/tree[1]/field[@name='taxes_id']" position="attributes">
+                    <attribute name="optional">hide</attribute>
+                  </xpath>
+            </field>
+         </record>
+
+    </data>
 </odoo>
