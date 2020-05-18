@@ -12,7 +12,7 @@
                     <group>
                         <group >
                             <field name="step_multiplier_id" />
-                            <field name="contador" />
+                            <field name="contador" attrs="{'invisible': True}" />
                         </group>
                         <group>
                             <field name="e_etiqueta_title_a" />
@@ -21,8 +21,8 @@
                     </group>
                 </xpath>
                 <xpath expr="//header" position='inside'>
-                     <button string="ver detalles" type="object" name="mostrar_detalles"  attrs="{'invisible': [('hide_fields', '=', True)]}" />
-                     <button string="ocultar detalles" type="object" name="mostrar_detalles"   attrs="{'invisible': [('hide_fields', '=', False)]}" />
+                     <button string="ver detalles" type="object" name="mostrar_detalles"  attrs="{'invisible': [('hide_fields', '=', True)]}" groups="sales_team.group_sale_manager" />
+                     <button string="ocultar detalles" type="object" name="mostrar_detalles"   attrs="{'invisible': [('hide_fields', '=', False)]}" groups="sales_team.group_sale_manager" />
                 </xpath>
 
                  <!-- <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/control[1]/create[@name='add_note_control']" position="before">
@@ -44,19 +44,19 @@
                     <field name="e_precio_de_lista"/>
                   </xpath>
                   <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='price_unit']" position="after">
-                        <field name="e_provedor" optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" />
-                        <field name="e_mult_std" optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" />
-                        <field name="e_igi"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" />
-                        <field name="e_g_m_l"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" />
-                        <field name="e_importation"   optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" />
+                        <field name="e_provedor" optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager" />
+                        <field name="e_mult_std" optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager"/>
+                        <field name="e_igi"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager"/>
+                        <field name="e_g_m_l"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager"/>
+                        <field name="e_importation"   optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager" />
                   </xpath>
                   <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='tax_id']" position="attributes">
                     <attribute name="optional">hide</attribute>
                   </xpath>
                   <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='discount']" position="after">
-                    <field name="e_costo_unitario"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" />
-                    <field name="e_costo_total"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" />
-                    <field name="e_costo_total_imp"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" />
+                    <field name="e_costo_unitario"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager" />
+                    <field name="e_costo_total"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager"/>
+                    <field name="e_costo_total_imp"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager"/>
                   </xpath>
                   <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='price_subtotal']" position="after">
                     <field name="e_estimado_pro_l"/>
@@ -81,7 +81,7 @@
                    </xpath>
 
                  <xpath expr="//group[@name='note_group']" position="before">
-                     <group name="note_group" col="6" >
+                     <group name="note_group" col="6" groups="sales_team.group_sale_manager">
                                 <group colspan="4">
                                      <field name="hide_fields" invisible="1" />
                                 </group>

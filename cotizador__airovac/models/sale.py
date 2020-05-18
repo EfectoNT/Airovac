@@ -91,7 +91,7 @@ class SaleOrderInherit(models.Model):
 
     @api.depends('order_line.e_asociar','order_line.sequence','order_line.price_subtotal')
     def _compute_contador_paquetes(self):
-        #print("**********")
+        print("**********")
         for order in self:
 
             contador_one = 0
@@ -136,7 +136,7 @@ class SaleOrderInherit(models.Model):
                                  #print(order_line.id, total_group,div)
                                  op =  total_group / div
                                  #print('op', op)
-                                 order_line.write({'e_p_unit_a': op, 'principal': 1,'price_subtotal':op * div })
+                                 order_line.write({'e_p_unit_a': op, 'principal': 1,'price_subtotal':op  })
                              aux = None
                              total_group = 0
                              div = 0
@@ -190,9 +190,9 @@ class SaleOrderLineInherit(models.Model):
     e_te_line_max = fields.Integer(string="T.E MIN")
     e_te_line_min = fields.Integer(string="T.E MAX")
     e_precio_de_lista = fields.Float(digits=(10, 2), string="P . L", help="Precio de lista")
-    e_multiplicador = fields.Float(digits=(1, 2), string="Multiplicador", help="Multiplicador, si no existe el multiplicador por etapa se asigna el multiplicador minimo de venta")
+    e_multiplicador = fields.Float(digits=(1, 2),default=0, string="Multiplicador", help="Multiplicador, si no existe el multiplicador por etapa se asigna el multiplicador minimo de venta")
     e_descuento = fields.Integer(string="Des %")
-    price_unit =fields.Float(digits=(3, 2),default= 100 , string="Punto de Venta",help="P.L * Multiplicador * (1 - Descuento)")
+    price_unit =fields.Float(digits=(3, 2), string="Punto de Venta",help="P.L * Multiplicador * (1 - Descuento)")
     e_costo_total =fields.Monetary(string="Costo Total")
 
     e_costo_unitario = fields.Float(digits=(1, 2),Default = 0, string="Costo Unitario", help="(1 + IGI + Impotación) * (PL * Mult. STD)")
@@ -228,9 +228,18 @@ class SaleOrderLineInherit(models.Model):
         if mult.e_multiplicador > 0.0:
             print('mult.e_multiplicador > 0')
             return mult.e_multiplicador
-        else:
-            print('mult.e_multiplicador < 0')
-            return 1
+        return 1.0
+
+    @api.onchange('e_multiplicador', 'e_descuento','e_precio_de_lista')
+    def change_price_unit(self):
+        print('al cambiar el multiplicador', self._set_mul_default(),
+              self.product_id.e_precio_de_lista,
+              self.price_unit)
+        self.update({'price_unit': self.e_multiplicador * self.product_id.e_precio_de_lista * (
+                1 - (self.e_descuento / 100))})
+
+
+
 
     @api.onchange('product_id')
     def _default_precio_lista(self):
@@ -241,11 +250,14 @@ class SaleOrderLineInherit(models.Model):
                     'e_te_line_min' : self.product_id.e_te_min,
                     'e_igi' : self.product_id.e_igi,
                     'e_importation' : self.product_id.e_importation,
-                    'e_multiplicador' : self._set_mul_default(),
-                    'price_unit': self._set_mul_default() * self.product_id.e_precio_de_lista * (
-                             1 - (self.e_descuento / 100))
+                    'e_multiplicador' :  self._set_mul_default()
                     })
+
         #self.update({})
+        #'price_unit': self._set_mul_default() * self.product_id.e_precio_de_lista * (
+        #        1 - (self.e_descuento / 100))
+        print(self._set_mul_default(),self.product_id.e_precio_de_lista,self.price_unit)
+
         return {'domain':{'e_provedor': [('product_tmpl_id', '=',self.product_id.id)]}}
 
         #self.e_precio_de_lista = self.product_id.e_precio_de_lista
@@ -258,10 +270,7 @@ class SaleOrderLineInherit(models.Model):
         #self.e_multiplicador = self._set_mul_default()
         #self.price_unit = self.e_multiplicador * self.e_precio_de_lista * (1 - (self.e_descuento / 100))
 
-    @api.onchange('e_multiplicador','e_descuento')
-    def change_price_unit(self):
-        self.price_unit = self.e_multiplicador * self.e_precio_de_lista * (
-                    1 - (self.e_descuento / 100))
+
 
     #@api.onchange('e_descuento')
     #def change_descuento(self):
@@ -279,6 +288,7 @@ class SaleOrderLineInherit(models.Model):
             return
         if self.order_id.pricelist_id and self.order_id.partner_id:
             price = self.price_unit
+            print(self.price_unit)
             product = self.product_id.with_context(
                 lang=self.order_id.partner_id.lang,
                 partner=self.order_id.partner_id,
@@ -289,6 +299,8 @@ class SaleOrderLineInherit(models.Model):
                 fiscal_position=self.env.context.get('fiscal_position')
             )
             self.price_unit = self.env['account.tax']._fix_tax_included_price_company(price, product.taxes_id, self.tax_id, self.company_id)
+            print('aver que pedo',self._set_mul_default(), self.product_id.e_precio_de_lista,
+                  self.price_unit)
 
 
 
