@@ -13,7 +13,7 @@ class SaleOrderInherit(models.Model):
 
     e_g_m_p = fields.Monetary(compute='_compute_e_g_m_p',string="G.M. del Proyecto",readonly="True")
     e_costo_total_obra = fields.Monetary(compute='_compute_e_costo_total_obra',string="Costo Total Obra",readonly="True")
-    e_costo_total_imp_obra = fields.Monetary(string="Costo Total Imp Obra",readonly="True")
+    e_costo_total_imp_obra = fields.Monetary(compute='_compute_e_costo_total_imp',string="Costo Total Imp Obra",readonly="True")
 
     step_multiplier_id = fields.Many2one('step.multiplier',
                                          ondelete='cascade',
@@ -21,81 +21,161 @@ class SaleOrderInherit(models.Model):
                                          )
 
     hide_fields = fields.Boolean(default = True)
+    contador = fields.Integer(delault = 0, compute = '_compute_contador_paquetes')
+    #
 
     def mostrar_detalles(self):
         for order in self:
             if not order.hide_fields:
-                order.update({'hide_fields': True})
-                print("True",order.hide_fields)
+                order.write({'hide_fields': True})
+                #print("True",order.hide_fields)
                 return
-        order.update({'hide_fields': False})
-        print("False", order.hide_fields)
+        order.write({'hide_fields': False})
+        #print("False", order.hide_fields)
 
 
     @api.onchange('step_multiplier_id')
-    def _default_precio_lista(self):
-        print(self)
-        for line in self.order_line:
-            print(line.e_multiplicador)
-            #step_multiplier_model = self.env['step.multiplier']
-            #step_multiplier = step_multiplier_model.browse(self.step_multiplier_id.id)
-            print(self.step_multiplier_id.name)
-            self.e_g_m_p = 0
-            self.e_costo_total_obra = 0
-            self.e_costo_total_imp_obra = 0
+    def _onchange_step_multiplier_id(self):
+        print('Hola')
+        for order in self:
+            for line in order.order_line:
+                print("holi")
+                mult = self.env['step.multiplier.line'].search([('e_step_multiplier_id','=',order.step_multiplier_id.id),('e_marca','=',line.product_id.categ_id.id)])
+                print(mult.e_multiplicador)
+                if mult.e_multiplicador > 0.0:
+                    line.write({'e_multiplicador': mult.e_multiplicador,'price_unit' : mult.e_multiplicador * line.e_precio_de_lista * (1 - (line.e_descuento / 100))})
+                else:
+                    line.write({'e_multiplicador': 1, 'price_unit' :  1 * line.e_precio_de_lista * (1 - (line.e_descuento / 100))})
 
-            for mults in self.step_multiplier_id.step_multiplier_line_ids:
-                print(line.product_id.categ_id.id , mults.marca)
-                print(line.e_multiplicador, mults.e_multiplicador)
-                print('para el if')
-                self.e_g_m_p += line.e_g_m_l
-                self.e_costo_total_obra += line.e_costo_total
-                self.e_costo_total_imp_obra += line.e_costo_total_imp
 
-                if line.product_id.categ_id.id == int(mults.marca):
-                    print('dentro el if')
-                    line.e_multiplicador = mults.e_multiplicador
-                    print(line.e_multiplicador , line.e_precio_de_lista, line.e_descuento)
-                    line.price_unit = line.e_multiplicador * line.e_precio_de_lista * (1 - (line.e_descuento / 100))
+
 
     @api.onchange('amount_untaxed')
-    def _default_precio_lista(self):
-        for line in self.order_line:
-            print(self.step_multiplier_id.name)
-            line.e_estimado_pro_l = (line.price_subtotal * 100)/ self.amount_untaxed
+    def _onchange_amount_untaxed(self):
+        for order in self:
+            for line in order.order_line:
+                line.write({'e_estimado_pro_l': (line.price_subtotal * 100)/ self.amount_untaxed})
+
 
     @api.depends('order_line.e_g_m_l')
     def _compute_e_g_m_p(self):
-        print("que pedo carnal")
+        #print("que pedo carnal")
         for order in self:
             e_g_m_p = 0.0
             for line in order.order_line:
                 e_g_m_p += line.e_g_m_l
-            print(e_g_m_p)
-            order.update({'e_g_m_p': e_g_m_p})
+            #print(e_g_m_p)
+            order.write({'e_g_m_p': e_g_m_p})
 
     @api.depends('order_line.e_costo_total')
     def _compute_e_costo_total_obra(self):
-        print("compute_e_costo_total")
+        #print("compute_e_costo_total")
         for order in self:
             e_costo_total_obra = 0.0
             for line in order.order_line:
                 e_costo_total_obra += line.e_costo_total
-            print(e_costo_total_obra)
-            order.update({'e_costo_total_obra': e_costo_total_obra})
+            #print(e_costo_total_obra)
+            order.write({'e_costo_total_obra': e_costo_total_obra})
 
 
     @api.depends('order_line.e_costo_total_imp')
     def _compute_e_costo_total_imp(self):
-        print("que pedo carnal")
+        #print("que pedo carnal")
         for order in self:
             e_costo_total_imp_obra = 0.0
             for line in order.order_line:
                 e_costo_total_imp_obra += line.e_costo_total_imp
-            print('costo total impor',e_costo_total_imp_obra)
-            order.update({'e_costo_total_imp_obra': e_costo_total_imp_obra})
+            #print('costo total impor',e_costo_total_imp_obra)
+            order.write({'e_costo_total_imp_obra': e_costo_total_imp_obra})
 
 
+    @api.depends('order_line.e_asociar','order_line.sequence','order_line.price_subtotal')
+    def _compute_contador_paquetes(self):
+        #print("**********")
+        for order in self:
+
+            contador_one = 0
+
+            for line in order.order_line:
+                #print("linea",line.id,line.e_asociar)
+                if line.e_asociar:
+                    contador_one +=1
+
+
+
+            #print("Contador_one",contador_one)
+            if contador_one % 2 == 0 :
+                contador  = 0
+                grupo = 1
+                colored = 1
+                sigue = False
+                total_group = 0
+                div = 0
+                aux = None
+                for line in order.order_line:
+                    #print(contador,'A',line.e_asociar,grupo,sigue)
+
+                    if line.e_asociar:
+                        contador +=1
+                        if contador % 2 != 0 and aux is None:
+                            aux = line.id
+                            div = line.product_uom_qty
+                            #print('Asignando Aux',aux.id,total_group)
+
+                        total_group += line.price_unit * line.product_uom_qty
+                        line.write({'grupo': grupo,'colored': colored,'e_p_unit_a': 0})
+
+
+                        #print(contador, 'B', line.e_asociar, grupo, sigue)
+
+                        if contador % 2 == 0:
+                             if div > 0:
+
+                                 order_line = self.env['sale.order.line'].browse([aux])
+                                 #print('Antes de operar puc')
+                                 #print(order_line.id, total_group,div)
+                                 op =  total_group / div
+                                 #print('op', op)
+                                 order_line.write({'e_p_unit_a': op, 'principal': 1,'price_subtotal':op * div })
+                             aux = None
+                             total_group = 0
+                             div = 0
+                             sigue = False
+                             grupo += 1
+                             if grupo % 2 ==0:
+                               colored = 2
+                             else:
+                                colored = 1
+                            #print(contador, 'C', line.e_asociar, grupo, sigue)
+                        else:
+                            sigue = True
+                            #total_group += line.price_subtotal
+                            #print(aux.grupo,total_group,line.price_subtotal)
+                            #print(contador, 'D', line.e_asociar, grupo, sigue)
+                    else:
+                        if sigue:
+                            total_group += line.price_unit * line.product_uom_qty
+                            #print('En sige Aux id',aux.id,aux.grupo, total_group, line.price_subtotal)
+                            #if line.e_p_unit_a > 0 and line.principal > 0:
+                            #    line.write({'grupo': grupo, 'colored': colored})
+                            #else:
+                            line.write({'grupo': grupo, 'colored' : colored,'e_p_unit_a': 0, 'principal': 0})
+                            #print(contador, 'E', line.e_asociar, grupo, sigue)
+                        else:
+                            if line.e_p_unit_a > 0 or line.principal > 0:
+                                line.write({'grupo': 0, 'colored': 0,
+                                            'e_p_unit_a': line.price_unit, 'principal': 0})
+                            else:
+                                line.write({'grupo': 0, 'colored': 0,'e_p_unit_a': line.price_unit})
+                            #print(contador, 'F', line.e_asociar, grupo, sigue,line.colored)
+                    #lista.append(line)
+
+            # lista.reverse()
+            # for line_s in lista:
+            #     print(line_s.id,line_s.colored)
+
+            order.write({'contador': contador_one})
+            #print('Aver we el contador', contador_one)
 
 
 
@@ -114,19 +194,26 @@ class SaleOrderLineInherit(models.Model):
     e_descuento = fields.Integer(string="Des %")
     price_unit =fields.Float(digits=(3, 2),default= 100 , string="Punto de Venta",help="P.L * Multiplicador * (1 - Descuento)")
     e_costo_total =fields.Monetary(string="Costo Total")
-    e_provedor = fields.Many2one('product.supplierinfo',string="Proveedor")
-    e_mult_std = fields.Float(digits=(1, 2), string="Mult std", help="Exwork mult")
+
     e_costo_unitario = fields.Float(digits=(1, 2),Default = 0, string="Costo Unitario", help="(1 + IGI + Impotación) * (PL * Mult. STD)")
     e_costo_total = fields.Float(digits=(1, 2),Default = 0, store=True, string="Costo Total", help="Costo Unitario * Cantidad")
-    e_costo_total_imp = fields.Float(digits=(1, 2),Default = 0, store=True, string="Costo Total", help="Importacion * (PL * Mult. STD) * Cantidad")
+    e_costo_total_imp = fields.Float(digits=(1, 2),Default = 0, store=True, string="C . T Import", help="Importacion * (PL * Mult. STD) * Cantidad")
     e_g_m_l = fields.Float(digits=(1, 2),Default = 0, store=True, string="G . M ", help="COSTO TOTAL / Subtotal")
     e_estimado_pro_l = fields.Float(digits=(1, 2), Default=0, store=True, string="S.T.P %", help="% Sobre total de propuesta")
-    e_asociar = fields.Boolean( Default=False,string="asociar",help="aver que pedo")
+    e_asociar = fields.Boolean( Default=False,string="asociar",help="Asocia productos con accesorios cada dos checkboxes")
+    e_p_unit_a = fields.Monetary(Default=0,string="P.U con Accesorios",help="Precio unitario con accesorios")
 
-    display_type = fields.Selection([
-        ('line_section_procuct', "Sección de producto"),
-        ('line_section', "Section"),
-        ('line_note', "Note")], default=False, help="Technical field for UX purpose.")
+    #campos no visibles, usados para el calculo de productos con accesorios :3
+    sequence = fields.Integer("Sequence")
+    grupo = fields.Integer(default=0)
+    colored = fields.Integer(default=0)
+    principal = fields.Integer(default=0)
+    e_partida = fields.Char(string="Partida")
+
+
+    e_provedor = fields.Many2one('product.supplierinfo', string="Proveedor")
+    e_mult_std = fields.Float(digits=(1, 2),default = 1.0, string="Mult std",
+                              help="Exwork mult")
 
 
     @api.onchange('e_costo_unitario', 'product_uom_qty')
@@ -134,42 +221,42 @@ class SaleOrderLineInherit(models.Model):
         return (self.e_costo_unitario * self.product_uom_qty)
 
     def _set_mul_default(self):
-        print('set default')
-        if not self.order_id.step_multiplier_id.id:
-            print('Sin etapa de proyecto')
-            if not self.product_id.id:
-                print('Sin etapa de proyecto y sin producto')
-                return 0
-            else:
-                print('Sin etapa de proyecto y con producto')
-                print('oni')
-                return  self.product_id.e_mult_min
+        mult = self.env['step.multiplier.line'].search(
+            [('e_step_multiplier_id', '=', self.order_id.step_multiplier_id.id),
+             ('e_marca', '=', self.product_id.categ_id.id)])
+        print(mult.e_multiplicador)
+        if mult.e_multiplicador > 0.0:
+            print('mult.e_multiplicador > 0')
+            return mult.e_multiplicador
         else:
-            if not self.product_id.id:
-                print('Con etapa de proyecto y sin producto')
-                return 0
-            else:
-                for mults in self.order_id.step_multiplier_id.step_multiplier_line_ids:
-                    print(self.product_id.categ_id.id , mults.marca)
-                    print(self.e_multiplicador, mults.e_multiplicador)
-                    print('para el if')
-                    if self.product_id.categ_id.id == int(mults.marca):
-                        print('dentro el if')
-                        return mults.e_multiplicador
-                return  self.product_id.e_mult_min
-        return 0
+            print('mult.e_multiplicador < 0')
+            return 1
 
     @api.onchange('product_id')
     def _default_precio_lista(self):
-        self.e_precio_de_lista = self.product_id.e_precio_de_lista
-        self.e_etiqueta_line_a = self.product_id.e_etiqueta_a
-        self.e_etiqueta_line_b = self.product_id.e_etiqueta_b
-        self.e_te_line_max = self.product_id.e_te_max
-        self.e_te_line_min = self.product_id.e_te_min
-        self.e_igi = self.product_id.e_igi
-        self.e_importation = self.product_id.e_importation
-        self.e_multiplicador = self._set_mul_default()
-        self.price_unit = self.e_multiplicador * self.e_precio_de_lista * (1 - (self.e_descuento / 100))
+        self.write({'e_precio_de_lista':self.product_id.e_precio_de_lista,
+                    'e_etiqueta_line_a': self.product_id.e_etiqueta_a,
+                    'e_etiqueta_line_b': self.product_id.e_etiqueta_b,
+                    'e_te_line_max' : self.product_id.e_te_max,
+                    'e_te_line_min' : self.product_id.e_te_min,
+                    'e_igi' : self.product_id.e_igi,
+                    'e_importation' : self.product_id.e_importation,
+                    'e_multiplicador' : self._set_mul_default(),
+                    'price_unit': self._set_mul_default() * self.product_id.e_precio_de_lista * (
+                             1 - (self.e_descuento / 100))
+                    })
+        #self.update({})
+        return {'domain':{'e_provedor': [('product_tmpl_id', '=',self.product_id.id)]}}
+
+        #self.e_precio_de_lista = self.product_id.e_precio_de_lista
+        #self.e_etiqueta_line_a = self.product_id.e_etiqueta_a
+        #self.e_etiqueta_line_b = self.product_id.e_etiqueta_b
+        #self.e_te_line_max = self.product_id.e_te_max
+        #self.e_te_line_min = self.product_id.e_te_min
+        #self.e_igi = self.product_id.e_igi
+        #self.e_importation = self.product_id.e_importation
+        #self.e_multiplicador = self._set_mul_default()
+        #self.price_unit = self.e_multiplicador * self.e_precio_de_lista * (1 - (self.e_descuento / 100))
 
     @api.onchange('e_multiplicador','e_descuento')
     def change_price_unit(self):
@@ -223,6 +310,26 @@ class SaleOrderLineInherit(models.Model):
             return 0
         self.e_g_m_l = self.e_costo_total / (self.price_unit * self.product_uom_qty)
 
+    @api.onchange('e_costo_total', 'price_unit', 'product_uom_qty')
+    def compute_g_m_l(self):
+        if self.e_costo_total == 0 or self.price_unit == 0 or self.product_uom_qty == 0:
+            return 0
+        self.e_g_m_l = self.e_costo_total / (
+                    self.price_unit * self.product_uom_qty)
+
+    @api.onchange('e_provedor')
+    def _onchange_e_mult_std(self):
+        self.write({'e_mult_std' : self.e_provedor.e_mult_std})
 
 
 
+
+
+    # @api.onchange('sequence')
+    # def onchange_egml(self):
+    #     print(self.sequence)
+    #
+    # @api.onchange('e_asociar')
+    # def onchange_asociar(self):
+    #     print('+++++++++++++++++++++++++++++')
+    #

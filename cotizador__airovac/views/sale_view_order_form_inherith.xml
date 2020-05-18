@@ -12,6 +12,7 @@
                     <group>
                         <group >
                             <field name="step_multiplier_id" />
+                            <field name="contador" />
                         </group>
                         <group>
                             <field name="e_etiqueta_title_a" />
@@ -43,10 +44,11 @@
                     <field name="e_precio_de_lista"/>
                   </xpath>
                   <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='price_unit']" position="after">
-                    <field name="e_mult_std" optional="hide"/>
-                    <field name="e_igi"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" />
-                    <field name="e_g_m_l"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" />
-                    <field name="e_importation"   optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" />
+                        <field name="e_provedor" optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" />
+                        <field name="e_mult_std" optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" />
+                        <field name="e_igi"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" />
+                        <field name="e_g_m_l"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" />
+                        <field name="e_importation"   optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" />
                   </xpath>
                   <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='tax_id']" position="attributes">
                     <attribute name="optional">hide</attribute>
@@ -61,19 +63,32 @@
                   </xpath>
 
                  <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='sequence']" position="after">
-                    <field name="e_asociar"/>
+
+                     <field name="e_asociar" options='{"bg_color": "LightSeaGreen: colored == 1;  DarkKhaki: colored == 2 "}'  />
+
                 </xpath>
 
+                  <xpath expr="//field[@name='e_asociar']" position="after">
+                    <field name="principal" optional="hide" attrs='{"column_invisible": True}' />
+                    <field name="grupo" attrs='{"column_invisible": True}' />
+                    <field name="colored" attrs='{"column_invisible": True}' />
+                    <field name="id" attrs='{"column_invisible": True}' />
+                    <field name="e_partida" />
+                  </xpath>
 
-                 <xpath expr="//group[@name='note_group']" position="after">
+                   <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='price_unit']" position="after">
+                    <field name="e_p_unit_a" options='{"bg_color": "LightCyan:colored == 1 and principal == 1 ;  LightYellow:colored == 2 and principal == 1 "}' />
+                   </xpath>
+
+                 <xpath expr="//group[@name='note_group']" position="before">
                      <group name="note_group" col="6" >
                                 <group colspan="4">
                                      <field name="hide_fields" invisible="1" />
                                 </group>
                                 <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
-                                    <field name="e_costo_total_imp_obra" widget="monetary"  options="{'currency_field': 'currency_id'}" attrs="{'invisible': [('hide_fields', '=', False)]}"/>
-                                    <field name="e_costo_total_obra" widget="monetary" options="{'currency_field': 'currency_id'}" attrs="{'invisible': [('hide_fields', '=', False)]}"/>
-                                    <field name="e_g_m_p" widget="monetary" options="{'currency_field': 'currency_id'}" />
+                                    <field name="e_costo_total_imp_obra" widget="monetary"  options='{"currency_field": "currency_id"}' attrs="{'invisible': [('hide_fields', '=', False)]}"/>
+                                    <field name="e_costo_total_obra" widget="monetary" options='{"currency_field": "currency_id"}' attrs="{'invisible': [('hide_fields', '=', False)]}"/>
+                                    <field name="e_g_m_p" widget="monetary" options='{"currency_field": "currency_id"}' />
                                 </group>
                                 <div class="oe_clear"/>
                      </group>
@@ -89,7 +104,7 @@
             <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding" />
             <field name="arch" type="xml">
                 <xpath expr="//tree[1]/field[@name='name']" position="after">
-                    <field name="e_desciption"/>
+
                 </xpath>
             </field>
         </record>

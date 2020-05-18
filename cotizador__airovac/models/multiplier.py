@@ -9,8 +9,8 @@ class StepMultiplier(models.Model):
 
     name = fields.Char(string="Estapa", required = True)
     description = fields.Text(string="Descripción")
-    step_multiplier_line_ids = fields.One2many(
-        'step.multiplier.line', 'step_multiplier_id')
+    e_step_multiplier_line_ids = fields.One2many(
+        'step.multiplier.line', 'e_step_multiplier_id')
 
 
 
@@ -22,48 +22,29 @@ class StepMultiplierLine(models.Model):
 
 
     name = fields.Char(string="Multiplicadores por marca")
-    marca = fields.Selection(lambda self : self.categorys_by_name(),string="Marca",store=True, required=True)
-    e_multiplicador = fields.Float(digits=(1, 2), string="Multiplicador", help="")
-    step_multiplier_id = fields.Many2one('step.multiplier',
+    e_marca = fields.Many2one('product.category',
+                                ondelete='cascade', string="Marca del producto",
+                                required=True)
+    e_multiplicador = fields.Float(digits=(1, 2), string="Multiplicador del producto por etapa", help="")
+    e_step_multiplier_id = fields.Many2one('step.multiplier',
                                 ondelete='cascade', string="Etapa",
                                 required=True)
 
 
 
-    @api.onchange('marca')
-    def _onchange_marca(self):
-        print("marca")
-        print(self.marca)
+    #Filter the e_marca if this alredy have e_multiplicador asigned
+    @api.onchange('e_marca')
+    def _onchange_emarca(self):
+        in_use = []
+        for line in self.e_step_multiplier_id.e_step_multiplier_line_ids:
+            if  line.e_marca.id:
+                 in_use.append(line.e_marca.id)
 
-
-    def categorys_by_name(self):
-
-        #sql_lines = ('SELECT marca '
-        #       'FROM step_multiplier_line '
-        #       'WHERE marca IS NOT NULL ')
-
-        sql = ('SELECT categ_id '
-               'FROM product_template')
-
-        self.env.cr.execute(sql)
-        #self.env.cr.execute(sql_lines)
-        category_model = self.env['product.category']
-        result = []
-
-        #lines = self.env['step.multiplier.line'].search([('step_multiplier_id', '=' ,self.step_multiplier_id.id)]).marca
-        #print(lines)
-        for categ_id in self.env.cr.fetchall():
-            category = category_model.browse(categ_id)
-            print(category.id,category.name)
-            tupla = (str(category.id),category.name)
-            print(tupla)
-            print('tupla')
-            result.append(tupla)
-
-        print(result)
-        return result
-
-
+        if not in_use:
+            return
+        print(in_use)
+        return {'domain':{'e_marca':
+                         [('id', 'not in', in_use)]}}
 
 
 
