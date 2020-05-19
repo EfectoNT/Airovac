@@ -8,18 +8,41 @@
                 <xpath expr="//field[@name='partner_id']" position="after">
                     <field name="e_desciption"/>
                 </xpath>
-                 <xpath expr="//form/sheet/group[1]" position="after">
+
+
+                <xpath expr="//form/sheet/group[1]/group[1]" position="inside">
+
+                            <hr style="whidth=100%;"/>
+                            <field name="cambio_etapa_chebox" />
+                            <field name="step_multiplier_id" attrs="{'readonly':[('cambio_etapa_chebox','=',False)]}" />
+                            <field name="cambio_etapa" attrs="{'invisible': True}"  />
+                            <field name="contador" attrs="{'invisible': True}" />
+
+                </xpath>
+
+                <xpath expr="//form/sheet/group[1]/group[2]" position="inside">
+                            <hr style="whidth=100%;"/>
+                            <field name="breakdown"  />
+                             <field name="e_etiqueta_title_a" />
+                            <field name="e_etiqueta_title_b" />
+
+                </xpath>
+
+
+
+                <!-- <xpath expr="//form/sheet/group[1]" position="after">
                     <group>
                         <group >
-                            <field name="step_multiplier_id" />
+                            <field name="step_multiplier_id" attrs="{'readonly':[('cambio_etapa_chebox','=',False)]}" />
+                            <field name="cambio_etapa_chebox" />
+                            <field name="cambio_etapa" attrs="{'invisible': True}" />
                             <field name="contador" attrs="{'invisible': True}" />
                         </group>
                         <group>
-                            <field name="e_etiqueta_title_a" />
-                            <field name="e_etiqueta_title_b" />
+
                         </group>
                     </group>
-                </xpath>
+                </xpath>-->
                 <xpath expr="//header" position='inside'>
                      <button string="ver detalles" type="object" name="mostrar_detalles"  attrs="{'invisible': [('hide_fields', '=', True)]}" groups="sales_team.group_sale_manager" />
                      <button string="ocultar detalles" type="object" name="mostrar_detalles"   attrs="{'invisible': [('hide_fields', '=', False)]}" groups="sales_team.group_sale_manager" />
@@ -58,8 +81,14 @@
                     <field name="e_costo_total"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager"/>
                     <field name="e_costo_total_imp"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager"/>
                   </xpath>
+
+                    <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='price_subtotal']" position="replace">
+                        <field name="price_subtotal"   attrs="{'column_invisible': [('parent.breakdown', '=', False)]}" />
+                    </xpath>
+
                   <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='price_subtotal']" position="after">
-                    <field name="e_estimado_pro_l"/>
+                      <field name="e_subtotal_no_des" attrs="{'column_invisible': [('parent.breakdown', '=', True)]}" />
+                      <field name="e_estimado_pro_l"/>
                   </xpath>
 
                  <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='sequence']" position="after">
@@ -77,7 +106,7 @@
                   </xpath>
 
                    <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='price_unit']" position="after">
-                    <field name="e_p_unit_a" options='{"bg_color": "LightCyan:colored == 1 and principal == 1 ;  LightYellow:colored == 2 and principal == 1 "}' />
+                    <field name="e_p_unit_a" attrs="{'column_invisible': [('parent.breakdown', '=', True)]}"  options='{"bg_color": "LightCyan:colored == 1 and principal == 1 ;  LightYellow:colored == 2 and principal == 1 "}' />
                    </xpath>
 
                  <xpath expr="//group[@name='note_group']" position="before">

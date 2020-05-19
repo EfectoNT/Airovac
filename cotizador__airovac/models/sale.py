@@ -21,8 +21,45 @@ class SaleOrderInherit(models.Model):
                                          )
 
     hide_fields = fields.Boolean(default = True)
-    contador = fields.Integer(delault = 0, compute = '_compute_contador_paquetes')
-    #
+    contador = fields.Integer(default = 0, compute = '_compute_contador_paquetes')
+    cambio_etapa = fields.Boolean(default = True,store=True, compute = '_compute_cambio_etapa',string="Hay cambio")
+    cambio_etapa_chebox = fields.Boolean(default = False, string="Habilitar cambio de etapa")
+    breakdown = fields.Boolean(default=True, string="Imprimir Desglosado")
+
+    @api.depends('order_line.e_multiplicador')
+    def _compute_cambio_etapa(self):
+        print("compute etapa")
+        for order in self:
+            for line in order.order_line:
+                if line.mult_is_changed():
+                    print("ubo un cambio",line.mult_is_changed())
+                    order.write({'cambio_etapa': True})
+                    return
+            order.write({'cambio_etapa': False})
+
+    @api.onchange('cambio_etapa')
+    def _onchange_cambio_etapa(self):
+        print("onchange cambio etapa")
+        for order in self:
+            print(order.cambio_etapa)
+            if order.cambio_etapa:
+                  order.write({'cambio_etapa_chebox':False})
+                  return
+        order.write({'cambio_etapa_chebox': True})
+
+
+    @api.onchange('cambio_etapa_chebox')
+    def _onchangue_cambio_etapa_chebox(self):
+        for order in self:
+            print(order.cambio_etapa_chebox,order.cambio_etapa)
+            if  order.cambio_etapa_chebox :
+                order.write({'cambio_etapa': False})
+                return {
+                    'warning': {
+                        'title': "Cuidado",
+                        'message': "Al cambiar de etapa el Multiplicador sera sobre escrito",
+                    }
+                }
 
     def mostrar_detalles(self):
         for order in self:
@@ -46,7 +83,7 @@ class SaleOrderInherit(models.Model):
                     line.write({'e_multiplicador': mult.e_multiplicador,'price_unit' : mult.e_multiplicador * line.e_precio_de_lista * (1 - (line.e_descuento / 100))})
                 else:
                     line.write({'e_multiplicador': 1, 'price_unit' :  1 * line.e_precio_de_lista * (1 - (line.e_descuento / 100))})
-
+            order.write({'cambio_etapa': False})
 
 
 
@@ -66,6 +103,10 @@ class SaleOrderInherit(models.Model):
                 e_g_m_p += line.e_g_m_l
             #print(e_g_m_p)
             order.write({'e_g_m_p': e_g_m_p})
+
+
+
+
 
     @api.depends('order_line.e_costo_total')
     def _compute_e_costo_total_obra(self):
@@ -123,7 +164,7 @@ class SaleOrderInherit(models.Model):
                             #print('Asignando Aux',aux.id,total_group)
 
                         total_group += line.price_unit * line.product_uom_qty
-                        line.write({'grupo': grupo,'colored': colored,'e_p_unit_a': 0})
+                        line.write({'grupo': grupo,'colored': colored,'e_p_unit_a': 0,'e_subtotal_no_des':0 })
 
 
                         #print(contador, 'B', line.e_asociar, grupo, sigue)
@@ -136,7 +177,7 @@ class SaleOrderInherit(models.Model):
                                  #print(order_line.id, total_group,div)
                                  op =  total_group / div
                                  #print('op', op)
-                                 order_line.write({'e_p_unit_a': op, 'principal': 1,'price_subtotal':op  })
+                                 order_line.write({'e_p_unit_a': op, 'principal': 1,'e_subtotal_no_des':op * div  })
                              aux = None
                              total_group = 0
                              div = 0
@@ -159,14 +200,14 @@ class SaleOrderInherit(models.Model):
                             #if line.e_p_unit_a > 0 and line.principal > 0:
                             #    line.write({'grupo': grupo, 'colored': colored})
                             #else:
-                            line.write({'grupo': grupo, 'colored' : colored,'e_p_unit_a': 0, 'principal': 0})
+                            line.write({'grupo': grupo, 'colored' : colored,'e_p_unit_a': 0, 'principal': 0,'e_subtotal_no_des':0})
                             #print(contador, 'E', line.e_asociar, grupo, sigue)
                         else:
                             if line.e_p_unit_a > 0 or line.principal > 0:
                                 line.write({'grupo': 0, 'colored': 0,
-                                            'e_p_unit_a': line.price_unit, 'principal': 0})
+                                            'e_p_unit_a': line.price_unit, 'principal': 0,'e_subtotal_no_des':line.price_subtotal})
                             else:
-                                line.write({'grupo': 0, 'colored': 0,'e_p_unit_a': line.price_unit})
+                                line.write({'grupo': 0, 'colored': 0,'e_p_unit_a': line.price_unit,'e_subtotal_no_des':line.price_subtotal})
                             #print(contador, 'F', line.e_asociar, grupo, sigue,line.colored)
                     #lista.append(line)
 
@@ -202,6 +243,8 @@ class SaleOrderLineInherit(models.Model):
     e_estimado_pro_l = fields.Float(digits=(1, 2), Default=0, store=True, string="S.T.P %", help="% Sobre total de propuesta")
     e_asociar = fields.Boolean( Default=False,string="asociar",help="Asocia productos con accesorios cada dos checkboxes")
     e_p_unit_a = fields.Monetary(Default=0,string="P.U con Accesorios",help="Precio unitario con accesorios")
+    e_subtotal_no_des = fields.Monetary(Default=0,string="Subtutal",help="Sub tutal no desglosado")
+
 
     #campos no visibles, usados para el calculo de productos con accesorios :3
     sequence = fields.Integer("Sequence")
@@ -221,22 +264,69 @@ class SaleOrderLineInherit(models.Model):
         return (self.e_costo_unitario * self.product_uom_qty)
 
     def _set_mul_default(self):
-        mult = self.env['step.multiplier.line'].search(
-            [('e_step_multiplier_id', '=', self.order_id.step_multiplier_id.id),
-             ('e_marca', '=', self.product_id.categ_id.id)])
-        print(mult.e_multiplicador)
-        if mult.e_multiplicador > 0.0:
-            print('mult.e_multiplicador > 0')
-            return mult.e_multiplicador
+        if self.order_id.step_multiplier_id.id:
+            mult = self.env['step.multiplier.line'].search(
+                [('e_step_multiplier_id', '=', self.order_id.step_multiplier_id.id),
+                 ('e_marca', '=', self.product_id.categ_id.id)])
+            print(mult,"aquitoy",len(mult))
+            if mult.e_multiplicador > 0.0 :
+                print('mult.e_multiplicador > 0')
+                return mult.e_multiplicador
+
         return 1.0
+
+    def mult_is_changed(self):
+        if self.order_id.step_multiplier_id.id:
+            mult = self.env['step.multiplier.line'].search(
+                [(
+                 'e_step_multiplier_id', '=', self.order_id.step_multiplier_id.id),
+                 ('e_marca', '=', self.product_id.categ_id.id)])
+            print(mult.e_multiplicador)
+            if (mult.e_multiplicador != self.e_multiplicador) or (mult.e_multiplicador == 0 and self.e_multiplicador != 1):
+                return True
+        if not self.order_id.step_multiplier_id.id:
+            if self.e_multiplicador != 1:
+                return True
+        return False
+
+
+
 
     @api.onchange('e_multiplicador', 'e_descuento','e_precio_de_lista')
     def change_price_unit(self):
         print('al cambiar el multiplicador', self._set_mul_default(),
               self.product_id.e_precio_de_lista,
               self.price_unit)
+        flag = self.env['res.users'].has_group('sales_team.group_sale_manager')
+        if self.e_multiplicador < self.product_id.e_mult_min and not flag:
+                self.e_multiplicador = self.product_id.e_precio_de_lista
+                self.update({'price_unit': self.e_multiplicador * self.product_id.e_precio_de_lista * (
+                                        1 - (self.e_descuento / 100))})
+                return {
+                    'warning': {
+                        'title': "Cuidado",
+                        'message': "No puedes ofrecer un producto por debajo de su multiplicador minimo",
+                        'type': 'notification'
+                    }
+                }
+        if self.e_multiplicador < self.product_id.e_mult_min and  flag:
+                self.update({'price_unit': self.e_multiplicador * self.product_id.e_precio_de_lista * (
+                                        1 - (self.e_descuento / 100))})
+                return {
+                    'warning': {
+                        'title': "Cuidado",
+                        'message': "Has ofrecido el producto x por debajo de su multiplicador minimo",
+                        'type': 'notification'
+                    }
+                }
+
+
         self.update({'price_unit': self.e_multiplicador * self.product_id.e_precio_de_lista * (
-                1 - (self.e_descuento / 100))})
+                                    1 - (self.e_descuento / 100))})
+
+
+
+
 
 
 
