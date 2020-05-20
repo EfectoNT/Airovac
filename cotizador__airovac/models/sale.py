@@ -79,10 +79,33 @@ class SaleOrderInherit(models.Model):
                 print("holi")
                 mult = self.env['step.multiplier.line'].search([('e_step_multiplier_id','=',order.step_multiplier_id.id),('e_marca','=',line.product_id.categ_id.id)])
                 print(mult.e_multiplicador)
+
                 if mult.e_multiplicador > 0.0:
-                    line.write({'e_multiplicador': mult.e_multiplicador,'price_unit' : mult.e_multiplicador * line.e_precio_de_lista * (1 - (line.e_descuento / 100))})
+                    resul = mult.e_multiplicador * line.product_id.e_precio_de_lista * (
+                            1 - (line.e_descuento / 100))
+                    espe = mult.e_multiplicador * line.product_id.e_precio_de_lista
+                    if resul < espe :
+                        line.write({'e_multiplicador': mult.e_multiplicador,'price_unit' : mult.e_multiplicador * line.e_precio_de_lista * (1 - (line.e_descuento / 100)),'e_por_debajo': 1})
+                    else:
+                        line.write({'e_multiplicador': mult.e_multiplicador,
+                                    'price_unit': mult.e_multiplicador * line.e_precio_de_lista * (
+                                                1 - (line.e_descuento / 100)),
+                                    'e_por_debajo': 0})
                 else:
-                    line.write({'e_multiplicador': 1, 'price_unit' :  1 * line.e_precio_de_lista * (1 - (line.e_descuento / 100))})
+                    resul = 1 * line.product_id.e_precio_de_lista * (
+                            1 - (line.e_descuento / 100))
+                    espe = 1 * line.product_id.e_precio_de_lista
+                    if resul < espe:
+                        line.write({'e_multiplicador': mult.e_multiplicador,
+                                    'price_unit': mult.e_multiplicador * line.e_precio_de_lista * (
+                                                1 - (line.e_descuento / 100)),
+                                    'e_por_debajo': 1})
+                    else:
+                        line.write({'e_multiplicador': mult.e_multiplicador,
+                                    'price_unit': mult.e_multiplicador * line.e_precio_de_lista * (
+                                            1 - (line.e_descuento / 100)),
+                                    'e_por_debajo': 0})
+
             order.write({'cambio_etapa': False})
 
 
@@ -244,7 +267,9 @@ class SaleOrderLineInherit(models.Model):
     e_asociar = fields.Boolean( Default=False,string="asociar",help="Asocia productos con accesorios cada dos checkboxes")
     e_p_unit_a = fields.Monetary(Default=0,string="P.U con Accesorios",help="Precio unitario con accesorios")
     e_subtotal_no_des = fields.Monetary(Default=0,string="Subtutal",help="Sub tutal no desglosado")
-
+    e_t_e = fields.Char(string="T.E",
+                                        help="Tiempo de entrega")
+    e_por_debajo = fields.Integer(Default=0)
 
     #campos no visibles, usados para el calculo de productos con accesorios :3
     sequence = fields.Integer("Sequence")
@@ -298,31 +323,40 @@ class SaleOrderLineInherit(models.Model):
               self.product_id.e_precio_de_lista,
               self.price_unit)
         flag = self.env['res.users'].has_group('sales_team.group_sale_manager')
-        if self.e_multiplicador < self.product_id.e_mult_min and not flag:
-                self.e_multiplicador = self.product_id.e_precio_de_lista
+        resul = self.e_multiplicador * self.product_id.e_precio_de_lista * (
+                1 - (self.e_descuento / 100))
+        espe =  self.product_id.e_mult_min * self.product_id.e_precio_de_lista
+
+        print("Alertas",resul,espe)
+        print("Alertas", resul < espe)
+        if (self.e_multiplicador < self.product_id.e_mult_min and not flag) or ((resul < espe)  and not flag):
+                print("Alertas vendedor")
+                self.e_multiplicador = self.product_id.e_mult_min
                 self.update({'price_unit': self.e_multiplicador * self.product_id.e_precio_de_lista * (
-                                        1 - (self.e_descuento / 100))})
+                                        1 - (self.e_descuento / 100)),'e_por_debajo' : 0})
                 return {
                     'warning': {
                         'title': "Cuidado",
-                        'message': "No puedes ofrecer un producto por debajo de su multiplicador minimo",
+                        'message': "No puedes ofrecer un producto por debajo de su (multiplicador) precio minimo",
                         'type': 'notification'
                     }
                 }
-        if self.e_multiplicador < self.product_id.e_mult_min and  flag:
+        if (self.e_multiplicador < self.product_id.e_mult_min and  flag) or  ((resul < espe)  and  flag):
+                print("gerente")
                 self.update({'price_unit': self.e_multiplicador * self.product_id.e_precio_de_lista * (
-                                        1 - (self.e_descuento / 100))})
+                                        1 - (self.e_descuento / 100)), 'e_por_debajo' : 1})
+
                 return {
                     'warning': {
                         'title': "Cuidado",
-                        'message': "Has ofrecido el producto x por debajo de su multiplicador minimo",
+                        'message': "Has ofrecido el producto  por debajo de su precio minimo",
                         'type': 'notification'
                     }
                 }
 
 
         self.update({'price_unit': self.e_multiplicador * self.product_id.e_precio_de_lista * (
-                                    1 - (self.e_descuento / 100))})
+                                    1 - (self.e_descuento / 100)),'e_por_debajo' : 0})
 
 
 
