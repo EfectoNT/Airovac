@@ -14,11 +14,30 @@ class productTemplateInherit(models.Model):
     e_te_min = fields.Integer(string="T.E MAX")
     e_etiqueta_a = fields.Text(string="Etiqueta A")
     e_etiqueta_b = fields.Text(string="Etiqueta B")
-    e_mult_min = fields.Float(digits=(1, 2), string="Mult. Min", help="e_mult_min")
+    e_mult_min = fields.Float(digits=(1, 2),default = 1, string="Mult. Min", help="e_mult_min")
     e_precio_de_lista = fields.Float(digits=(10, 2), string="Precio de Lista", help="Precio de lista")
     e_product_class  = fields.Many2one('producte.class',
                                          string="Clase de producto",
                                          )
+
+    @api.onchange('e_product_class')
+    def _e_product_class(self):
+        print('onchangue')
+        self.write({'e_mult_min': self.e_product_class.e_mult_min})
+
+    @api.onchange('e_mult_min')
+    def _change_mult_min(self):
+        print('onchangue emult')
+        if self.e_mult_min < 0:
+            self.write({'e_mult_min': self._origin.e_mult_min})
+            return {
+                'warning': {
+                    'title': "Cuidado",
+                    'message': "El multiplicador mínimo debe ser mayor que 0.0",
+                }
+            }
+
+
 
 class productSupplierinfoInherit(models.Model):
     _inherit = 'product.supplierinfo'
@@ -34,6 +53,24 @@ class productSupplierinfoInherit(models.Model):
 
 class ProductuEClass(models.Model):
     _name = 'producte.class'
-    _description = "Clase de producto"
+    _description = "Marca del producto"
 
-    name = fields.Char(string="Clase de producto", required = True)
+    name = fields.Char(string="Marca del producto", required = True)
+    e_mult_min = fields.Float(digits=(1, 2),default=1, string="Multiplicador mínimo", help="Multiplicador, si no existe el multiplicador default 1")
+    products_ids = fields.One2many('product.template', 'e_product_class',
+                                      string="Productos ",
+                                      )
+
+    @api.onchange('e_mult_min')
+    def _onchange_(self):
+        if self.e_mult_min < 0:
+            return {
+                'warning': {
+                    'title': "Cuidado",
+                    'message': "El multiplicador mínimo debe ser mayor que 0.0",
+                }
+            }
+
+        for clase in self:
+            for producto in clase.products_ids:
+                producto.write({'e_mult_min':clase.e_mult_min})

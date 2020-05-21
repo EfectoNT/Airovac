@@ -9,7 +9,7 @@ class purchaseOrderLineInherit(models.Model):
 
     e_mult_std =  fields.Float(digits=(1,4), string="Mult STD", help="Multiplicador solicitado al proveedor" )
     #fields.Float(digits=(1,4), string="Mult STD", help="Multiplicador solicitado al proveedor")
-    e_cost_exwork = fields.Float(digits=(10, 2),string="Precio ExWorks", help="Precio de Lista X Mult STD")
+    e_cost_exwork = fields.Float(digits=(10, 2),string="Precio ExWork", help="Precio de Lista X Mult STD")
     @api.onchange('product_qty','e_mult_std','price_unit')
     def _onchange_mult_std(self):
          self.e_cost_exwork = self.e_mult_std * self.price_unit
