@@ -73,17 +73,20 @@ class SaleOrderInherit(models.Model):
 
     @api.onchange('step_multiplier_id')
     def _onchange_step_multiplier_id(self):
-        print('Hola')
+
         for order in self:
             for line in order.order_line:
-                print("holi")
-                mult = self.env['step.multiplier.line'].search([('e_step_multiplier_id','=',order.step_multiplier_id.id),('e_marca','=',line.product_id.categ_id.id)])
-                print(mult.e_multiplicador)
 
+                #Buscamos el multiplicador
+                mult = self.env['step.multiplier.line']\
+                    .search([('e_step_multiplier_id','=',order.step_multiplier_id.id),
+                                                                ('e_marca','=',line.product_id.categ_id.id)])
+
+                #Si el multiplicador es maypr que 0
                 if mult.e_multiplicador > 0.0:
-                    resul = mult.e_multiplicador * line.product_id.e_precio_de_lista * (
+                    resul = mult.e_multiplicador * line.e_precio_de_lista * (
                             1 - (line.e_descuento / 100))
-                    espe = mult.e_multiplicador * line.product_id.e_precio_de_lista
+                    espe = mult.e_multiplicador * line.e_precio_de_lista
                     if resul < espe :
                         line.write({'e_multiplicador': mult.e_multiplicador,'price_unit' : mult.e_multiplicador * line.e_precio_de_lista * (1 - (line.e_descuento / 100)),'e_por_debajo': 1})
                     else:
@@ -92,9 +95,9 @@ class SaleOrderInherit(models.Model):
                                                 1 - (line.e_descuento / 100)),
                                     'e_por_debajo': 0})
                 else:
-                    resul = 1 * line.product_id.e_precio_de_lista * (
+                    resul = 1 * line.e_precio_de_lista * (
                             1 - (line.e_descuento / 100))
-                    espe = 1 * line.product_id.e_precio_de_lista
+                    espe = 1 * line.e_precio_de_lista
                     if resul < espe:
                         line.write({'e_multiplicador': mult.e_multiplicador,
                                     'price_unit': mult.e_multiplicador * line.e_precio_de_lista * (
@@ -114,7 +117,10 @@ class SaleOrderInherit(models.Model):
     def _onchange_amount_untaxed(self):
         for order in self:
             for line in order.order_line:
-                line.write({'e_estimado_pro_l': (line.price_subtotal * 100)/ self.amount_untaxed})
+                if line.price_subtotal > 0:
+                    line.write({'e_estimado_pro_l': (line.price_subtotal * 100) / self.amount_untaxed})
+                else:
+                    line.write({'e_estimado_pro_l': 0})
 
 
     @api.depends('order_line.e_g_m_l')
@@ -253,19 +259,19 @@ class SaleOrderLineInherit(models.Model):
     e_etiqueta_line_b = fields.Text(string="Etiqueta B")
     e_te_line_max = fields.Integer(string="T.E MIN")
     e_te_line_min = fields.Integer(string="T.E MAX")
-    e_precio_de_lista = fields.Float(digits=(10, 2), string="P . L", help="Precio de lista")
+    e_precio_de_lista = fields.Float(digits=(10, 2),readonly=True, string="P . L", help="Precio de lista")
     e_multiplicador = fields.Float(digits=(1, 2),default=0, string="Multiplicador", help="Multiplicador, si no existe el multiplicador por etapa se asigna el multiplicador minimo de venta")
     e_descuento = fields.Integer(string="Des %")
-    price_unit =fields.Float(digits=(3, 2), string="Punto de Venta",help="P.L * Multiplicador * (1 - Descuento)")
-    e_costo_total =fields.Monetary(string="Costo Total")
+    price_unit =fields.Float(digits=(3, 2),readonly=True, string="Punto de Venta",help="P.L * Multiplicador * (1 - Descuento)")
+    e_costo_total =fields.Monetary(string="Costo Total",readonly=True)
 
-    e_costo_unitario = fields.Float(digits=(1, 2),Default = 0, string="Costo Unitario", help="(1 + IGI + Impotación) * (PL * Mult. STD)")
-    e_costo_total = fields.Float(digits=(1, 2),Default = 0, store=True, string="Costo Total", help="Costo Unitario * Cantidad")
-    e_costo_total_imp = fields.Float(digits=(1, 2),Default = 0, store=True, string="C . T Import", help="Importacion * (PL * Mult. STD) * Cantidad")
-    e_g_m_l = fields.Float(digits=(1, 2),Default = 0, store=True, string="G . M ", help="COSTO TOTAL / Subtotal")
-    e_estimado_pro_l = fields.Float(digits=(1, 2), Default=0, store=True, string="S.T.P %", help="% Sobre total de propuesta")
+    e_costo_unitario = fields.Monetary(digits=(1, 2),Default = 0,store=True,readonly=True, string="Costo Unitario", help="(1 + IGI + Impotación) * (PL * Mult. STD)")
+    e_costo_total = fields.Float(digits=(1, 2),Default = 0, store=True,readonly=True, string="Costo Total", help="Costo Unitario * Cantidad")
+    e_costo_total_imp = fields.Float(digits=(1, 2),Default = 0, store=True,readonly=True, string="C . T Import", help="Importacion * (PL * Mult. STD) * Cantidad")
+    e_g_m_l = fields.Float(digits=(1, 2),Default = 0, store=True,readonly=True, string="G . M ", help="COSTO TOTAL / Subtotal")
+    e_estimado_pro_l = fields.Float(digits=(1, 2), Default=0,readonly = True, store=True, string="S.T.P %", help="% Sobre total de propuesta")
     e_asociar = fields.Boolean( Default=False,string="asociar",help="Asocia productos con accesorios cada dos checkboxes")
-    e_p_unit_a = fields.Monetary(Default=0,string="P.U con Accesorios",help="Precio unitario con accesorios")
+    e_p_unit_a = fields.Monetary(Default=0,readonly=True,string="P.U con Accesorios",help="Precio unitario con accesorios")
     e_subtotal_no_des = fields.Monetary(Default=0,string="Subtutal",help="Sub tutal no desglosado")
     e_t_e = fields.Char(string="T.E",
                                         help="Tiempo de entrega")
@@ -319,43 +325,73 @@ class SaleOrderLineInherit(models.Model):
 
     @api.onchange('e_multiplicador', 'e_descuento','e_precio_de_lista')
     def change_price_unit(self):
-        print('al cambiar el multiplicador', self._set_mul_default(),
-              self.product_id.e_precio_de_lista,
-              self.price_unit)
-        flag = self.env['res.users'].has_group('sales_team.group_sale_manager')
-        resul = self.e_multiplicador * self.product_id.e_precio_de_lista * (
-                1 - (self.e_descuento / 100))
-        espe =  self.product_id.e_mult_min * self.product_id.e_precio_de_lista
 
-        print("Alertas",resul,espe)
-        print("Alertas", resul < espe)
+        # El descuento no puede ser del 100%
+
+        if self.e_descuento >= 100:
+            self.write({
+                            'price_unit': self.e_multiplicador * self.e_precio_de_lista * (
+                                    1 - (self._origin.e_descuento / 100)),
+                            'e_por_debajo': 0,'e_descuento' :self._origin.e_descuento})
+            return {
+                'warning': {
+                    'title': "Cuidado",
+                    'message': "El Descuento no puede ser más del 100%",
+                    'type': 'notification'
+                }
+            }
+
+        # El multiplicador no puede ser negativo
+
+        if self.e_multiplicador < 0:
+            self.write({
+                            'price_unit': self._origin.e_multiplicador * self.e_precio_de_lista * (
+                                    1 - (self.e_descuento / 100)),
+                            'e_por_debajo': 0,'e_multiplicador' : self._origin.e_multiplicador})
+            return {
+                'warning': {
+                    'title': "Cuidado",
+                    'message': "El Multiplicador no puede ser menor que 0",
+                    'type': 'notification'
+                }
+            }
+
+
+
+        flag = self.env['res.users'].has_group('sales_team.group_sale_manager')
+        resul = self.e_multiplicador * self.e_precio_de_lista * (
+                1 - (self.e_descuento / 100))
+        espe =  self.product_id.e_mult_min * self.e_precio_de_lista
+
         if (self.e_multiplicador < self.product_id.e_mult_min and not flag) or ((resul < espe)  and not flag):
-                print("Alertas vendedor")
-                self.e_multiplicador = self.product_id.e_mult_min
-                self.update({'price_unit': self.e_multiplicador * self.product_id.e_precio_de_lista * (
-                                        1 - (self.e_descuento / 100)),'e_por_debajo' : 0})
+
+                self.write({'e_multiplicador' : self._origin.e_multiplicador,
+                             'price_unit': self._origin.price_unit ,
+                             'e_por_debajo' : 0,'e_descuento':self._origin.e_descuento
+                            })
                 return {
                     'warning': {
                         'title': "Cuidado",
-                        'message': "No puedes ofrecer un producto por debajo de su (multiplicador) precio minimo",
+                        'message': "No puedes ofrecer un producto por debajo de su (multiplicador) precio mínimo",
                         'type': 'notification'
                     }
                 }
+
         if (self.e_multiplicador < self.product_id.e_mult_min and  flag) or  ((resul < espe)  and  flag):
-                print("gerente")
-                self.update({'price_unit': self.e_multiplicador * self.product_id.e_precio_de_lista * (
+
+                self.write({'price_unit': self.e_multiplicador * self.e_precio_de_lista * (
                                         1 - (self.e_descuento / 100)), 'e_por_debajo' : 1})
 
                 return {
                     'warning': {
                         'title': "Cuidado",
-                        'message': "Has ofrecido el producto  por debajo de su precio minimo",
+                        'message': "Has ofrecido el producto  por debajo de su precio mínimo",
                         'type': 'notification'
                     }
                 }
 
 
-        self.update({'price_unit': self.e_multiplicador * self.product_id.e_precio_de_lista * (
+        self.write({'price_unit': self.e_multiplicador * self.e_precio_de_lista * (
                                     1 - (self.e_descuento / 100)),'e_por_debajo' : 0})
 
 
@@ -364,7 +400,7 @@ class SaleOrderLineInherit(models.Model):
 
 
 
-
+    #Se agrega un nuevo producto
     @api.onchange('product_id')
     def _default_precio_lista(self):
         self.write({'e_precio_de_lista':self.product_id.e_precio_de_lista,
@@ -377,29 +413,11 @@ class SaleOrderLineInherit(models.Model):
                     'e_multiplicador' :  self._set_mul_default()
                     })
 
-        #self.update({})
-        #'price_unit': self._set_mul_default() * self.product_id.e_precio_de_lista * (
-        #        1 - (self.e_descuento / 100))
-        print(self._set_mul_default(),self.product_id.e_precio_de_lista,self.price_unit)
-
-        return {'domain':{'e_provedor': [('product_tmpl_id', '=',self.product_id.id)]}}
-
-        #self.e_precio_de_lista = self.product_id.e_precio_de_lista
-        #self.e_etiqueta_line_a = self.product_id.e_etiqueta_a
-        #self.e_etiqueta_line_b = self.product_id.e_etiqueta_b
-        #self.e_te_line_max = self.product_id.e_te_max
-        #self.e_te_line_min = self.product_id.e_te_min
-        #self.e_igi = self.product_id.e_igi
-        #self.e_importation = self.product_id.e_importation
-        #self.e_multiplicador = self._set_mul_default()
-        #self.price_unit = self.e_multiplicador * self.e_precio_de_lista * (1 - (self.e_descuento / 100))
 
 
 
-    #@api.onchange('e_descuento')
-    #def change_descuento(self):
-    #    self.price_unit = self.e_multiplicador * self.e_precio_de_lista * (
-    #        1 - (self.e_descuento / 100))
+
+
 
     @api.onchange('product_uom_qty')
     def _onchange_quantity(self):
@@ -423,8 +441,7 @@ class SaleOrderLineInherit(models.Model):
                 fiscal_position=self.env.context.get('fiscal_position')
             )
             self.price_unit = self.env['account.tax']._fix_tax_included_price_company(price, product.taxes_id, self.tax_id, self.company_id)
-            print('aver que pedo',self._set_mul_default(), self.product_id.e_precio_de_lista,
-                  self.price_unit)
+
 
 
 
@@ -457,15 +474,3 @@ class SaleOrderLineInherit(models.Model):
     def _onchange_e_mult_std(self):
         self.write({'e_mult_std' : self.e_provedor.e_mult_std})
 
-
-
-
-
-    # @api.onchange('sequence')
-    # def onchange_egml(self):
-    #     print(self.sequence)
-    #
-    # @api.onchange('e_asociar')
-    # def onchange_asociar(self):
-    #     print('+++++++++++++++++++++++++++++')
-    #

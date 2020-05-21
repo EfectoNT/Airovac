@@ -79,7 +79,7 @@
                       <field name="e_subtotal_no_des" attrs="{'column_invisible': [('parent.breakdown', '=', True)]}" options='{"bg_color": "LightCyan:colored == 1 and principal == 1 ;  LightYellow:colored == 2 and principal == 1 "}' />
                       <field name="e_t_e"/>
                        <field name="e_estimado_pro_l"/>
-                       <field name="e_provedor" optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager" />
+                       <field name="e_provedor" domain = "[('product_tmpl_id', '=', product_id )]" optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager" />
                         <field name="e_mult_std" optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager"/>
                         <field name="e_igi"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager"/>
                         <field name="e_g_m_l"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager"/>
