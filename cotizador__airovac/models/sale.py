@@ -410,6 +410,7 @@ class SaleOrderLineInherit(models.Model):
                     'e_te_line_min' : self.product_id.e_te_min,
                     'e_igi' : self.product_id.e_igi,
                     'e_importation' : self.product_id.e_importation,
+                    'e_t_e': self.product_id.e_tiempo_estimado,
                     'e_multiplicador' :  self._set_mul_default()
                     })
 
