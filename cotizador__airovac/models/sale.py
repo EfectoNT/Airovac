@@ -288,7 +288,7 @@ class SaleOrderLineInherit(models.Model):
     e_provedor = fields.Many2one('product.supplierinfo', string="Proveedor")
     e_mult_std = fields.Float(digits=(1, 2),default = 1.0, string="Mult std",
                               help="Exwork mult")
-
+    e_mult_min = fields.Float(digits=(1, 2),default = 1, string="Mult. Min", help="e_mult_min")
 
     @api.onchange('e_costo_unitario', 'product_uom_qty')
     def compute_costo_total(self):
@@ -361,9 +361,9 @@ class SaleOrderLineInherit(models.Model):
         flag = self.env['res.users'].has_group('sales_team.group_sale_manager')
         resul = self.e_multiplicador * self.e_precio_de_lista * (
                 1 - (self.e_descuento / 100))
-        espe =  self.product_id.e_mult_min * self.e_precio_de_lista
+        espe =  self.e_mult_min * self.e_precio_de_lista
 
-        if (self.e_multiplicador < self.product_id.e_mult_min and not flag) or ((resul < espe)  and not flag):
+        if (self.e_multiplicador < self.e_mult_min and not flag) or ((resul < espe)  and not flag):
 
                 self.write({'e_multiplicador' : self._origin.e_multiplicador,
                              'price_unit': self._origin.price_unit ,
@@ -377,7 +377,7 @@ class SaleOrderLineInherit(models.Model):
                     }
                 }
 
-        if (self.e_multiplicador < self.product_id.e_mult_min and  flag) or  ((resul < espe)  and  flag):
+        if (self.e_multiplicador < self.e_mult_min and  flag) or  ((resul < espe)  and  flag):
 
                 self.write({'price_unit': self.e_multiplicador * self.e_precio_de_lista * (
                                         1 - (self.e_descuento / 100)), 'e_por_debajo' : 1})
@@ -411,7 +411,8 @@ class SaleOrderLineInherit(models.Model):
                     'e_igi' : self.product_id.e_igi,
                     'e_importation' : self.product_id.e_importation,
                     'e_t_e': self.product_id.e_tiempo_estimado,
-                    'e_multiplicador' :  self._set_mul_default()
+                    'e_mult_min': self.product_id.e_mult_min,
+                    'e_multiplicador' :  self._set_mul_default(),
                     })
 
 
