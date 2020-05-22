@@ -259,7 +259,7 @@ class SaleOrderLineInherit(models.Model):
     e_etiqueta_line_b = fields.Text(string="Etiqueta B")
     e_te_line_max = fields.Integer(string="T.E MIN")
     e_te_line_min = fields.Integer(string="T.E MAX")
-    e_precio_de_lista = fields.Float(digits=(10, 2),readonly=True, string="P . L", help="Precio de lista")
+    e_precio_de_lista = fields.Float(digits=(10, 2),readonly=True,string="P . L", help="Precio de lista")
     e_multiplicador = fields.Float(digits=(1, 2),default=0, string="Multiplicador", help="Multiplicador, si no exite 1")
     e_descuento = fields.Integer(string="Des %")
     price_unit =fields.Float(digits=(3, 2),readonly=True, string="Punto de Venta",help="P.L * Multiplicador * (1 - Descuento)")
