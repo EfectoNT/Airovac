@@ -62,9 +62,10 @@
                     <attribute name="optional">hide</attribute>
                   </xpath>
                   <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='product_uom_qty']" position="after">
-                    <field name="e_descuento"/>
-                    <field name="e_multiplicador"/>
-                    <field name="e_precio_de_lista" readonly="1" force_save="1" />
+                      <field name="e_descuento"/>
+                      <field name="e_multiplicador"/>
+                      <field name="e_mult_min" groups="sales_team.group_sale_manager" optional="hide"/>
+                      <field name="e_precio_de_lista" readonly="1" force_save="1" />
                   </xpath>
 
                   <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='tax_id']" position="attributes">
