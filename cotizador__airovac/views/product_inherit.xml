@@ -12,16 +12,19 @@
       <xpath expr="//form[@name='Product Template']/sheet[1]/notebook[1]/page[@name='general_information']/group[1]" position="after">
         <group name="studio_group_q4Nwo">
           <group name="studio_group_q4Nwo_left">
-            <field name="e_te_max"/>
-            <field name="e_te_min"/>
+            <field name="e_tiempo_estimado"/>
             <field name="e_etiqueta_a"/>
             <field name="e_etiqueta_b"/>
           </group>
           <group name="studio_group_q4Nwo_right">
-            <field name="e_precio_de_lista"/>
-            <field name="e_importation"/>
-            <field name="e_igi"/>
-            <field name="e_mult_min"/>
+              <field name="e_precio_de_lista"/>
+              <field name="e_mult_min"/>
+              <field name="e_igi"/>
+              <field name="e_importation"/>
+              <field name="e_te_max"/>
+              <field name="e_te_min"/>
+
+
           </group>
         </group>
       </xpath>
