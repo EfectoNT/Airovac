@@ -19,6 +19,8 @@ class productTemplateInherit(models.Model):
     e_product_class  = fields.Many2one('producte.class',
                                          string="Clase de producto",
                                          )
+    e_tiempo_estimado = fields.Char(string="Tiempo Estimado",
+                                        help="Tiempo estimado de entrega")
 
     @api.onchange('e_product_class')
     def _e_product_class(self):
