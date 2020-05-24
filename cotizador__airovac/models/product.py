@@ -66,6 +66,7 @@ class ProductuEClass(models.Model):
     @api.onchange('e_mult_min')
     def _onchange_(self):
         if self.e_mult_min < 0:
+            self.write({'e_mult_min': self._origin.e_mult_min})
             return {
                 'warning': {
                     'title': "Cuidado",
@@ -73,6 +74,15 @@ class ProductuEClass(models.Model):
                 }
             }
 
-        for clase in self:
-            for producto in clase.products_ids:
-                producto.write({'e_mult_min':clase.e_mult_min})
+        # for clase in self:
+        #     print(clase.ids)
+        #
+        #     print('PRODUCTS',clase.products_ids.ids )
+        #     lista = self.env['product.template'].search(
+        #         [('id', 'in', clase.products_ids.ids)])
+        #
+        #     for producto in lista:
+        #         print('en lista',producto.name)
+        #         producto.write({'e_mult_min': clase.e_mult_min})
+        #
+

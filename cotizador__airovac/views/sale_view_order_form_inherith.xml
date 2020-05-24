@@ -82,7 +82,7 @@
                        <field name="e_estimado_pro_l" readonly="1" force_save="1" />
                        <field name="e_provedor" domain = "[('product_tmpl_id', '=', product_id )]" optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager" />
                         <field name="e_mult_std" optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager"/>
-                        <field name="e_exwork" optional="hide" readonly="1" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager"/>
+                        <field name="e_exwork" optional="hide" readonly="1" force_save="1" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager"/>
                         <field name="e_importation"   optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager" />
                         <field name="e_igi"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager"/>
                        <field name="e_costo_unitario" readonly="1" force_save="1"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager" />

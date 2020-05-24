@@ -290,7 +290,7 @@ class SaleOrderLineInherit(models.Model):
                               help="Exwork mult")
     e_mult_min = fields.Float(digits=(1, 2),default = 1, string="Mult. Min", help="e_mult_min")
 
-    e_exwork = fields.Monetary( string="Cost Exwork",compute = '_compute_exwor', help="e_mult_min")
+    e_exwork = fields.Monetary( string="Cost Exwork",store=True, help="e_mult_min")
 
     @api.onchange('e_costo_unitario', 'product_uom_qty')
     def compute_costo_total(self):
@@ -446,19 +446,7 @@ class SaleOrderLineInherit(models.Model):
             )
             self.price_unit = self.env['account.tax']._fix_tax_included_price_company(price, product.taxes_id, self.tax_id, self.company_id)
 
-    @api.onchange('e_mult_std')
-    def _compute_exwor(self):
-        if self.e_mult_std < 0:
-            self.e_mult_std = self._origin.e_mult_std
-            self.e_exwork = self.e_mult_std * self.e_precio_de_lista
-            return {
-                'warning': {
-                    'title': "Cuidado",
-                    'message': "El multiplicador solicitado no puede ser negativo",
-                    'type': 'notification'
-                }
-            }
-        self.e_exwork = self.e_mult_std * self.e_precio_de_lista
+
 
 
     @api.onchange('product_id','e_igi','e_importation','e_exwork')
@@ -482,5 +470,5 @@ class SaleOrderLineInherit(models.Model):
 
     @api.onchange('e_provedor')
     def _onchange_e_mult_std(self):
-        self.write({'e_mult_std' : self.e_provedor.e_mult_std})
+        self.write({'e_mult_std' : self.e_provedor.e_mult_std,'e_exwork':self.e_provedor.e_mult_std * self.e_precio_de_lista })
 
