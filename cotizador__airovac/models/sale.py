@@ -7,6 +7,9 @@ from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 class SaleOrderInherit(models.Model):
     _inherit = 'sale.order'
 
+
+
+
     e_etiqueta_title_a = fields.Text(string="Titulo de Etiqueta A")
     e_etiqueta_title_b = fields.Text(string="Titulo de Etiqueta B")
     e_desciption = fields.Char(string="Descripción")
@@ -22,26 +25,42 @@ class SaleOrderInherit(models.Model):
 
     hide_fields = fields.Boolean(default = True)
     contador = fields.Integer(default = 0, compute = '_compute_contador_paquetes')
-    cambio_etapa = fields.Boolean(default = True,store=True, compute = '_compute_cambio_etapa',string="Hay cambio")
+
+    def _dafault_cambio_etapa(self):
+        #print("Default cambio de etapa")
+        for order in self:
+            for line in order.order_line:
+                if line.mult_is_changed():
+                    #print("ubo un cambio",line.mult_is_changed())
+                    return True
+            #print("No hbo cambio", line.mult_is_changed())
+            return False
+
+
+
+    cambio_etapa = fields.Boolean(default = _dafault_cambio_etapa,store=True, compute = '_compute_cambio_etapa',string="Hay cambio")
     cambio_etapa_chebox = fields.Boolean(default = False, string="Habilitar cambio de etapa")
     breakdown = fields.Boolean(default=True, string="Imprimir Desglosado")
 
     @api.depends('order_line.e_multiplicador')
     def _compute_cambio_etapa(self):
-        print("compute etapa")
+        #print('_compute_cambio_etapa')
         for order in self:
+            #print("cambio_etapa Antes del for lines ",order.cambio_etapa)
             for line in order.order_line:
                 if line.mult_is_changed():
-                    print("ubo un cambio",line.mult_is_changed())
+                    #print("ubo un cambio",line.mult_is_changed())
+                    #print("cambio_etapa RETUn True")
                     order.write({'cambio_etapa': True})
                     return
+            #print("cambio_etapa RETUn False")
             order.write({'cambio_etapa': False})
 
     @api.onchange('cambio_etapa')
     def _onchange_cambio_etapa(self):
-        print("onchange cambio etapa")
+        #print("onchange cambio etapa")
         for order in self:
-            print(order.cambio_etapa)
+            #print('Valor de cambio_etapa',order.cambio_etapa)
             if order.cambio_etapa:
                   order.write({'cambio_etapa_chebox':False})
                   return
@@ -51,8 +70,8 @@ class SaleOrderInherit(models.Model):
     @api.onchange('cambio_etapa_chebox')
     def _onchangue_cambio_etapa_chebox(self):
         for order in self:
-            print(order.cambio_etapa_chebox,order.cambio_etapa)
-            if  order.cambio_etapa_chebox :
+            #print(order.cambio_etapa_chebox,order.cambio_etapa)
+            if  order.cambio_etapa_chebox and order.cambio_etapa :
                 order.write({'cambio_etapa': False})
                 return {
                     'warning': {
@@ -78,37 +97,38 @@ class SaleOrderInherit(models.Model):
             for line in order.order_line:
 
                 #Buscamos el multiplicador
-                mult = self.env['step.multiplier.line']\
-                    .search([('e_step_multiplier_id','=',order.step_multiplier_id.id),
-                                                                ('e_marca','=',line.product_id.categ_id.id)])
+                mult = self.env['step.multiplier.line'].search([('e_step_multiplier_id','=',order.step_multiplier_id.id),('e_marca','=',line.product_id.e_product_class.id)])
 
+                #print(mult,mult.e_multiplicador)
                 #Si el multiplicador es maypr que 0
                 if mult.e_multiplicador > 0.0:
                     resul = mult.e_multiplicador * line.e_precio_de_lista * (
-                            1 - (line.e_descuento / 100))
+                            1 - (line.discount / 100))
                     espe = mult.e_multiplicador * line.e_precio_de_lista
+                    #print(resul,espe)
                     if resul < espe :
-                        line.write({'e_multiplicador': mult.e_multiplicador,'price_unit' : mult.e_multiplicador * line.e_precio_de_lista * (1 - (line.e_descuento / 100)),'e_por_debajo': 1})
+                        line.write({'e_multiplicador': mult.e_multiplicador,'price_unit' : mult.e_multiplicador * line.e_precio_de_lista * (1 - (line.discount / 100)),'e_por_debajo': 1})
                     else:
                         line.write({'e_multiplicador': mult.e_multiplicador,
                                     'price_unit': mult.e_multiplicador * line.e_precio_de_lista * (
-                                                1 - (line.e_descuento / 100)),
+                                                1 - (line.discount / 100)),
                                     'e_por_debajo': 0})
                 else:
                     resul = 1 * line.e_precio_de_lista * (
-                            1 - (line.e_descuento / 100))
+                            1 - (line.discount / 100))
                     espe = 1 * line.e_precio_de_lista
                     if resul < espe:
                         line.write({'e_multiplicador': mult.e_multiplicador,
                                     'price_unit': mult.e_multiplicador * line.e_precio_de_lista * (
-                                                1 - (line.e_descuento / 100)),
+                                                1 - (line.discount / 100)),
                                     'e_por_debajo': 1})
                     else:
                         line.write({'e_multiplicador': mult.e_multiplicador,
                                     'price_unit': mult.e_multiplicador * line.e_precio_de_lista * (
-                                            1 - (line.e_descuento / 100)),
+                                            1 - (line.discount / 100)),
                                     'e_por_debajo': 0})
 
+                    return
             order.write({'cambio_etapa': False})
 
 
@@ -161,7 +181,7 @@ class SaleOrderInherit(models.Model):
 
     @api.depends('order_line.e_asociar','order_line.sequence','order_line.price_subtotal')
     def _compute_contador_paquetes(self):
-        print("**********")
+        #print("**********")
         for order in self:
 
             contador_one = 0
@@ -257,8 +277,8 @@ class SaleOrderLineInherit(models.Model):
     e_importation = fields.Float(digits=(1, 4), string="IMPOR %",help="Porcentaje de Importación")
     e_etiqueta_line_a = fields.Text(string="Etiqueta A")
     e_etiqueta_line_b = fields.Text(string="Etiqueta B")
-    e_te_line_max = fields.Integer(string="T.E MIN")
-    e_te_line_min = fields.Integer(string="T.E MAX")
+    e_te_line_max = fields.Integer(string="T.E MAX")
+    e_te_line_min = fields.Integer(string="T.E MIN")
     e_precio_de_lista = fields.Float(digits=(10, 2),readonly=True,string="P . L", help="Precio de lista")
     e_multiplicador = fields.Float(digits=(1, 2),default=0, string="Multiplicador", help="Multiplicador, si no exite 1")
     e_descuento = fields.Integer(string="Des %")
@@ -270,12 +290,13 @@ class SaleOrderLineInherit(models.Model):
     e_costo_total_imp = fields.Float(digits=(1, 3),Default = 0, store=True,readonly=True, string="C . T Import", help="Importacion * (PL * Mult. STD) * Cantidad")
     e_g_m_l = fields.Float(digits=(1, 3),Default = 0, store=True,readonly=True, string="G . M ", help="COSTO TOTAL / Subtotal")
     e_estimado_pro_l = fields.Float(digits=(1, 3), Default=0,readonly = True, store=True, string="S.T.P %", help="% Sobre total de propuesta")
-    e_asociar = fields.Boolean( Default=False,string="asociar",help="Asocia productos con accesorios cada dos checkboxes")
+    e_asociar = fields.Boolean( Default=False,string="Asociar",help="Asocia productos con accesorios cada dos checkboxes")
     e_p_unit_a = fields.Monetary(Default=0,readonly=True,string="P.U con Accesorios",help="Precio unitario con accesorios")
     e_subtotal_no_des = fields.Monetary(Default=0,string="Subtutal",help="Sub tutal no desglosado")
     e_t_e = fields.Char(string="T.E",
                                         help="Tiempo de entrega")
     e_por_debajo = fields.Integer(Default=0)
+    discount = fields.Integer(Default=0,string = "Descuento %")
 
     #campos no visibles, usados para el calculo de productos con accesorios :3
     sequence = fields.Integer("Sequence")
@@ -292,6 +313,20 @@ class SaleOrderLineInherit(models.Model):
 
     e_exwork = fields.Monetary( string="Cost Exwork",store=True, help="e_mult_min")
 
+    #price_subtotal = fields.Monetary(Default=0, string="Subtutal",compute='_compute_subtotal',
+     #                                   help="Subtutal")
+
+
+
+
+    @api.onchange('price_subtotal')
+    def _compute_subtotal(self):
+        for line in self:
+            print("Semurio2?")
+            line.write({'price_subtotal':line.price_unit * line.product_uom_qty})
+
+
+
     @api.onchange('e_costo_unitario', 'product_uom_qty')
     def compute_costo_total(self):
         return (self.e_costo_unitario * self.product_uom_qty)
@@ -300,41 +335,47 @@ class SaleOrderLineInherit(models.Model):
         if self.order_id.step_multiplier_id.id:
             mult = self.env['step.multiplier.line'].search(
                 [('e_step_multiplier_id', '=', self.order_id.step_multiplier_id.id),
-                 ('e_marca', '=', self.product_id.categ_id.id)])
-            print(mult,"aquitoy",len(mult))
+                 ('e_marca', '=', self.product_id.e_product_class.id)])
+            #print(mult,"aquitoy",len(mult))
             if mult.e_multiplicador > 0.0 :
-                print('mult.e_multiplicador > 0')
+                #print('mult.e_multiplicador > 0')
                 return mult.e_multiplicador
 
         return 1.0
 
     def mult_is_changed(self):
+        #print('Funcion mult is changed')
         if self.order_id.step_multiplier_id.id:
+            #print('Nombre de la Etapa',self.order_id.step_multiplier_id.name)
             mult = self.env['step.multiplier.line'].search(
-                [(
-                 'e_step_multiplier_id', '=', self.order_id.step_multiplier_id.id),
-                 ('e_marca', '=', self.product_id.categ_id.id)])
-            print(mult.e_multiplicador)
+                [('e_step_multiplier_id', '=', self.order_id.step_multiplier_id.id),
+                 ('e_marca', '=', self.product_id.e_product_class.id)])
+
+
+            #print('Multiplicador de etapa',mult.e_multiplicador,'Multiplicador del actual',self.e_multiplicador)
             if (mult.e_multiplicador != self.e_multiplicador) or (mult.e_multiplicador == 0 and self.e_multiplicador != 1):
+                #print('Se cumple condicion TRUE')
                 return True
         if not self.order_id.step_multiplier_id.id:
+            #print('No existe una etapa inicial')
             if self.e_multiplicador != 1:
                 return True
+        #print('No hubo ningun cambio')
         return False
 
 
 
 
-    @api.onchange('e_multiplicador', 'e_descuento','e_precio_de_lista')
+    @api.onchange('e_multiplicador', 'discount','e_precio_de_lista')
     def change_price_unit(self):
 
         # El descuento no puede ser del 100%
 
-        if self.e_descuento >= 100:
+        if self.discount >= 100:
             self.write({
                             'price_unit': self.e_multiplicador * self.e_precio_de_lista * (
-                                    1 - (self._origin.e_descuento / 100)),
-                            'e_por_debajo': 0,'e_descuento' :self._origin.e_descuento})
+                                    1 - (self._origin.discount / 100)),
+                            'e_por_debajo': 0,'discount' :self._origin.discount})
             return {
                 'warning': {
                     'title': "Cuidado",
@@ -348,7 +389,7 @@ class SaleOrderLineInherit(models.Model):
         if self.e_multiplicador < 0:
             self.write({
                             'price_unit': self._origin.e_multiplicador * self.e_precio_de_lista * (
-                                    1 - (self.e_descuento / 100)),
+                                    1 - (self.discount / 100)),
                             'e_por_debajo': 0,'e_multiplicador' : self._origin.e_multiplicador})
             return {
                 'warning': {
@@ -362,14 +403,14 @@ class SaleOrderLineInherit(models.Model):
 
         flag = self.env['res.users'].has_group('sales_team.group_sale_manager')
         resul = self.e_multiplicador * self.e_precio_de_lista * (
-                1 - (self.e_descuento / 100))
+                1 - (self.discount / 100))
         espe =  self.e_mult_min * self.e_precio_de_lista
 
         if (self.e_multiplicador < self.e_mult_min and not flag) or ((resul < espe)  and not flag):
 
                 self.write({'e_multiplicador' : self._origin.e_multiplicador,
                              'price_unit': self._origin.price_unit ,
-                             'e_por_debajo' : 0,'e_descuento':self._origin.e_descuento
+                             'e_por_debajo' : 0,'discount':self._origin.discount
                             })
                 return {
                     'warning': {
@@ -382,7 +423,7 @@ class SaleOrderLineInherit(models.Model):
         if (self.e_multiplicador < self.e_mult_min and  flag) or  ((resul < espe)  and  flag):
 
                 self.write({'price_unit': self.e_multiplicador * self.e_precio_de_lista * (
-                                        1 - (self.e_descuento / 100)), 'e_por_debajo' : 1})
+                                        1 - (self.discount / 100)), 'e_por_debajo' : 1})
 
                 return {
                     'warning': {
@@ -392,9 +433,9 @@ class SaleOrderLineInherit(models.Model):
                     }
                 }
 
-
+        print("cambiando subtotal")
         self.write({'price_unit': self.e_multiplicador * self.e_precio_de_lista * (
-                                    1 - (self.e_descuento / 100)),'e_por_debajo' : 0})
+                                    1 - (self.discount / 100)),'e_por_debajo' : 0})
 
 
 
@@ -434,7 +475,7 @@ class SaleOrderLineInherit(models.Model):
             return
         if self.order_id.pricelist_id and self.order_id.partner_id:
             price = self.price_unit
-            print(self.price_unit)
+            #print(self.price_unit)
             product = self.product_id.with_context(
                 lang=self.order_id.partner_id.lang,
                 partner=self.order_id.partner_id,

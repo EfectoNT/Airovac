@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="product.product_template_only_form_view" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='categ_id']" position="after">
-                    <field name="e_product_class"/>
+                    <field name="e_product_class" string="Marca" options="{'no_create_edit':True, 'no_create':True, 'no_open':True}"/>
                 </xpath>
       <xpath expr="//form[@name='Product Template']/sheet[1]/notebook[1]/page[@name='general_information']/group[1]" position="after">
         <group name="studio_group_q4Nwo">
