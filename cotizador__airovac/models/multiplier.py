@@ -7,7 +7,7 @@ class StepMultiplier(models.Model):
     _name = 'step.multiplier'
     _description = "Etapa de cotización"
 
-    name = fields.Char(string="Estapa", required = True)
+    name = fields.Char(string="Etapa", required = True)
     description = fields.Text(string="Descripción")
     e_step_multiplier_line_ids = fields.One2many(
         'step.multiplier.line', 'e_step_multiplier_id')
