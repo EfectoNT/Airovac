@@ -25,7 +25,7 @@ class StepMultiplierLine(models.Model):
     e_marca = fields.Many2one('producte.class',
                                 ondelete='cascade', string="Marca del producto",
                                 required=True)
-    e_multiplicador = fields.Float(digits=(1, 2), string="Multiplicador del producto por etapa", help="")
+    e_multiplicador = fields.Float(digits=(1, 4), string="Multiplicador del producto por etapa", help="")
     e_step_multiplier_id = fields.Many2one('step.multiplier',
                                 ondelete='cascade', string="Etapa",
                                 required=True)

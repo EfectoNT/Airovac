@@ -5,6 +5,16 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form" />
             <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='name']" position="after">
+
+
+                    <h2  style="color:red;">
+                        <field name="perdido" attrs="{'invisible': [('perdido', '!=','Perdido')]}"/>
+                    </h2>
+                </xpath>
+
+
                 <xpath expr="//field[@name='partner_id']" position="after">
                     <field name="e_desciption"/>
                 </xpath>
@@ -19,6 +29,9 @@
                             <field name="contador" attrs="{'invisible': True}" />
 
                 </xpath>
+
+
+
 
                 <xpath expr="//form/sheet/group[1]/group[2]" position="inside">
                             <hr style="whidth=100%;"/>
@@ -44,9 +57,11 @@
                     </group>
                 </xpath>-->
                 <xpath expr="//header" position='inside'>
+                     <button string="Marcar como perido" type="object" name="marcar_perido" states="draft,sent,sale" />
                      <button string="ver detalles" type="object" name="mostrar_detalles"  attrs="{'invisible': [('hide_fields', '=', True)]}" groups="sales_team.group_sale_manager" />
                      <button string="ocultar detalles" type="object" name="mostrar_detalles"   attrs="{'invisible': [('hide_fields', '=', False)]}" groups="sales_team.group_sale_manager" />
                 </xpath>
+
 
                  <!-- <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/control[1]/create[@name='add_note_control']" position="before">
                     <create name="add_section_control" string="otra seccion" context="{'default_display_type': 'line_section_procuct'}"/>
@@ -169,11 +184,24 @@
             <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding" />
             <field name="arch" type="xml">
                 <xpath expr="//tree[1]/field[@name='name']" position="after">
-
+                    <field name="e_desciption"></field>
                 </xpath>
+
+                 <xpath expr="//tree[1]/field[@name='state']" position="after">
+                    <field name="perdido"  optional="hide"></field>
+                </xpath>
+
             </field>
         </record>
 
+<!--          <record id="configuracion_comisiones_action_window" model="ir.actions.act_window">-->
+<!--            <field name="name">Configuración Comisiones</field>-->
+<!--            <field name="res_model">configuracion.comisiones</field>-->
 
+<!--            <field name="view_mode">tree,form</field>-->
+<!--        </record>-->
+
+<!--        <menuitem id="configuracion_comisiones_menuitem" name="Comisiones" action="configuracion_comisiones_action_window" parent="sale.menu_sale_config" sequence="109" groups="group_supervisor_ventas"/>-->
+<!--    -->
     </data>
 </odoo>

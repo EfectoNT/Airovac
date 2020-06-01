@@ -7,9 +7,6 @@ from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 class SaleOrderInherit(models.Model):
     _inherit = 'sale.order'
 
-
-
-
     e_etiqueta_title_a = fields.Text(string="Titulo de Etiqueta A")
     e_etiqueta_title_b = fields.Text(string="Titulo de Etiqueta B")
     e_desciption = fields.Char(string="Descripción")
@@ -25,6 +22,9 @@ class SaleOrderInherit(models.Model):
 
     hide_fields = fields.Boolean(default = True)
     contador = fields.Integer(default = 0, compute = '_compute_contador_paquetes')
+    perdidoText = fields.Boolean()
+
+
 
     def _dafault_cambio_etapa(self):
         #print("Default cambio de etapa")
@@ -41,6 +41,17 @@ class SaleOrderInherit(models.Model):
     cambio_etapa = fields.Boolean(default = _dafault_cambio_etapa,store=True, compute = '_compute_cambio_etapa',string="Hay cambio")
     cambio_etapa_chebox = fields.Boolean(default = False, string="Habilitar cambio de etapa")
     breakdown = fields.Boolean(default=True, string="Imprimir Desglosado")
+    perdido = fields.Char(default='')
+
+
+    def marcar_perido(self):
+        for order in self:
+            print('perdido')
+            order.write({'state': 'cancel','perdido':'Perdido'})
+
+
+
+
 
     @api.depends('order_line.e_multiplicador')
     def _compute_cambio_etapa(self):
@@ -273,23 +284,23 @@ class SaleOrderLineInherit(models.Model):
     _inherit = 'sale.order.line'
 
 
-    e_igi = fields.Float(digits=(1, 4), string="IGI %",help="Porcentaje de IGI")
-    e_importation = fields.Float(digits=(1, 4), string="IMPOR %",help="Porcentaje de Importación")
+    e_igi = fields.Float(digits=(10, 4), string="IGI %",help="Porcentaje de IGI")
+    e_importation = fields.Float(digits=(10, 4), string="IMPOR %",help="Porcentaje de Importación")
     e_etiqueta_line_a = fields.Text(string="Etiqueta A")
     e_etiqueta_line_b = fields.Text(string="Etiqueta B")
     e_te_line_max = fields.Integer(string="T.E MAX")
     e_te_line_min = fields.Integer(string="T.E MIN")
     e_precio_de_lista = fields.Float(digits=(10, 2),readonly=True,string="P . L", help="Precio de lista")
-    e_multiplicador = fields.Float(digits=(1, 2),default=0, string="Multiplicador", help="Multiplicador, si no exite 1")
-    e_descuento = fields.Integer(string="Des %")
+    e_multiplicador = fields.Float(digits=(10, 4),default=0, string="Multiplicador", help="Multiplicador, si no exite 1")
+    e_descuento = fields.Integer(string="Des %q")
     price_unit =fields.Float(digits=(10, 2),readonly=True, string="Punto de Venta",help="P.L * Multiplicador * (1 - Descuento)")
     e_costo_total =fields.Monetary(string="Costo Total",readonly=True)
 
-    e_costo_unitario = fields.Monetary(digits=(1, 3),Default = 0,store=True,readonly=True, string="Costo Unitario", help="(1 + IGI + Impotación) * (PL * Mult. STD)")
-    e_costo_total = fields.Float(digits=(1, 3),Default = 0, store=True,readonly=True, string="Costo Total", help="Costo Unitario * Cantidad")
+    e_costo_unitario = fields.Monetary(digits=(10, 2),Default = 0,store=True,readonly=True, string="Costo Unitario", help="(1 + IGI + Impotación) * (PL * Mult. STD)")
+    e_costo_total = fields.Float(digits=(10, 3),Default = 0, store=True,readonly=True, string="Costo Total", help="Costo Unitario * Cantidad")
     e_costo_total_imp = fields.Float(digits=(1, 3),Default = 0, store=True,readonly=True, string="C . T Import", help="Importacion * (PL * Mult. STD) * Cantidad")
-    e_g_m_l = fields.Float(digits=(1, 3),Default = 0, store=True,readonly=True, string="G . M ", help="COSTO TOTAL / Subtotal")
-    e_estimado_pro_l = fields.Float(digits=(1, 3), Default=0,readonly = True, store=True, string="S.T.P %", help="% Sobre total de propuesta")
+    e_g_m_l = fields.Float(digits=(10, 3),Default = 0, store=True,readonly=True, string="G . M ", help="COSTO TOTAL / Subtotal")
+    e_estimado_pro_l = fields.Float(digits=(10, 3), Default=0,readonly = True, store=True, string="S.T.P %", help="% Sobre total de propuesta")
     e_asociar = fields.Boolean( Default=False,string="Asociar",help="Asocia productos con accesorios cada dos checkboxes")
     e_p_unit_a = fields.Monetary(Default=0,readonly=True,string="P.U con Accesorios",help="Precio unitario con accesorios")
     e_subtotal_no_des = fields.Monetary(Default=0,string="Subtutal",help="Sub tutal no desglosado")
@@ -307,11 +318,11 @@ class SaleOrderLineInherit(models.Model):
 
 
     e_provedor = fields.Many2one('product.supplierinfo', string="Proveedor")
-    e_mult_std = fields.Float(digits=(1, 2),default = 1.0, string="Mult std",
+    e_mult_std = fields.Float(digits=(10, 4),default = 1.0, string="Mult std",
                               help="Exwork mult")
-    e_mult_min = fields.Float(digits=(1, 2),default = 1, string="Mult. Min", help="e_mult_min")
+    e_mult_min = fields.Float(digits=(10, 4),default = 1, string="Mult. Min", help="e_mult_min")
 
-    e_exwork = fields.Monetary( string="Cost Exwork",store=True, help="e_mult_min")
+    e_exwork = fields.Monetary( string="Cost Exwork",store=True, help="P.L x Exwork mult")
 
     #price_subtotal = fields.Monetary(Default=0, string="Subtutal",compute='_compute_subtotal',
      #                                   help="Subtutal")
