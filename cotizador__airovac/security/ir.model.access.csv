@@ -3,3 +3,4 @@ access_step_multiplier,access_step_multiplier,model_step_multiplier,base.group_u
 access_step_multiplier_line,access_step_multiplier_line,model_step_multiplier_line,base.group_user,1,1,1,1
 access_producte_class,access_producte_class,model_producte_class,base.group_user,1,1,1,1
 
+producte_class

@@ -16,7 +16,7 @@ class productTemplateInherit(models.Model):
     e_etiqueta_b = fields.Text(string="Etiqueta B")
     e_mult_min = fields.Float(digits=(10,4),default = 1, string="Mult. Min", help="e_mult_min")
     e_precio_de_lista = fields.Float(digits=(10, 2), string="Precio de Lista", help="Precio de lista")
-    e_product_class  = fields.Many2one('prgit soducte.class',
+    e_product_class  = fields.Many2one('producte.class',
                                          string="Clase de producto",
                                          )
     e_tiempo_estimado = fields.Char(string="Tiempo Estimado",
@@ -60,7 +60,7 @@ class ProductuEClass(models.Model):
     name = fields.Char(string="Marca del producto", required = True)
     e_mult_min = fields.Float(digits=(1, 4),default=1, string="Multiplicador mínimo", help="Multiplicador, si no existe el multiplicador default 1")
     products_ids = fields.One2many('product.template', 'e_product_class',
-                                      string="Productos ",
+                                      string="Productos"
                                       )
 
     @api.onchange('e_mult_min')
