@@ -14,7 +14,7 @@ class productTemplateInherit(models.Model):
     e_te_min = fields.Integer(string="T.E MAX")
     e_etiqueta_a = fields.Text(string="Etiqueta A")
     e_etiqueta_b = fields.Text(string="Etiqueta B")
-    e_mult_min = fields.Float(digitgits=(10, 4),default = 1, string="Mult. Min", help="e_mult_min")
+    e_mult_min = fields.Float(digits=(10,4),default = 1, string="Mult. Min", help="e_mult_min")
     e_precio_de_lista = fields.Float(digits=(10, 2), string="Precio de Lista", help="Precio de lista")
     e_product_class  = fields.Many2one('prgit soducte.class',
                                          string="Clase de producto",
