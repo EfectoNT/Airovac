@@ -58,7 +58,7 @@ class ProductuEClass(models.Model):
     _description = "Marca del producto"
 
     name = fields.Char(string="Marca del producto", required = True)
-    e_mult_min = fields.Float(digits=(1, 2),default=1, string="Multiplicador mínimo", help="Multiplicador, si no existe el multiplicador default 1")
+    e_mult_min = fields.Float(digits=(1, 4),default=1, string="Multiplicador mínimo", help="Multiplicador, si no existe el multiplicador default 1")
     products_ids = fields.One2many('product.template', 'e_product_class',
                                       string="Productos ",
                                       )
