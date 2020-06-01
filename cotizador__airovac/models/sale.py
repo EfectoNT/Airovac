@@ -158,12 +158,16 @@ class SaleOrderInherit(models.Model):
     def _compute_e_g_m_p(self):
         #print("que pedo carnal")
         for order in self:
-            e_g_m_p = 0.0
+            costo_total = 0.0
+            total = 0.0
             for line in order.order_line:
-                e_g_m_p += line.e_g_m_l
+                costo_total += line.e_costo_total
+                total += line.price_unit * line.product_uom_qty
             #print(e_g_m_p)
-            order.write({'e_g_m_p': e_g_m_p})
-
+            if total != 0:
+                order.write({'e_g_m_p': 1 - (costo_total/total)})
+                return
+            order.write({'e_g_m_p': 0})
 
 
 
@@ -284,15 +288,15 @@ class SaleOrderLineInherit(models.Model):
     _inherit = 'sale.order.line'
 
 
-    e_igi = fields.Float(digits=(10, 4), string="IGI %",help="Porcentaje de IGI")
-    e_importation = fields.Float(digits=(10, 4), string="IMPOR %",help="Porcentaje de Importación")
+    e_igi = fields.Float(digits=(10, 2), string="IGI %",help="Porcentaje de IGI")
+    e_importation = fields.Float(digits=(10, 2), string="IMPOR %",help="Porcentaje de Importación")
     e_etiqueta_line_a = fields.Text(string="Etiqueta A")
     e_etiqueta_line_b = fields.Text(string="Etiqueta B")
     e_te_line_max = fields.Integer(string="T.E MAX")
     e_te_line_min = fields.Integer(string="T.E MIN")
     e_precio_de_lista = fields.Float(digits=(10, 2),readonly=True,string="P . L", help="Precio de lista")
     e_multiplicador = fields.Float(digits=(10, 4),default=0, string="Multiplicador", help="Multiplicador, si no exite 1")
-    e_descuento = fields.Integer(string="Des %q")
+    e_descuento = fields.Integer(string="Des %")
     price_unit =fields.Float(digits=(10, 2),readonly=True, string="Punto de Venta",help="P.L * Multiplicador * (1 - Descuento)")
     e_costo_total =fields.Monetary(string="Costo Total",readonly=True)
 
@@ -462,8 +466,8 @@ class SaleOrderLineInherit(models.Model):
                     'e_etiqueta_line_b': self.product_id.e_etiqueta_b,
                     'e_te_line_max' : self.product_id.e_te_max,
                     'e_te_line_min' : self.product_id.e_te_min,
-                    'e_igi' : self.product_id.e_igi,
-                    'e_importation' : self.product_id.e_importation,
+                    'e_igi' : (self.product_id.e_igi * 100),
+                    'e_importation' : (self.product_id.e_importation * 100),
                     'e_t_e': self.product_id.e_tiempo_estimado,
                     'e_mult_min': self.product_id.e_mult_min,
                     'e_multiplicador' :  self._set_mul_default(),
@@ -503,21 +507,25 @@ class SaleOrderLineInherit(models.Model):
 
     @api.onchange('product_id','e_igi','e_importation','e_exwork')
     def compute_costo_unitario(self):
-        self.e_costo_unitario =  (1 + self.e_igi + self.e_importation) *  self.e_exwork
+        self.e_costo_unitario =  (1 + (self.e_igi/100) + (self.e_importation/100)) *  self.e_exwork
+        #print(self.e_costo_unitario)
 
     @api.onchange('e_costo_unitario','product_uom_qty')
     def compute_costo_total(self):
         self.e_costo_total = ( self.e_costo_unitario * self.product_uom_qty)
+        #print(self.e_costo_total)
 
     @api.onchange('e_importation','product_uom_qty','e_exwork')
     def compute_costo_total_imp(self):
-        self.e_costo_total_imp = self.e_importation * self.e_exwork  * self.product_uom_qty
+        self.e_costo_total_imp = (self.e_importation/100) * self.e_exwork  * self.product_uom_qty
 
-    @api.onchange('e_costo_total','price_unit','product_uom_qty')
+    @api.onchange('e_costo_total','e_costo_unitario','product_uom_qty')
     def compute_g_m_l(self):
-        if self.e_costo_total == 0 or  self.price_unit == 0 or  self.product_uom_qty == 0:
+        if self.e_costo_total == 0 or  self.e_costo_unitario == 0 or  self.product_uom_qty == 0:
             return 0
-        self.e_g_m_l = self.e_costo_total / (self.price_unit * self.product_uom_qty)
+        #print(self.e_costo_total ,self.price_unit , self.product_uom_qty)
+        self.e_g_m_l = 1 - (self.e_costo_total / (self.price_unit * self.product_uom_qty))
+        #print(self.e_g_m_l)
 
 
     @api.onchange('e_provedor')
