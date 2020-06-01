@@ -19,10 +19,8 @@
           <group name="studio_group_q4Nwo_right">
               <field name="e_precio_de_lista"/>
               <field name="e_mult_min" />
-              <div>
-              <field name="e_igi" class="oe_edit_only" />
-              <field name="e_importation"  class="oe_read_only" />
-              </div>
+              <field name="e_igi"/>
+              <field name="e_importation" />
               <field name="e_te_max"/>
               <field name="e_te_min"/>
 
