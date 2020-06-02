@@ -5,7 +5,7 @@ from odoo import models, fields, api
 
 class StepMultiplier(models.Model):
     _name = 'step.multiplier'
-    _description = "Etapa de cotización"
+    _description = "Etapa de cotizaciónes"
 
     name = fields.Char(string="Etapa", required = True)
     description = fields.Text(string="Descripción")
