@@ -194,6 +194,8 @@ class SaleOrderInherit(models.Model):
             order.write({'e_costo_total_imp_obra': e_costo_total_imp_obra})
 
 
+
+
     @api.depends('order_line.e_asociar','order_line.sequence','order_line.price_subtotal')
     def _compute_contador_paquetes(self):
         #print("**********")
@@ -294,7 +296,7 @@ class SaleOrderLineInherit(models.Model):
     e_etiqueta_line_b = fields.Text(string="Etiqueta B")
     e_te_line_max = fields.Integer(string="T.E MAX")
     e_te_line_min = fields.Integer(string="T.E MIN")
-    e_precio_de_lista = fields.Float(digits=(10, 2),readonly=True,string="P . L", help="Precio de lista")
+    e_precio_de_lista = fields.Monetary(digits=(10, 2),readonly=True,string="P . L", help="Precio de lista")
     e_multiplicador = fields.Float(digits=(10, 4),default=0, string="Multiplicador", help="Multiplicador, si no exite 1")
     e_descuento = fields.Integer(string="Des %")
     price_unit =fields.Float(digits=(10, 2),readonly=True, string="Punto de Venta",help="P.L * Multiplicador * (1 - Descuento)")
@@ -337,7 +339,7 @@ class SaleOrderLineInherit(models.Model):
     @api.onchange('price_subtotal')
     def _compute_subtotal(self):
         for line in self:
-            print("Semurio2?")
+            #print("Semurio2?")
             line.write({'price_subtotal':line.price_unit * line.product_uom_qty})
 
 
@@ -448,7 +450,7 @@ class SaleOrderLineInherit(models.Model):
                     }
                 }
 
-        print("cambiando subtotal")
+        #print("cambiando subtotal")
         self.write({'price_unit': self.e_multiplicador * self.e_precio_de_lista * (
                                     1 - (self.discount / 100)),'e_por_debajo' : 0})
 
@@ -470,8 +472,11 @@ class SaleOrderLineInherit(models.Model):
                     'e_importation' : (self.product_id.e_importation * 100),
                     'e_t_e': self.product_id.e_tiempo_estimado,
                     'e_mult_min': self.product_id.e_mult_min,
-                    'e_multiplicador' :  self._set_mul_default(),
+                    'e_multiplicador' :  self._set_mul_default()
                     })
+        if self.product_id:
+            self.write({'e_partida' : str(len(self.order_id.order_line)-1)})
+
 
 
 
@@ -536,3 +541,4 @@ class SaleOrderLineInherit(models.Model):
     @api.onchange('e_mult_std')
     def _onchange_e_mult_stf(self):
         self.write({'e_exwork': self.e_mult_std * self.e_precio_de_lista})
+
