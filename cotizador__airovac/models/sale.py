@@ -425,8 +425,7 @@ class SaleOrderLineInherit(models.Model):
 
         if (self.e_multiplicador < self.e_mult_min and not flag) or ((resul < espe)  and not flag):
 
-                self.write({'e_multiplicador' : self._origin.e_multiplicador,
-                             'price_unit': self._origin.price_unit ,
+                self.write({'e_multiplicador' : self._set_mul_default(),
                              'e_por_debajo' : 0,'discount':self._origin.discount
                             })
                 return {
