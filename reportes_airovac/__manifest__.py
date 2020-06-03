@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Presupuesto Efecto",
+    'name': "Presupuesto Airovac",
 
     'summary': """
-        Personalización del presupuesto de ventas""",
+        Personalización de presupuesto de ventas""",
 
     'description': """
         Personalización del presupuesto de ventas
@@ -33,6 +33,6 @@
     'demo': [
 
     ],
-    'installable': True,
-    'auto_install': True,
+    'installable': False,
+    'auto_install': False,
 }
