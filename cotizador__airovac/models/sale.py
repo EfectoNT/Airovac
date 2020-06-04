@@ -7,8 +7,8 @@ from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 class SaleOrderInherit(models.Model):
     _inherit = 'sale.order'
 
-    e_etiqueta_title_a = fields.Text(string="Titulo de Etiqueta A")
-    e_etiqueta_title_b = fields.Text(string="Titulo de Etiqueta B")
+    e_etiqueta_title_a = fields.Text(string="Titulo de Etiqueta A", default="Volumen de Aire (CFM’s)")
+    e_etiqueta_title_b = fields.Text(string="Titulo de Etiqueta B", default="Caída de Presión (in H2O)")
     e_desciption = fields.Char(string="Descripción")
 
     e_g_m_p = fields.Float(digits=(1, 3),Default = 0,compute='_compute_e_g_m_p',string="G.M. del Proyecto",readonly="True")
