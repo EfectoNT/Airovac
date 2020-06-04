@@ -477,10 +477,17 @@ class SaleOrderLineInherit(models.Model):
             self.write({'e_partida' : str(len(self.order_id.order_line)-1)})
 
 
+        print(self.display_type)
+        if self.display_type == 'line_section':
+            print("hola")
 
 
 
 
+
+    @api.onchange('name')
+    def _onchange_name(self):
+        print(self)
 
 
     @api.onchange('product_uom_qty')
