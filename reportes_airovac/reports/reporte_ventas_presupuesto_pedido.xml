@@ -50,7 +50,7 @@
 
                     <div class="article o_report_layout_standard o_company_1_layout" data-oe-model="sale.order" data-oe-id="18" data-oe-lang="es_ES">
                         <div class="address row">
-                            <div  class="col-5">
+                            <div  class="col-6">
                             </div>
                             <div name="address" class="col-5">
                                 <div>
@@ -62,11 +62,17 @@
                                             <div class="d-flex align-items-baseline">
                                                  <div class="w-100" itemprop="streetAddress">
                                                      <t t-esc ="doc.partner_id.street_name" />
-                                                     <t t-esc ="doc.partner_id.street_number" />/
-                                                     <t t-esc ="doc.partner_id.street_number2" /><br/>
+                                                     <t t-esc ="doc.partner_id.street_number" />
+                                                     <t t-if = "doc.partner_id.street_number2">
+                                                        /<t t-esc ="doc.partner_id.street_number2" /><br/>
+                                                     </t>
                                                      <t t-esc ="doc.partner_id.zip" />
-                                                     <t t-esc ="doc.partner_id.city_id.name" />,
-                                                     <t t-esc ="doc.partner_id.state_id.code" /><br/>
+                                                     <t t-esc ="doc.partner_id.city_id.name" />
+                                                      <t t-if = "doc.partner_id.state_id.code">
+                                                          , <t t-esc ="doc.partner_id.state_id.code" />
+                                                     </t>
+
+                                                    <br/>
                                                      <t t-sec ="doc.partner_id.country_id"></t>
                                                      </div>
 
@@ -145,7 +151,7 @@
 
                             <div class="clearfix" name="so_total_summary">
                                 <div id="total" class="row" name="total">
-                                    <div class="col-6">
+                                    <div class="col-8">
 
                                     </div>
                                     <div class="col-4">
