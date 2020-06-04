@@ -50,9 +50,9 @@
 
                     <div class="article o_report_layout_standard o_company_1_layout" data-oe-model="sale.order" data-oe-id="18" data-oe-lang="es_ES">
                         <div class="address row">
-                            <div name="address" class="col-5">
+                            <div  class="col-5">
                             </div>
-                            <div name="address" class="col-5 ml-auto">
+                            <div name="address" class="col-5">
                                 <div>
                                     <address class="mb-0" itemscope="itemscope" >
                                         <div>
@@ -148,7 +148,7 @@
                                     <div class="col-6">
 
                                     </div>
-                                    <div class="col-4  ml-auto">
+                                    <div class="col-4">
                                         <table class="table table-sm">
                                             <tbody><tr class="border-black o_subtotal" style="">
                                                 <td name="td_amount_untaxed_label"><strong>Subtotal</strong></td>
