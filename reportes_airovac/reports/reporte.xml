@@ -5,7 +5,7 @@
             id="reporte_ventas_presupuesto_pedido"
             model="sale.order"
             string="Presupuesto / Pedido"
-            report_type="qweb-html"
+            report_type="qweb-pdf"
             name="reportes_airovac.reporte_ventas_presupuesto_pedido"
             file="reportes_airovac.reporte_ventas_presupuesto_pedido"
             print_report_name = "(object.name+'.pdf')"
