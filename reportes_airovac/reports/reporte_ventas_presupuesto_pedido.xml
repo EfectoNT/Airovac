@@ -7,7 +7,8 @@
                     <div class="header o_company_1_layout">
                         <div class="row">
                             <div class="col-3 mb4">
-                                <img style="max-height: 45px;" alt="Logo" src="" />
+                                <img style="max-height: 45px;" alt="Logo" src='/web/binary/company_logo'/>
+
                             </div>
 
                         </div>
@@ -17,9 +18,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-6">
 
-                            </div>
                             <div class="col-6" name="company_address">
                                 <div>
                                     <address class="mb-0" itemscope="itemscope" >
@@ -51,6 +50,8 @@
 
                     <div class="article o_report_layout_standard o_company_1_layout" data-oe-model="sale.order" data-oe-id="18" data-oe-lang="es_ES">
                         <div class="address row">
+                            <div name="address" class="col-5">
+                            </div>
                             <div name="address" class="col-5 ml-auto">
                                 <div>
                                     <address class="mb-0" itemscope="itemscope" >
@@ -144,7 +145,7 @@
 
                             <div class="clearfix" name="so_total_summary">
                                 <div id="total" class="row" name="total">
-                                    <div class="col-8">
+                                    <div class="col-7">
 
                                     </div>
                                     <div class="col-4  ml-auto">
