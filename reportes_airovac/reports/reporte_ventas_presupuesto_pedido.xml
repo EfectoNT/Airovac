@@ -17,11 +17,14 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col-6">
+
+                            </div>
                             <div class="col-6" name="company_address">
                                 <div>
                                     <address class="mb-0" itemscope="itemscope" >
                                         <div>
-                                            <span itemprop="name" t-field="doc.partner_id.name"></span>
+                                            <span itemprop="name" t-field="doc.company_id.name"></span>
                                         </div>
                                         <div itemprop="address" itemscope="itemscope" >
                                             <div class="d-flex align-items-baseline">
@@ -48,7 +51,7 @@
 
                     <div class="article o_report_layout_standard o_company_1_layout" data-oe-model="sale.order" data-oe-id="18" data-oe-lang="es_ES">
                         <div class="address row">
-                            <div name="address" class="col-md-5 ml-auto">
+                            <div name="address" class="col-5 ml-auto">
                                 <div>
                                     <address class="mb-0" itemscope="itemscope" >
                                         <div>
@@ -141,7 +144,10 @@
 
                             <div class="clearfix" name="so_total_summary">
                                 <div id="total" class="row" name="total">
-                                    <div class="col-sm-7 col-md-5 ml-auto">
+                                    <div class="col-8">
+
+                                    </div>
+                                    <div class="col-4  ml-auto">
                                         <table class="table table-sm">
                                             <tbody><tr class="border-black o_subtotal" style="">
                                                 <td name="td_amount_untaxed_label"><strong>Subtotal</strong></td>
@@ -206,11 +212,11 @@
 
                     <div class="footer o_standard_footer o_company_1_layout">
                         <div class="text-center" style="border-top: 1px solid black;">
-                            <p>AiroVAC</p>
-                            <p>Proyectos en Ventilación, Agua y Control</p>
-                            <p>Tel. Mty (81) 8333 7738, D.F. (55) 5005 9893, Gdl (33) 8995 7135, Mer (999) 801 1300, Pue (222) 644 0560, e.mail: info@airovac.com</p>
-                            <p><small>www.airovac.com</small></p>
-                            <p style="font-size:12px;vertical-align:text-bottom;">Página <span class="page"/> / <span class="topage"/></p>
+                            AiroVAC
+                            Proyectos en Ventilación, Agua y Control<br/>
+                            Tel. Mty (81) 8333 7738, D.F. (55) 5005 9893, Gdl (33) 8995 7135, Mer (999) 801 1300, Pue (222) 644 0560, e.mail: info@airovac.com<br/>
+                            <small>www.airovac.com</small><br/>
+                            Página <span class="page"/> / <span class="topage"/>
 
                         </div>
                     </div>
