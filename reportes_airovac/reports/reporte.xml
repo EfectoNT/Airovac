@@ -2,18 +2,19 @@
 
         <!-- QWeb Reports -->
         <report
-            id="report_so2"
+            id="reporte_ventas_presupuesto_pedido"
             model="sale.order"
             string="Presupuesto / Pedido"
-            report_type="qweb-pdf"
-            name="en_so_report_qweb2.report_so2"
-            file="en_so_report_qweb2.report_so2"
+            report_type="qweb-html"
+            name="reportes_airovac.reporte_ventas_presupuesto_pedido"
+            file="reportes_airovac.reporte_ventas_presupuesto_pedido"
             print_report_name = "(object.name+'.pdf')"
         />
 
-        <record id="paperformat_lowmargin" model="report.paperformat">
-            <field name="name">Formato para presupuesto</field>
-            <field name="default" eval="True" />
+        <!-- Formato de papel -->
+        <record id="paperformat_ventas_presupuesto_pedido" model="report.paperformat">
+            <field name="name">Formato para ventas presupuesto pedido</field>
+            <field name="default" eval="True"/>
             <field name="format">A4</field>
             <field name="page_height">0</field>
             <field name="page_width">0</field>
@@ -27,7 +28,8 @@
             <field name="dpi">90</field>
         </record>
 
-        <record id="en_so_report_qweb2.report_so2" model="ir.actions.report">
-            <field name="paperformat_id" ref="en_so_report_qweb2.paperformat_lowmargin" />
+        <!-- Formato ligado al reporte -->
+        <record id="reportes_airovac.reporte_ventas_presupuesto_pedido" model="ir.actions.report">
+            <field name="paperformat_id" ref="reportes_airovac.paperformat_ventas_presupuesto_pedido" />
         </record>
 </odoo>

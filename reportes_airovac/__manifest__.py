@@ -15,7 +15,7 @@
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/13.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
-    'category': 'Uncategorized',
+    'category': 'Reportes',
     'version': '0.1',
 
     # any module necessary for this one to work correctly
@@ -26,13 +26,13 @@
         #'security/ir.model.access.csv',
         'views/views.xml',
         'views/templates.xml',
-        'reports/report.xml',
-        'reports/report_so_card.xml',
+        'reports/reporte.xml',
+        'reports/reporte_ventas_presupuesto_pedido.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
 
     ],
-    'installable': False,
-    'auto_install': False,
+    'installable': True,
+    'auto_install': True,
 }
