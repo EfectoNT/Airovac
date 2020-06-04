@@ -63,6 +63,8 @@ class ProductuEClass(models.Model):
                                       string="Productos"
                                       )
 
+    e_num_products = fields.Integer(compute='_calculate_products')
+
     @api.onchange('e_mult_min')
     def _onchange_(self):
         if self.e_mult_min < 0:
@@ -73,6 +75,11 @@ class ProductuEClass(models.Model):
                     'message': "El multiplicador mínimo debe ser mayor que 0.0",
                 }
             }
+
+    @api.depends('products_ids')
+    def _calculate_products(self):
+        for record in self:
+            record.e_num_products = len(record.products_ids)
 
         # for clase in self:
         #     print(clase.ids)
