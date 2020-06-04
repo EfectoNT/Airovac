@@ -159,8 +159,8 @@
                                                     <td name="td_amount_by_group_label">
                                                         <span>IVA 16% </span>
                                                     </td>
-                                                    <td name="td_amount_by_group" class="text-right o_price_total">
-                                                        <span data-oe-type="monetary" data-oe-expression="amount_by_group[1]"><span class="oe_currency_value" t-field="doc.amount_tax"></span></span>
+                                                    <td  class="text-right o_price_total">
+                                                        <span data-oe-type="monetary" ><span class="oe_currency_value" t-field="doc.amount_tax"></span></span>
                                                     </td>
 
                                                 </tr>
