@@ -92,7 +92,7 @@
                                 <div class="col-auto mw-100 mb-2">
                                     <strong>Fecha de cotización:</strong>
                                     <p class="m-0">
-                                        <span t-field="doc.date_order" t-options='{"format": "dd/mm/yyyy"}'  style="font-size: 23px;"></span>
+                                        <span t-field="doc.date_order" t-options='{"format": "dd/MM/yyyy"}'  style="font-size: 23px;"></span>
                                     </p>
                                 </div>
                                 <div class="col-auto mw-100 mb-2">
@@ -111,11 +111,11 @@
                         <table class="table table-sm o_main_table">
                             <thead>
                                 <tr>
-                                    <th width="50%" name="th_description" class="text-left">Descripción</th>
-                                    <th width="10%" name="th_quantity" class="text-right">Cantidad</th>
-                                    <th width="10%" name="th_priceunit" class="text-right">Precio unitario</th>
-                                    <th width="20%" name="th_e_t_e" class="text-right">T.E</th>
-                                    <th width="10%" name="th_subtotal" class="text-right">Importe</th>
+                                    <th width="50%" name="th_description" class="text-center">Descripción</th>
+                                    <th width="10%" name="th_quantity" class="text-center">Cantidad</th>
+                                    <th width="10%" name="th_priceunit" class="text-center">Precio unitario</th>
+                                    <th width="20%" name="th_e_t_e" class="text-center">T.E</th>
+                                    <th width="10%" name="th_subtotal" class="text-center">Subtotal<t t-esc="doc.pricelist_id.currency_id.name"></t></th>
                                 </tr>
                             </thead>
 
@@ -183,7 +183,7 @@
                                                 <tr class="border-black o_total">
                                                     <td name="td_amount_total_label"><strong>Total</strong></td>
                                                     <td name="td_amount_total" class="text-right">
-                                                        <span><span class="oe_currency_value" t-field="doc.amount_total"></span></span>
+                                                        <span><span class="oe_currency_value" t-field="doc.amount_total"></span></span><t t-esc="doc.pricelist_id.currency_id.name"></t>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -195,7 +195,7 @@
 
 
 
-                            <div class="col-6 text-left" name="information_block">
+                            <div class="col-12 text-left" name="information_block">
                                 <h3> Condiciones Generales:</h3>
                                 » Los precios son en dólares americanos y se cobrarán en dólares, ó al tipo de cambio de venta bancario vigente a la fecha del pago <br/>
                                 » Los precios no incluyen el 16% de I.V.A. <br/>
@@ -215,6 +215,12 @@
                                 » La garantía de los equipos depende de la marca y modelo, y va desde 1 hasta 5 años a patir de la entrega.<br/>
                                 Sin más por el momento quedo a sus ordenes para cualquier aclaración.<br/>
                                 Atentamente
+
+                            </div>
+
+                            <div class="col-12 text-left" name="information_block">
+                                <h3> Términos y condiciones:</h3>
+                                <t t-esc="doc.note"></t>
 
                             </div>
 
