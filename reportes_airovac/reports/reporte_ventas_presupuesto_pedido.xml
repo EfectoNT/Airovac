@@ -92,13 +92,13 @@
                                 <div class="col-auto mw-100 mb-2">
                                     <strong>Fecha de cotización:</strong>
                                     <p class="m-0">
-                                        <span t-field="doc.date_order" t-options='{"format": "dd/MM/yyyy"}'  style="font-size: 23px;"></span>
+                                        <span t-field="doc.date_order" t-options='{"format": "dd/MM/yyyy"}'  ></span>
                                     </p>
                                 </div>
                                 <div class="col-auto mw-100 mb-2">
                                     <strong>Fecha de expiración:</strong>
                                     <p class="m-0">
-                                        <span t-field="doc.validity_date"   style="font-size: 23px;"></span>
+                                        <span t-field="doc.validity_date"   ></span>
                                     </p>
                                 </div>
                                 <div class="col-auto mw-100 mb-2">
@@ -113,9 +113,9 @@
                                 <tr>
                                     <th width="50%" name="th_description" class="text-center">Descripción</th>
                                     <th width="10%" name="th_quantity" class="text-center">Cantidad</th>
-                                    <th width="10%" name="th_priceunit" class="text-center">Precio unitario</th>
-                                    <th width="20%" name="th_e_t_e" class="text-center">T.E</th>
-                                    <th width="10%" name="th_subtotal" class="text-center">Subtotal<t t-esc="doc.pricelist_id.currency_id.name"></t></th>
+                                    <th width="12%" name="th_priceunit" class="text-center">Precio unitario</th>
+                                    <th width="16%" name="th_e_t_e" class="text-center">T.E</th>
+                                    <th width="12%" name="th_subtotal" class="text-center">Subtotal<t t-esc="doc.pricelist_id.currency_id.name"></t></th>
                                 </tr>
                             </thead>
 
@@ -128,16 +128,16 @@
                                                 <span style="font-size: 13px" t-field="line.name">
                                                 </span>
                                             </td>
-                                            <td name="td_quantity" class="text-right">
+                                            <td name="td_quantity" class="text-center">
                                                 <span t-field="line.product_uom_qty"></span>
                                             </td>
-                                            <td name="td_priceunit" class="text-right">
+                                            <td name="td_priceunit" class="text-center">
                                                 <span t-field="line.price_unit"></span>
                                             </td>
-                                            <td name="td_e_t_e" class="text-right">
+                                            <td name="td_e_t_e" class="text-center">
                                                 <span t-field="line.e_t_e"></span>
                                             </td>
-                                            <td name="td_subtotal" class="text-right o_price_total">
+                                            <td name="td_subtotal" class="text-center o_price_total">
                                                 <span class="oe_currency_value" t-field="line.price_subtotal"></span>
                                             </td>
                                         </tr>
@@ -195,7 +195,7 @@
 
 
 
-                            <div class="col-12 text-left" name="information_block">
+                            <div style="margin-top:5px;"  class="col-12 text-left" name="information_block">
                                 <h3> Condiciones Generales:</h3>
                                 » Los precios son en dólares americanos y se cobrarán en dólares, ó al tipo de cambio de venta bancario vigente a la fecha del pago <br/>
                                 » Los precios no incluyen el 16% de I.V.A. <br/>
@@ -218,7 +218,7 @@
 
                             </div>
 
-                            <div class="col-12 text-left" name="information_block">
+                            <div style="margin-top:5px;" class="col-12 text-left" name="information_block">
                                 <h3> Términos y condiciones:</h3>
                                 <t t-esc="doc.note"></t>
 
