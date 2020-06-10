@@ -157,6 +157,13 @@
                                                 </td>
                                             </tr>
                                         </t>
+                                        <t t-if = "'line_note' in line.display_type" >
+                                            <tr  class="font-italic o_line_note">
+                                                <td name="td_note_line" colspan="99">
+                                                    <span t-field="line.name"></span>
+                                                </td>
+                                            </tr>
+                                        </t>
                                     </t>
                                 </t><!--for-->
                             </tbody>
