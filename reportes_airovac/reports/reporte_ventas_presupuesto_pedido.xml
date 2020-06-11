@@ -56,8 +56,9 @@
                                 <div>
                                     <address class="mb-0" itemscope="itemscope" >
                                         <div>
+
+                                            <span itemprop="name" t-field="doc.partner_id.parent_id.name"></span><br/>
                                             <span itemprop="name" t-field="doc.partner_id.name"></span>
-                                            <span itemprop="name" t-field="doc.partner_id.parent_id.name"></span>
                                         </div>
                                         <div itemprop="address" itemscope="itemscope" >
                                             <div class="d-flex align-items-baseline">
@@ -245,9 +246,9 @@
                         <div class="text-center" style="border-top: 1px solid black; font-size: 13px;">
                            <span>  AiroVAC</span>
                            <span> Proyectos en Ventilación, Agua y Control<br/></span>
-                           <span> Tel. Mty (81) 8333 7738, D.F. (55) 5005 9893, Gdl (33) 8995 7135, Mer (999) 801 1300, Pue (222) 644 0560, e.mail: info@airovac.com<br/>
+                           <span> Tel. Mty (81) 8333 7738, D.F. (55) 5005 9893, Gdl (33) 8995 7135, Mer (999) 801 1300, Pue (222) 644 0560<br/>
                             </span>
-                           <span> <small>www.airovac.com</small><br/></span>
+                           <span> e.mail: www.airovac.com<br/></span>
                             Página <span class="page"/> / <span class="topage"/>
 
                         </div>
