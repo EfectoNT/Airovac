@@ -17,7 +17,7 @@ class productTemplateInherit(models.Model):
     e_mult_min = fields.Float(digits=(10,4),default = 1, string="Mult. Min", help="e_mult_min")
     e_precio_de_lista = fields.Monetary(digits=(10, 2), string="Precio de Lista", help="Precio de lista")
     e_product_class  = fields.Many2one('producte.class',
-                                         string="Clase de producto",
+                                         string="Marca",
                                          )
     e_tiempo_estimado = fields.Char(string="Tiempo Estimado",
                                         help="Tiempo estimado de entrega")
