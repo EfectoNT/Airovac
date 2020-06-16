@@ -58,8 +58,8 @@
                 </xpath>-->
                 <xpath expr="//header" position='inside'>
                      <button string="Marcar como perido" type="object" name="marcar_perido" states="draft,sent,sale" />
-                     <button string="ver detalles" type="object" name="mostrar_detalles"  attrs="{'invisible': [('hide_fields', '=', True)]}" groups="sales_team.group_sale_manager" />
-                     <button string="ocultar detalles" type="object" name="mostrar_detalles"   attrs="{'invisible': [('hide_fields', '=', False)]}" groups="sales_team.group_sale_manager" />
+                     <button string="ver detalles" type="object" name="mostrar_detalles"  attrs="{'invisible': [('hide_fields', '=', True)]}" groups="cotizador__airovac.group_nom_options" />
+                     <button string="ocultar detalles" type="object" name="mostrar_detalles"   attrs="{'invisible': [('hide_fields', '=', False)]}" groups="cotizador__airovac.group_nom_options" />
                 </xpath>
 
 
@@ -100,15 +100,15 @@
 
 
 
-                       <field name="e_provedor" domain = "[('product_tmpl_id', '=', product_id )]" optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager" />
-                        <field name="e_mult_std" optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager"/>
-                        <field name="e_exwork" optional="hide" readonly="1" force_save="1" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager"/>
-                        <field name="e_importation"   optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager" />
-                        <field name="e_igi"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager"/>
-                       <field name="e_costo_unitario" readonly="1" force_save="1"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager" />
-                        <field name="e_g_m_l" readonly="1" force_save="1"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager"/>
-                    <field name="e_costo_total" readonly="1" force_save="1"   optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager"/>
-                    <field name="e_costo_total_imp" readonly="1" force_save="1"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager"/>
+                       <field name="e_provedor" domain = "[('product_tmpl_id', '=', product_id )]" optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="cotizador__airovac.group_nom_options" />
+                        <field name="e_mult_std" optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="cotizador__airovac.group_nom_options"/>
+                        <field name="e_exwork" optional="hide" readonly="1" force_save="1" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="cotizador__airovac.group_nom_options"/>
+                        <field name="e_importation"   optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="cotizador__airovac.group_nom_options" />
+                        <field name="e_igi"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="cotizador__airovac.group_nom_options"/>
+                       <field name="e_costo_unitario" readonly="1" force_save="1"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="cotizador__airovac.group_nom_options" />
+                        <field name="e_g_m_l" readonly="1" force_save="1"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="cotizador__airovac.group_nom_options"/>
+                    <field name="e_costo_total" readonly="1" force_save="1"   optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="cotizador__airovac.group_nom_options"/>
+                    <field name="e_costo_total_imp" readonly="1" force_save="1"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="cotizador__airovac.group_nom_options"/>
 <!--                      <field name="discount" readonly="1" force_save="1"  optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="sales_team.group_sale_manager"/>-->
                   </xpath>
 
@@ -158,7 +158,7 @@
 
 
                  <xpath expr="//group[@name='note_group']" position="before">
-                     <group name="note_group" col="6" groups="sales_team.group_sale_manager">
+                     <group name="note_group" col="6" groups="cotizador__airovac.group_nom_options">
                                 <group colspan="4">
                                      <field name="hide_fields" invisible="1" />
                                 </group>
