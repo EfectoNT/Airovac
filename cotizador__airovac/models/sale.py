@@ -107,6 +107,7 @@ class SaleOrderInherit(models.Model):
         for order in self:
             for line in order.order_line:
                 if not line.display_type:
+                    print(line.product_id.name)
                     #Buscamos el multiplicador
                     mult = self.env['step.multiplier.line'].search([('e_step_multiplier_id','=',order.step_multiplier_id.id),('e_marca','=',line.product_id.e_product_class.id)])
 
@@ -126,20 +127,21 @@ class SaleOrderInherit(models.Model):
                                         'e_por_debajo': 0})
                         print(line)
                     else:
+                        print('multiplicador 0')
                         resul = 1 * line.e_precio_de_lista * (
                                 1 - (line.discount / 100))
                         espe = 1 * line.e_precio_de_lista
                         if resul < espe:
-                            line.write({'e_multiplicador': mult.e_multiplicador,
-                                        'price_unit': mult.e_multiplicador * line.e_precio_de_lista * (
+                            line.write({'e_multiplicador': 1,
+                                        'price_unit': 1 * line.e_precio_de_lista * (
                                                     1 - (line.discount / 100)),
                                         'e_por_debajo': 1})
                         else:
-                            line.write({'e_multiplicador': mult.e_multiplicador,
-                                        'price_unit': mult.e_multiplicador * line.e_precio_de_lista * (
+                            line.write({'e_multiplicador': 1,
+                                        'price_unit': 1 * line.e_precio_de_lista * (
                                                 1 - (line.discount / 100)),
                                         'e_por_debajo': 0})
-                        print(line)
+                        print('return multi')
                         return
             order.write({'cambio_etapa': False})
 
@@ -298,21 +300,21 @@ class SaleOrderLineInherit(models.Model):
     e_te_line_max = fields.Integer(string="T.E MAX")
     e_te_line_min = fields.Integer(string="T.E MIN")
     e_precio_de_lista = fields.Monetary(digits=(10, 2),readonly=True,string="P . L", help="Precio de lista")
-    e_multiplicador = fields.Float(digits=(10, 4),default=0, string="Multiplicador", help="Multiplicador, si no exite 1")
+    e_multiplicador = fields.Float(digits=(10, 4),default=0, string="Mult.", help="Multiplicador, si no exite 1")
     e_descuento = fields.Integer(string="Des %")
-    price_unit =fields.Float(digits=(10, 2),readonly=True, string="Punto de Venta",help="P.L * Multiplicador * (1 - Descuento)")
+    price_unit =fields.Float(digits=(10, 2),readonly=True, string="P . V",help="P.L * Multiplicador * (1 - Descuento)")
     e_costo_total =fields.Monetary(string="Costo Total",readonly=True)
 
     e_costo_unitario = fields.Monetary(digits=(10, 2),Default = 0,store=True,readonly=True, string="Costo Unitario", help="(1 + IGI + Impotación) * (PL * Mult. STD)")
     e_costo_total = fields.Float(digits=(10, 3),Default = 0, store=True,readonly=True, string="Costo Total", help="Costo Unitario * Cantidad")
     e_costo_total_imp = fields.Float(digits=(1, 3),Default = 0, store=True,readonly=True, string="C . T Import", help="Importacion * (PL * Mult. STD) * Cantidad")
     e_g_m_l = fields.Float(digits=(10, 3),Default = 0, store=True,readonly=True, string="G . M ", help="COSTO TOTAL / Subtotal")
-    e_estimado_pro_l = fields.Float(digits=(10, 3), Default=0,readonly = True, store=True, string="S.T.P %", help="% Sobre total de propuesta")
-    e_asociar = fields.Boolean( Default=False,string="Asociar",help="Asocia productos con accesorios cada dos checkboxes")
+    e_estimado_pro_l = fields.Float(digits=(10, 3), Default=0,readonly = True, store=True, string="% STP", help="% Sobre total de propuesta")
+    e_asociar = fields.Boolean( Default=False,string="G.",help="Asocia productos con accesorios cada dos checkboxes")
     e_p_unit_a = fields.Monetary(Default=0,readonly=True,string="P.U con Accesorios",help="Precio unitario con accesorios")
     e_subtotal_no_des = fields.Monetary(Default=0,string="Subtutal",help="Sub tutal no desglosado")
     e_t_e = fields.Char(string="T.E",
-                                        help="Tiempo de entrega")
+                                        help="Tiempo estimado de entrega")
     e_por_debajo = fields.Integer(Default=0)
     discount = fields.Integer(Default=0,string = "Descuento %")
 
@@ -321,7 +323,7 @@ class SaleOrderLineInherit(models.Model):
     grupo = fields.Integer(default=0)
     colored = fields.Integer(default=0)
     principal = fields.Integer(default=0)
-    e_partida = fields.Char(string="Partida")
+    e_partida = fields.Char(string="P.")
 
 
     e_provedor = fields.Many2one('product.supplierinfo', string="Proveedor")
