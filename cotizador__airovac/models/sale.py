@@ -2,6 +2,7 @@
 import datetime
 
 from odoo import models, fields, api
+from odoo.exceptions import UserError
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 class SaleOrderInherit(models.Model):
@@ -30,9 +31,10 @@ class SaleOrderInherit(models.Model):
         #print("Default cambio de etapa")
         for order in self:
             for line in order.order_line:
-                if line.mult_is_changed():
-                    #print("ubo un cambio",line.mult_is_changed())
-                    return True
+                if not line.display_type:
+                    if line.mult_is_changed():
+                        #print("ubo un cambio",line.mult_is_changed())
+                        return True
             #print("No hbo cambio", line.mult_is_changed())
             return False
 
@@ -59,11 +61,12 @@ class SaleOrderInherit(models.Model):
         for order in self:
             #print("cambio_etapa Antes del for lines ",order.cambio_etapa)
             for line in order.order_line:
-                if line.mult_is_changed():
-                    #print("ubo un cambio",line.mult_is_changed())
-                    #print("cambio_etapa RETUn True")
-                    order.write({'cambio_etapa': True})
-                    return
+                if not line.display_type:
+                    if line.mult_is_changed():
+                        #print("ubo un cambio",line.mult_is_changed())
+                        #print("cambio_etapa RETUn True")
+                        order.write({'cambio_etapa': True})
+                        return
             #print("cambio_etapa RETUn False")
             order.write({'cambio_etapa': False})
 
@@ -125,9 +128,9 @@ class SaleOrderInherit(models.Model):
                                         'price_unit': mult.e_multiplicador * line.e_precio_de_lista * (
                                                     1 - (line.discount / 100)),
                                         'e_por_debajo': 0})
-                        print(line)
+                        #print(line)
                     else:
-                        print('multiplicador 0')
+                        #print('multiplicador 0')
                         resul = 1 * line.e_precio_de_lista * (
                                 1 - (line.discount / 100))
                         espe = 1 * line.e_precio_de_lista
@@ -141,7 +144,7 @@ class SaleOrderInherit(models.Model):
                                         'price_unit': 1 * line.e_precio_de_lista * (
                                                 1 - (line.discount / 100)),
                                         'e_por_debajo': 0})
-                        print('return multi')
+                        #print('return multi')
                         return
             order.write({'cambio_etapa': False})
 
@@ -302,7 +305,7 @@ class SaleOrderLineInherit(models.Model):
     e_precio_de_lista = fields.Monetary(digits=(10, 2),readonly=True,string="P . L", help="Precio de lista")
     e_multiplicador = fields.Float(digits=(10, 4),default=0, string="Mult.", help="Multiplicador, si no exite 1")
     e_descuento = fields.Integer(string="Des %")
-    price_unit =fields.Float(digits=(10, 2),readonly=True, string="P . V",help="P.L * Multiplicador * (1 - Descuento)")
+    #price_unit =fields.Float(digits=(10, 2),readonly=True, string="P . V",help="P.L * Multiplicador * (1 - Descuento)")
     e_costo_total =fields.Monetary(string="Costo Total",readonly=True)
 
     e_costo_unitario = fields.Monetary(digits=(10, 2),Default = 0,store=True,readonly=True, string="Costo Unitario", help="(1 + IGI + Impotación) * (PL * Mult. STD)")
@@ -456,35 +459,43 @@ class SaleOrderLineInherit(models.Model):
         self.write({'price_unit': self.e_multiplicador * self.e_precio_de_lista * (
                                     1 - (self.discount / 100)),'e_por_debajo' : 0})
 
-
-
-
-
-
-
-    #Se agrega un nuevo producto
     @api.onchange('product_id')
-    def _default_precio_lista(self):
-        # print(self.order_id.pricelist_id.id)
-        # moneda = self.env['product.pricelist'].search([('id','=',self.order_id.pricelist_id.id)], limit=1)
-        # print(self.order_id.pricelist_id.currency_id.name.strip(),'ODI')
-        # res = None
-        # if self.order_id.pricelist_id.currency_id.name.strip() != 'MXN':
-        #     print('MXN')
-        #     res = self.env['res.currency'].search(
-        #         [('name', '=', self.order_id.pricelist_id.currency_id.name)], limit=1)
-        #
-        # print(moneda.currency_id.rate)
-        #
-        # if moneda.currency_id.name == 'USD':
-        #     price_init_f = self.product_id.e_precio_de_lista
-        #     print('Son usd')
-        # else:
-        #     price_init_f = self.product_id.e_precio_de_lista / (res.rate * 1)
-        #     print('Otra moneda')
+    def product_id_change(self):
+        if not self.order_id.pricelist_id:
+            raise UserError(
+                'ELIJA UNA TARIFA')
+        # SUPER
+        res = super(SaleOrderLineInherit, self).product_id_change()
+
+        print(self.order_id.pricelist_id.id)
+        moneda_usar = self.env['product.pricelist'].search([('id','=',self.order_id.pricelist_id.id)], limit=1)
+        print(self.order_id.pricelist_id.currency_id.name.strip(),'ODI')
+        convertido = 0
+
+        if moneda_usar.currency_id.name == 'USD':
+            convertido = self.product_id.e_precio_de_lista
+            print('Son usd')
+        if moneda_usar.currency_id.name == 'MXN':
+            dolars = self.env['res.currency'].search(
+                [('name', '=', 'USD')],
+                limit=1)
+            convertido = self.product_id.e_precio_de_lista / (dolars.rate * 1)
+        else:
+            dolars = self.env['res.currency'].search(
+                [('name', '=', 'USD')],
+                limit=1)
+
+            otra_moneda = self.env['res.currency'].search(
+                [('name', '=', self.order_id.pricelist_id.currency_id.name)],
+                limit=1)
+
+            pesos = self.product_id.e_precio_de_lista / (dolars.rate * 1)
+            convertido = pesos * otra_moneda.rate
+
+            #print('Otra moneda')
 
         price_init_f = self.product_id.e_precio_de_lista
-        self.write({'e_precio_de_lista': price_init_f,
+        self.write({'e_precio_de_lista': convertido,
                     'e_etiqueta_line_a': self.product_id.e_etiqueta_a,
                     'e_etiqueta_line_b': self.product_id.e_etiqueta_b,
                     'e_te_line_max' : self.product_id.e_te_max,
@@ -499,17 +510,18 @@ class SaleOrderLineInherit(models.Model):
             self.write({'e_partida' : str(len(self.order_id.order_line)-1)})
 
 
-        print(self.display_type)
-        if self.display_type == 'line_section':
-            print("hola")
+        #print(self.display_type)
+        #if self.display_type == 'line_section':
+            #print("hola")
+
+        return res
 
 
 
+    #Se agrega un nuevo producto
+    #@api.onchange('product_id')
+    #def _default_precio_lista(self):
 
-
-    @api.onchange('name')
-    def _onchange_name(self):
-        print(self)
 
 
     @api.onchange('product_uom_qty')
