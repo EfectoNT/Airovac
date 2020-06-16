@@ -106,40 +106,41 @@ class SaleOrderInherit(models.Model):
 
         for order in self:
             for line in order.order_line:
+                if not line.display_type:
+                    #Buscamos el multiplicador
+                    mult = self.env['step.multiplier.line'].search([('e_step_multiplier_id','=',order.step_multiplier_id.id),('e_marca','=',line.product_id.e_product_class.id)])
 
-                #Buscamos el multiplicador
-                mult = self.env['step.multiplier.line'].search([('e_step_multiplier_id','=',order.step_multiplier_id.id),('e_marca','=',line.product_id.e_product_class.id)])
-
-                #print(mult,mult.e_multiplicador)
-                #Si el multiplicador es maypr que 0
-                if mult.e_multiplicador > 0.0:
-                    resul = mult.e_multiplicador * line.e_precio_de_lista * (
-                            1 - (line.discount / 100))
-                    espe = mult.e_multiplicador * line.e_precio_de_lista
-                    #print(resul,espe)
-                    if resul < espe :
-                        line.write({'e_multiplicador': mult.e_multiplicador,'price_unit' : mult.e_multiplicador * line.e_precio_de_lista * (1 - (line.discount / 100)),'e_por_debajo': 1})
+                    #print(mult,mult.e_multiplicador)
+                    #Si el multiplicador es maypr que 0
+                    if mult.e_multiplicador > 0.0:
+                        resul = mult.e_multiplicador * line.e_precio_de_lista * (
+                                1 - (line.discount / 100))
+                        espe = mult.e_multiplicador * line.e_precio_de_lista
+                        #print(resul,espe)
+                        if resul < espe :
+                            line.write({'e_multiplicador': mult.e_multiplicador,'price_unit' : mult.e_multiplicador * line.e_precio_de_lista * (1 - (line.discount / 100)),'e_por_debajo': 1})
+                        else:
+                            line.write({'e_multiplicador': mult.e_multiplicador,
+                                        'price_unit': mult.e_multiplicador * line.e_precio_de_lista * (
+                                                    1 - (line.discount / 100)),
+                                        'e_por_debajo': 0})
+                        print(line)
                     else:
-                        line.write({'e_multiplicador': mult.e_multiplicador,
-                                    'price_unit': mult.e_multiplicador * line.e_precio_de_lista * (
+                        resul = 1 * line.e_precio_de_lista * (
+                                1 - (line.discount / 100))
+                        espe = 1 * line.e_precio_de_lista
+                        if resul < espe:
+                            line.write({'e_multiplicador': mult.e_multiplicador,
+                                        'price_unit': mult.e_multiplicador * line.e_precio_de_lista * (
+                                                    1 - (line.discount / 100)),
+                                        'e_por_debajo': 1})
+                        else:
+                            line.write({'e_multiplicador': mult.e_multiplicador,
+                                        'price_unit': mult.e_multiplicador * line.e_precio_de_lista * (
                                                 1 - (line.discount / 100)),
-                                    'e_por_debajo': 0})
-                else:
-                    resul = 1 * line.e_precio_de_lista * (
-                            1 - (line.discount / 100))
-                    espe = 1 * line.e_precio_de_lista
-                    if resul < espe:
-                        line.write({'e_multiplicador': mult.e_multiplicador,
-                                    'price_unit': mult.e_multiplicador * line.e_precio_de_lista * (
-                                                1 - (line.discount / 100)),
-                                    'e_por_debajo': 1})
-                    else:
-                        line.write({'e_multiplicador': mult.e_multiplicador,
-                                    'price_unit': mult.e_multiplicador * line.e_precio_de_lista * (
-                                            1 - (line.discount / 100)),
-                                    'e_por_debajo': 0})
-
-                    return
+                                        'e_por_debajo': 0})
+                        print(line)
+                        return
             order.write({'cambio_etapa': False})
 
 
@@ -418,7 +419,7 @@ class SaleOrderLineInherit(models.Model):
 
 
 
-        flag = self.env['res.users'].has_group('sales_team.group_sale_manager')
+        flag = self.env['res.users'].has_group('cotizador__airovac.group_nom_options')
         resul = self.e_multiplicador * self.e_precio_de_lista * (
                 1 - (self.discount / 100))
         espe =  self.e_mult_min * self.e_precio_de_lista
@@ -462,7 +463,26 @@ class SaleOrderLineInherit(models.Model):
     #Se agrega un nuevo producto
     @api.onchange('product_id')
     def _default_precio_lista(self):
-        self.write({'e_precio_de_lista':self.product_id.e_precio_de_lista,
+        # print(self.order_id.pricelist_id.id)
+        # moneda = self.env['product.pricelist'].search([('id','=',self.order_id.pricelist_id.id)], limit=1)
+        # print(self.order_id.pricelist_id.currency_id.name.strip(),'ODI')
+        # res = None
+        # if self.order_id.pricelist_id.currency_id.name.strip() != 'MXN':
+        #     print('MXN')
+        #     res = self.env['res.currency'].search(
+        #         [('name', '=', self.order_id.pricelist_id.currency_id.name)], limit=1)
+        #
+        # print(moneda.currency_id.rate)
+        #
+        # if moneda.currency_id.name == 'USD':
+        #     price_init_f = self.product_id.e_precio_de_lista
+        #     print('Son usd')
+        # else:
+        #     price_init_f = self.product_id.e_precio_de_lista / (res.rate * 1)
+        #     print('Otra moneda')
+
+        price_init_f = self.product_id.e_precio_de_lista
+        self.write({'e_precio_de_lista': price_init_f,
                     'e_etiqueta_line_a': self.product_id.e_etiqueta_a,
                     'e_etiqueta_line_b': self.product_id.e_etiqueta_b,
                     'e_te_line_max' : self.product_id.e_te_max,
