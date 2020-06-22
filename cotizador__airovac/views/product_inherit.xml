@@ -12,6 +12,7 @@
       <xpath expr="//form[@name='Product Template']/sheet[1]/notebook[1]/page[@name='general_information']/group[1]" position="after">
         <group name="studio_group_q4Nwo">
           <group name="studio_group_q4Nwo_left">
+            <field name="e_revision_p_l"/>
             <field name="e_tiempo_estimado"/>
             <field name="e_etiqueta_a"/>
             <field name="e_etiqueta_b"/>

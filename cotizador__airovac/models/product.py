@@ -3,6 +3,7 @@ import datetime
 
 from odoo import models, fields, api
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
+from odoo.exceptions import UserError
 
 class productTemplateInherit(models.Model):
     _inherit = 'product.template'
@@ -22,6 +23,9 @@ class productTemplateInherit(models.Model):
     e_tiempo_estimado = fields.Char(string="Tiempo Estimado",
                                         help="Tiempo estimado de entrega")
 
+    e_revision_p_l = fields.Char(string="Revisión de P.L")
+
+
     @api.onchange('e_product_class')
     def _e_product_class(self):
         print('onchangue')
@@ -39,7 +43,28 @@ class productTemplateInherit(models.Model):
                 }
             }
 
+    @api.onchange('e_precio_de_lista')
+    def _onchange_p_l(self):
+        # flag = self.env['res.users'].has_group(
+        #     'cotizador__airovac.group_nom_options')
+        # print(flag, 'cambio precio de lista')
+        # if not flag:
+        #     raise UserError(
+        #         'No tienes los permisos necesarios para hacer esta acción')
 
+        self.write({'list_price':self.e_precio_de_lista})
+
+    @api.onchange('list_price')
+    def _onchange_price_sale(self):
+        # flag = self.env['res.users'].has_group(
+        #     'cotizador__airovac.group_nom_options')
+        #
+        # print(flag, 'cambio list price')
+        # if not flag:
+        #     raise UserError(
+        #         'No tienes los permisos necesarios para hacer esta acción')
+
+        self.write({'e_precio_de_lista': self.list_price})
 
 class productSupplierinfoInherit(models.Model):
     _inherit = 'product.supplierinfo'

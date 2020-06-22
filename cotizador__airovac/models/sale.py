@@ -150,6 +150,8 @@ class SaleOrderInherit(models.Model):
 
 
 
+
+
     @api.onchange('amount_untaxed')
     def _onchange_amount_untaxed(self):
         for order in self:
@@ -513,8 +515,6 @@ class SaleOrderLineInherit(models.Model):
             #print("hola")
 
         return res
-
-
 
     #Se agrega un nuevo producto
     #@api.onchange('product_id')
