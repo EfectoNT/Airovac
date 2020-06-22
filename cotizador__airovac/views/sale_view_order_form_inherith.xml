@@ -53,7 +53,7 @@
                 <!-- CAMPOS OCULTOS USADOS PARA AGRUPAR-->
                 <xpath expr="//field[@name='e_asociar']" position="after">
                     <field name="principal" optional="hide" attrs='{"column_invisible": True}' />
-                    <field name="grupo" attrs='{"column_invisible": True}' />
+                    <field name="grupo" attrs='{"column_invisible": True}'  />
                     <field name="colored" attrs='{"column_invisible": True}' />
                     <field name="id" attrs='{"column_invisible": True}' />
                     <field name="e_por_debajo" attrs='{"column_invisible": True}' />
@@ -100,6 +100,7 @@
                  <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='price_subtotal']" position="replace">
                     <field name="price_subtotal" readonly="1" force_save="1"   attrs="{'column_invisible': [('parent.breakdown', '=', False)]}" options='{"bg_color": "LightCyan:colored == 1 and principal == 1 ;  LightYellow:colored == 2 and principal == 1 "}'  />
                 </xpath>
+
 
                 <xpath expr="//field[@name='e_subtotal_no_des']" position="after">
                     <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='tax_id']" position="move"/>
