@@ -24,6 +24,8 @@ class SaleOrderInherit(models.Model):
     hide_fields = fields.Boolean(default = True)
     contador = fields.Integer(default = 0, compute = '_compute_contador_paquetes')
     perdidoText = fields.Boolean()
+    e_fecha_prevista_cierre = fields.Date(
+        string='Fecha prevista de cierre')
 
 
 
@@ -44,6 +46,14 @@ class SaleOrderInherit(models.Model):
     cambio_etapa_chebox = fields.Boolean(default = False, string="Habilitar cambio de etapa")
     breakdown = fields.Boolean(default=True, string="Imprimir Desglosado")
     perdido = fields.Char(default='')
+
+    @api.onchange('opportunity_id')
+    def _e_change_opportunity_id(self):
+        print('changue oportunity')
+        for order in self:
+            if order.opportunity_id:
+               order.write({'e_fecha_prevista_cierre':
+                                order.opportunity_id.date_deadline })
 
 
     def marcar_perido(self):

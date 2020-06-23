@@ -23,6 +23,10 @@
                 <xpath expr="//field[@name='partner_id']" position="after">
                     <field name="e_desciption"/>
                 </xpath>
+                <!--Fehca prevista de cierre -->
+                <xpath expr="//field[@name='date_order']" position="after">
+                    <field name="e_fecha_prevista_cierre"/>
+                </xpath>
 
                 <!-- CAMPOS: CAMBIO DE TAPA-->
                 <xpath expr="//form/sheet/group[1]/group[1]" position="inside">
@@ -58,7 +62,7 @@
                     <field name="id" attrs='{"column_invisible": True}' />
                     <field name="e_por_debajo" attrs='{"column_invisible": True}' />
                     <field name="e_partida" />
-                </xpath>
+                   </xpath>
                 <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='product_uom_qty']" position="after">
                     <field name="discount"/>
                     <field name="e_multiplicador"/>
@@ -77,6 +81,8 @@
 
 
 
+
+
                 <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='price_unit']" position="after">
                      <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='price_subtotal']" position="move" />
                     <field name="e_p_unit_a" attrs="{'column_invisible': [('parent.breakdown', '=', True)]}"  options='{"bg_color": "LightCyan:colored == 1 and principal == 1 ;  LightYellow:colored == 2 and principal == 1 "}' />
@@ -84,8 +90,10 @@
                     <field name="e_t_e"/>
                      <field name="e_te_line_min" optional="hide"/>
                     <field name="e_te_line_max" optional="hide"/>
+                    <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='customer_lead']" position="move" />
                     <field name="e_estimado_pro_l" readonly="1" force_save="1" />
                     <field name="e_marca" readonly="1" />
+                    <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='tax_id']" position="move"/>
                     <field name="e_provedor" domain = "[('product_tmpl_id', '=', product_id )]" optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="cotizador__airovac.group_nom_options" />
                     <field name="e_mult_std" optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="cotizador__airovac.group_nom_options"/>
                     <field name="e_exwork" optional="hide" readonly="1" force_save="1" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="cotizador__airovac.group_nom_options"/>
@@ -99,18 +107,17 @@
 
                  <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='price_subtotal']" position="replace">
                     <field name="price_subtotal" readonly="1" force_save="1"   attrs="{'column_invisible': [('parent.breakdown', '=', False)]}" options='{"bg_color": "LightCyan:colored == 1 and principal == 1 ;  LightYellow:colored == 2 and principal == 1 "}'  />
-                </xpath>
+                 </xpath>
 
 
-                <xpath expr="//field[@name='e_subtotal_no_des']" position="after">
-                    <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='tax_id']" position="move"/>
-                </xpath>
 
 
 
                 <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='price_unit']" position="replace">
                     <field name="price_unit" string="P.Venta" help = "P.L * Multiplicador * (1 - Descuento)" readonly="1" force_save="1"    options='{"bg_color": "Pink:e_por_debajo == 1 "}' />
                 </xpath>
+
+
 
 
 
