@@ -24,8 +24,6 @@
               <field name="e_importation" />
               <field name="e_te_max"/>
               <field name="e_te_min"/>
-
-
           </group>
         </group>
       </xpath>

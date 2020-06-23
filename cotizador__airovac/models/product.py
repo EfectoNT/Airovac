@@ -11,8 +11,8 @@ class productTemplateInherit(models.Model):
     e_igi = fields.Float(digits=(3, 4),string="IGI%", help="Porcentaje de IGI")
     e_importation = fields.Float(digits=(3, 4),string="STD Importación%", help="Porcentaje de Importación")
     #e_precio_list = fields.Float(digits=(10,2), string="Precio de Lista", help="Precio de lista")
-    e_te_max = fields.Integer(string="T.E MIN")
-    e_te_min = fields.Integer(string="T.E MAX")
+    e_te_max = fields.Integer(string="T.E MAX",help="Tiempo maximo de entrega en semanas")
+    e_te_min = fields.Integer(string="T.E MIN",help="Tiempo minimo de entrega en semanas")
     e_etiqueta_a = fields.Text(string="Etiqueta A")
     e_etiqueta_b = fields.Text(string="Etiqueta B")
     e_mult_min = fields.Float(digits=(10,4),default = 1, string="Mult. Min", help="e_mult_min")
@@ -24,6 +24,25 @@ class productTemplateInherit(models.Model):
                                         help="Tiempo estimado de entrega")
 
     e_revision_p_l = fields.Char(string="Revisión de P.L")
+
+    @api.onchange('e_te_max')
+    def e_change_e_te_max(self):
+        if self.e_te_max < self.e_te_min:
+            raise UserError(
+                     'El tiempo máximo de entrega tiene que ser mayor que el tiempo mínimo')
+        if self.e_te_max >= self.e_te_min :
+            self.update({'sale_delay': (self.e_te_max * 7)})
+        else:
+            self.update({'sale_delay': (self.e_te_min * 7)})
+
+
+    @api.onchange('e_te_min')
+    def e_change_e_te_min(self):
+        if self.e_te_min > self.e_te_max:
+            raise UserError(
+                'El tiempo mínimo de entrega tiene que ser menor que el tiempo máximo')
+
+
 
 
     @api.onchange('e_product_class')
@@ -89,6 +108,8 @@ class ProductuEClass(models.Model):
                                       )
 
     e_num_products = fields.Integer(compute='_calculate_products')
+
+
 
     @api.onchange('e_mult_min')
     def _onchange_(self):
