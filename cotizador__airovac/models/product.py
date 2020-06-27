@@ -24,6 +24,7 @@ class productTemplateInherit(models.Model):
                                         help="Tiempo estimado de entrega")
 
     e_revision_p_l = fields.Char(string="Revisión de P.L")
+    e_link_full = fields.Char()
 
     @api.onchange('e_te_max')
     def e_change_e_te_max(self):
@@ -276,7 +277,7 @@ class ProductuEClass(models.Model):
                                       )
 
     e_num_products = fields.Integer(compute='_calculate_products')
-
+    e_revision_p_l = fields.Char(string="Revisión de P.L")
 
 
     @api.onchange('e_mult_min')

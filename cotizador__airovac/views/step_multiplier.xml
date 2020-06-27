@@ -120,7 +120,7 @@
             <field name="name">producte.class.tree</field>
             <field name="model">producte.class</field>
             <field name="arch" type="xml">
-                <tree string="Marcas / Multiplicadores mínimos">
+                <tree string="Marcas / Multiplicadores mínimos" create="true" delete="false" editable="top">
                     <field name="name"/>
                     <field name="e_mult_min"/>
                 </tree>
