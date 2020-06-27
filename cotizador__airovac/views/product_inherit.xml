@@ -16,6 +16,7 @@
             <field name="e_tiempo_estimado"/>
             <field name="e_etiqueta_a"/>
             <field name="e_etiqueta_b"/>
+		    <field name="e_link_full" widget="CopyClipboardChar"/>
           </group>
           <group name="studio_group_q4Nwo_right">
               <field name="e_precio_de_lista"/>
