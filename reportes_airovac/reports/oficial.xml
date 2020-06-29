@@ -1,22 +1,23 @@
 <odoo>
-    <template id="reporte_ventas_presupuesto_pedido_oficial">
+    <template id="oficial">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
                 <div class = "page">
 
-                    <div class="header o_company_1_layout">
-                        <div class="row">
-                            <div class="col-3 mb4">
-                                <img style="max-height: 45px;" alt="Logo" src='/web/binary/company_logo'/>
-                            </div>
+                    <div class="oficial_header">
 
-                        </div>
-                        <div class="row zero_min_height">
-                            <div class="col-12">
-                                <div style="border-bottom: 1px solid black;"></div>
+                        <div class="row">
+                            <div class="header_no_logo col-4 ">
+                            </div>
+                            <div class="header_logo col-4">
+                                <img  alt="Logo" src='/reportes_airovac/static/src/img/logo_grande_png.png'/>
+                            </div>
+                            <div class="header_no_logo col-4">
                             </div>
                         </div>
-                        <div class="row">
+                    </div>
+
+                    <div class="row">
 
                             <div class="col-6" name="company_address">
                                 <div>
@@ -44,8 +45,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
 
                     <div class="article o_report_layout_standard o_company_1_layout" data-oe-model="sale.order" data-oe-id="18" data-oe-lang="es_ES">
                         <div class="address row">
@@ -113,7 +112,6 @@
                             <thead>
                                 <tr>
                                     <th width="10%" name="th_partida" class="text-center" style="vertical-align:middle">Partida</th>
-                                    <th width="10%" name="th_imagen" class="text-center" style="vertical-align:middle">Imagen</th>
                                     <th width="40%" name="th_description" class="text-center" style="vertical-align:middle">Descripción</th>
                                     <th width="10%" name="th_quantity" class="text-center" style="vertical-align:middle">Cantidad</th>
                                     <th width="12%" name="th_priceunit" class="text-center" style="vertical-align:middle">Precio unitario</th>
@@ -128,10 +126,6 @@
                                     <t t-if = "line.display_type == False" >
                                         <tr class="">
                                             <td name="td_partida">
-                                                <span style="font-size: 15px" t-field="line.e_partida"></span>
-
-                                            </td>
-                                             <td name="th_imagen">
                                                 <span style="font-size: 15px" t-field="line.e_partida"></span>
 
                                             </td>
@@ -267,10 +261,9 @@
         </t>
     </template>
 
-
-    <template id="reporte_ventas_presupuesto_pedido_oficial_inherit" inherit_id="reportes_airovac.reporte_ventas_presupuesto_pedido_oficial">
-      <xpath expr="//head" position="inside">
-             <link rel='stylesheet' href="/reportes_airovac/static/src/css/cotizacion.css"/>
+     <template id="oficial_inherit" inherit_id="reportes_airovac.oficial">
+      <xpath expr="." position="inside">
+        <link rel='stylesheet' href="/reportes_airovac/static/src/css/cotizacion.css"/>
       </xpath>
 </template>
 </odoo>

@@ -12,12 +12,12 @@
         />
 
         <report
-            id="reporte_ventas_presupuesto_pedido_oficial"
+            id="oficial"
             model="sale.order"
             string="Presupuesto / Pedido Oficial"
             report_type="qweb-pdf"
-            name="reportes_airovac.reporte_ventas_presupuesto_pedido_oficial"
-            file="reportes_airovac.reporte_ventas_presupuesto_pedido_oficial"
+            name="reportes_airovac.oficial"
+            file="reportes_airovac.oficial"
             print_report_name="'Cotización - %s' % (object.name)"
         />
 
@@ -38,7 +38,7 @@
             <field name="dpi">90</field>
         </record>
 
-        <record id="paperformat_ventas_presupuesto_pedido_oficial" model="report.paperformat">
+        <record id="paperformat_oficial" model="report.paperformat">
             <field name="name">Formato para ventas presupuesto pedido</field>
             <field name="default" eval="True"/>
             <field name="format">A4</field>
@@ -60,7 +60,7 @@
         </record>
 
         <!-- Formato ligado al reporte -->
-        <record id="reportes_airovac.reporte_ventas_presupuesto_pedido_oficial" model="ir.actions.report">
-            <field name="paperformat_id" ref="reportes_airovac.paperformat_ventas_presupuesto_pedido_oficial" />
+        <record id="reportes_airovac.oficial" model="ir.actions.report">
+            <field name="paperformat_id" ref="reportes_airovac.paperformat_oficial" />
         </record>
 </odoo>
