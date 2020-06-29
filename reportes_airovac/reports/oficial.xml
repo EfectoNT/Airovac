@@ -7,9 +7,9 @@
                     <div class="oficial_header">
 
                         <div class="row">
-                            <div class="header_no_logo col-4 ">
+                            <div class="header_no_logo col-3 ">
                             </div>
-                            <div class="header_logo col-4">
+                            <div class="header_logo col-5">
                                 <img  alt="Logo" src='/reportes_airovac/static/src/img/logo_grande_png.png'/>
                             </div>
                             <div class="header_no_logo col-4">

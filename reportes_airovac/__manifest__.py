@@ -28,7 +28,7 @@
         'views/templates.xml',
         'reports/reporte.xml',
         'reports/reporte_ventas_presupuesto_pedido.xml',
-        'reports/oficial.xml',
+        #'reports/oficial.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
