@@ -33,6 +33,7 @@
     'demo': [
         #'demo/demo.xml',
     ],
+    'images': ['static/src/img/logo_grande_png.png', ],
     'installable': True,
     'auto_install': True,
 }
