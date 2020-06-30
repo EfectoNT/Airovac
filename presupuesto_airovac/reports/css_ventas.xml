@@ -1,9 +1,5 @@
 <odoo>
     <data>
-    <template id="css_ventas" name="Estilos" inherit_id="presupuesto_airovac.ventas_presupuesto">
-      <xpath expr="." position="inside">
-        <link  href="/presupuesto_airovac/static/src/css/cotizacion.css" rel='stylesheet' type="text/css"/>
-      </xpath>
-    </template>
+
     </data>
 </odoo>
