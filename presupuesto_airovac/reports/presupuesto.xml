@@ -1,24 +1,19 @@
 <odoo>
-    <template id="reporte_ventas_presupuesto_pedido">
+<data>
+
+    <template id="ventas_presupuesto">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
                 <div class = "page">
 
-                    <div class="header o_company_1_layout">
-                        <div class="row">
-                            <div class="col-3 mb4">
-                                <img style="max-height: 45px;" alt="Logo" src='/web/binary/company_logo'/>
+                    <div class="header o_company_1_layout head_presupuesto">
+                        <div class="row" >
+                            <div class="col-4">
+                                <img style="max-height: 100%;" alt="Logo" src='/presupuesto_airovac/static/src/img/logo_grande_png.png'/>
                             </div>
-
-                        </div>
-                        <div class="row zero_min_height">
-                            <div class="col-12">
-                                <div style="border-bottom: 1px solid black;"></div>
+                            <div class="col-2">
                             </div>
-                        </div>
-                        <div class="row">
-
-                            <div class="col-6" name="company_address">
+                            <div class="col-4" name="company_address">
                                 <div>
                                     <address class="mb-0" itemscope="itemscope" >
                                         <div>
@@ -261,4 +256,6 @@
             </t>
         </t>
     </template>
+
+</data>
 </odoo>
