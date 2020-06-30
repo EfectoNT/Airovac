@@ -1,19 +1,19 @@
 <odoo>
 
-        <!-- QWeb Reports -->
+
         <report
             id="ventas_presupuesto"
             model="sale.order"
             string="Presupuesto / Pedido (en desarrollo)"
             report_type="qweb-pdf"
-            name="reportes_airovac.reporte_ventas_presupuesto_pedido"
-            file="reportes_airovac.reporte_ventas_presupuesto_pedido"
+            name="presupuesto_airovac.ventas_presupuesto"
+            file="presupuesto_airovac.ventas_presupuesto"
             print_report_name="'Cotización - %s' % (object.name)"
         />
 
 
         <!-- Formato de papel -->
-        <record id="paperformat_ventas_presupuesto_pedido" model="report.paperformat">
+        <record id="paperformat_ventas_presupuesto" model="report.paperformat">
             <field name="name">Formato para ventas presupuesto pedido</field>
             <field name="default" eval="True"/>
             <field name="format">A4</field>
@@ -32,8 +32,8 @@
 
 
         <!-- Formato ligado al reporte -->
-        <record id="reportes_airovac.reporte_ventas_presupuesto_pedido" model="ir.actions.report">
-            <field name="paperformat_id" ref="reportes_airovac.paperformat_ventas_presupuesto_pedido" />
+        <record id="presupuesto_airovac.ventas_presupuesto" model="ir.actions.report">
+            <field name="paperformat_id" ref="presupuesto_airovac.paperformat_ventas_presupuesto" />
         </record>
 
 
