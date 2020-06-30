@@ -27,7 +27,7 @@
         # 'security/ir.model.access.csv',
         'reports/presupuesto.xml',
         'reports/reporte.xml',
-        'reports/presupuesto_inherith.xml'
+        'reports/presupuesto_inherith.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
