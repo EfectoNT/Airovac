@@ -44,8 +44,7 @@
                             <link rel="stylesheet" href="/presupuesto_airovac/static/src/css/cotizacion.css"/>
                     <div class="head-presupuesto">
                         <div class="row" >
-                            <div class="col-4">
-                                <img style="max-height: 100%;" alt="Logo"  t-att-src="'/presupuesto_airovac/static/src/img/logo_grande_png.png'"/>
+                            <div class="col-4"><img style="max-height: 100%;" alt="Logo"  t-att-src="'/presupuesto_airovac/static/src/img/logo_grande_png.png'"/>
                             </div>
                             <div class="col-2">
                             </div>
