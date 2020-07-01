@@ -26,13 +26,10 @@
     'data': [
         # 'security/ir.model.access.csv',
         'reports/presu.xml',
-        'reports/presupuesto.xml'
-        #'reports/css_ventas.xml',
+        'reports/presupuesto.xml',
     ],
     # only loaded in demonstration mode
-    'demo': [
-        #'demo/demo.xml',
-    ],
+    'demo': [ ],
     'images':['static/src/img/logo_grande_png.png'],
 
     'installable': True,
