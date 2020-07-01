@@ -5,8 +5,8 @@
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
                 <div class = "page">
-
-                    <div class="header o_company_1_layout head_presupuesto">
+                            <link rel="stylesheet" href="/presupuesto_airovac/static/src/css/cotizacion.css"/>
+                    <div class="head-presupuesto">
                         <div class="row" >
                             <div class="col-4">
                                 <img style="max-height: 100%;" alt="Logo" src='/presupuesto_airovac/static/src/img/logo_grande_png.png'/>
@@ -257,11 +257,6 @@
         </t>
     </template>
 
-     <template id="css_ventas" name="Estilos" inherit_id="ventas_presupuesto">
-      <xpath expr="." position="inside">
-        <link  href="/presupuesto_airovac/static/src/css/cotizacion.css" rel='stylesheet' type="text/css"/>
-      </xpath>
-    </template>
 
 
 </data>

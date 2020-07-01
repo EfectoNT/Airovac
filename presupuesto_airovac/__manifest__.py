@@ -20,12 +20,12 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','sale'],
+    'depends': ['base','sale','web'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
-        'reports/reporte.xml',
+        'reports/presu.xml',
         'reports/presupuesto.xml',
         #'reports/css_ventas.xml',
     ],
@@ -33,7 +33,7 @@
     'demo': [
         #'demo/demo.xml',
     ],
-    'images': ['static/src/img/logo_grande_png.png', ],
+
     'installable': True,
     'auto_install': True,
 }
