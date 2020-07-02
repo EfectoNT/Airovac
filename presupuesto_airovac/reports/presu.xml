@@ -56,10 +56,8 @@
     </template>
 
     <template id="report_footer_custom" inherit_id="presupuesto_airovac.report_ventas_presupuesto">
-    <xpath expr="//div[@class='rectangulo']" position="replace">
-        <div class="footer">
+    <xpath expr="//div[@class='rectangulo']" position="inside">
             <img class="img img-responsive" src="/presupuesto_airovac/static/src/img/logo-grande.png"/>
-        </div>
     </xpath>
    </template>
 
