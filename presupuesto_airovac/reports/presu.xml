@@ -45,7 +45,7 @@
                     <link href="/presupuesto_airovac/static/src/css/cotizacion.css" rel="stylesheet"/>
                    <body>
                       <div class="rectangulo col-12" style="background-color: red;">
-                          <img class="img img-responsive" src="logo-grande.png"/>
+                          <img class="img img-responsive" src="/presupuesto_airovac/static/src/css/logo-grande"/>
 
                         Hola
                       </div>
