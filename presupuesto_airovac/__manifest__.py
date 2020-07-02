@@ -24,15 +24,10 @@
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
-        'reports/presu.xml',
-        'reports/presupuesto.xml',
+        'reports/presu.xml'
     ],
     # only loaded in demonstration mode
-    'demo': [ ],
-
     'images':['static/src/img/logo-grande.png'],
-
     'installable': True,
 
 }
