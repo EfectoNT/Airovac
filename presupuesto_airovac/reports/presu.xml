@@ -45,7 +45,6 @@
                     <link href="/presupuesto_airovac/static/src/css/cotizacion.css" rel="stylesheet"/>
                    <body>
                       <div class="rectangulo col-12" style="background-color: red;">
-                          <img class="img img-responsive" src="/static/src/css/logo-grande.grande"/>
 
                         Hola
                       </div>
@@ -56,7 +55,13 @@
         </t>
     </template>
 
-
+    <template id="report_footer_custom" inherit_id="presupuesto_airovac.report_ventas_presupuesto">
+    <xpath expr="//div[@class='rectangulo']" position="replace">
+        <div class="footer">
+            <img class="img img-responsive" src="/presupuesto_airovac/static/src/img/logo-grande.png"/>
+        </div>
+    </xpath>
+   </template>
 
 
 
