@@ -41,11 +41,11 @@
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
                 <div class = "page">
-                            <link rel="stylesheet" href="/presupuesto_airovac/static/src/css/cotizacion.css"/>
+<!--                            <link rel="stylesheet" href="/presupuesto_airovac/static/src/css/cotizacion.css"/>-->
                     <div class="head-presupuesto">
                         <div class="row" >
-                            <div class="col-4">
-                                <img  style="max-height: 45px;" src="/presupuesto_airovac/static/src/img/logo-grande.png" />
+                            <div class="col-4" style="background-color: red;">
+<!--                                <img  style="max-height: 45px;" src="/presupuesto_airovac/static/src/img/logo-grande.png" />-->
                             </div>
                             <div class="col-2">
                             </div>
@@ -293,7 +293,15 @@
         </t>
     </template>
 
-
+    <template id="report_saleorder_style" inherit_id="presupuesto_airovac.report_ventas_presupuesto">
+      <xpath expr=".">
+        <t>
+          .example-css-class {
+            background-color: red;
+          }
+        </t>
+      </xpath>
+    </template>
 
 
 
