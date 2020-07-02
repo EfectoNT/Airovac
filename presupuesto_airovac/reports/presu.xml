@@ -55,7 +55,7 @@
                                         <div>
                                             <span itemprop="name" t-field="doc.company_id.name"></span>
                                         </div>
-                                        <div itemprop="address" itemscope="itemscope" >
+                                        <div itemprop="address" itemscope="itemscope" style="background-color: red;" >
                                             <div class="d-flex align-items-baseline">
 
                                                 <div class="w-100" itemprop="streetAddress">
