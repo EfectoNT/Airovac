@@ -30,7 +30,7 @@
     ],
     # only loaded in demonstration mode
     'demo': [ ],
-    'images':['/static/src/img/logo_grande_png.png'],
+    'images':['/static/src/img/logo-grande.png'],
 
     'installable': True,
 
