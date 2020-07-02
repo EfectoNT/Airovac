@@ -44,10 +44,11 @@
                 <div class="page">
                     <link href="/presupuesto_airovac/static/src/css/cotizacion.css" rel="stylesheet"/>
                     <body >
-                        <div  style="background-color: red;" >
+
+                        <div   >
 
                             <div class="header o_company_1_layout">
-                                <div class="row">
+                                <div class="row" style="background-color: red;">
                                     <div class="col-3 mb4">
                                         <img style="max-height: 45px;" alt="Logo" src='/web/binary/company_logo'/>
                                     </div>
@@ -60,7 +61,7 @@
                                 </div>
                                 <div class="row">
 
-                                    <div class="col-6" name="company_address">
+                                    <div class="col-6" name="company_address" style="background-color: red !important;">
                                         <div>
                                             <address class="mb-0" itemscope="itemscope" >
                                                 <div>
@@ -288,7 +289,7 @@
 
                             </div>
 
-                            <div class="footer o_standard_footer o_company_1_layout">
+                            <div class="footer">
                                 <div class="text-center" style="border-top: 1px solid black; font-size: 13px;">
                                     <span>  AiroVAC</span>
                                     <span> Proyectos en Ventilación, Agua y Control<br/></span>
