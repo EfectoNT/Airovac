@@ -37,15 +37,21 @@
 <!--            <field name="paperformat_id" ref="presupuesto_airovac.paperformat_ventas_presupuesto" />-->
 <!--        </record>-->
 
+    <template id="report_saleorder_style" inherit_id="report_ventas_presupuesto">
+      <xpath expr=".">
+         <link t-att-href="'/presupuesto_airovac/static/src/css/cotizacion.css'" rel="stylesheet"/>
+      </xpath>
+    </template>
+
 
     <template id="report_ventas_presupuesto">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
                 <div class="page">
-                    <link t-att-href="'/presupuesto_airovac/static/src/css/cotizacion.css'" rel="stylesheet"/>
+<!--                    <link t-att-href="'/presupuesto_airovac/static/src/css/cotizacion.css'" rel="stylesheet"/>-->
                     <body >
 
-                        <div   >
+                        <div  class="example-css-class" >
 
                             <div class="header o_company_1_layout">
                                 <div class="row" >
