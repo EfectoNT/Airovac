@@ -50,7 +50,9 @@
                             <div class="header o_company_1_layout">
                                 <div class="row" style="background-color: red;">
                                     <div class="col-3 mb4">
-                                        <img style="max-height: 45px;" alt="Logo" src='/web/binary/company_logo'/>
+<!--                                        <img style="max-height: 45px;" alt="Logo" src='/web/binary/company_logo'/>-->
+                                        <img  alt="Logo" t-att-src="'/presupuesto_airovac/static/src/img/logog.png'" style="max-height: 45px;"/>
+
                                     </div>
 
                                 </div>

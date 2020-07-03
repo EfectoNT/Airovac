@@ -27,7 +27,6 @@
         'reports/presu.xml'
     ],
     # only loaded in demonstration mode
-    'images':['img/logo-grande.png',],
     'installable': True,
     'auto_install': True,
 
