@@ -37,17 +37,20 @@
 <!--            <field name="paperformat_id" ref="presupuesto_airovac.paperformat_ventas_presupuesto" />-->
 <!--        </record>-->
 
-    <template id="report_saleorder_style" inherit_id="report_ventas_presupuesto">
-      <xpath expr=".">
-         <link t-att-href="'/presupuesto_airovac/static/src/css/cotizacion.css'" rel="stylesheet"/>
-      </xpath>
-    </template>
+
 
 
     <template id="report_ventas_presupuesto">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
                 <div class="page">
+                    <style>
+                        .rectangulo{
+                            background-color: red;
+                            color:blue;
+                        }
+
+                    </style>
 <!--                    <link t-att-href="'/presupuesto_airovac/static/src/css/cotizacion.css'" rel="stylesheet"/>-->
                     <body >
 
@@ -55,10 +58,17 @@
 
                             <div class="header o_company_1_layout">
                                 <div class="row" >
-                                    <div class="col-3 mb4">
+                                    <div class="col-4 mb4">
 <!--                                        <img style="max-height: 45px;" alt="Logo" src='/web/binary/company_logo'/>-->
                                         <img  alt="Logo" t-att-src="'/presupuesto_airovac/static/src/img/logog.png'" class="rectangulo"/>
 
+                                    </div>
+                                    <div class="col-2 mb4">
+<!--                                        <img style="max-height: 45px;" alt="Logo" src='/web/binary/company_logo'/>-->
+
+                                    </div>
+                                    <div class="col-4 mb4">
+                                        <img  alt="Logo" t-att-src="'/presupuesto_airovac/static/src/img/logog.png'" class="rectangulo"/>
                                     </div>
 
                                 </div>
