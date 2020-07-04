@@ -58,17 +58,17 @@
 
                             <div class="header o_company_1_layout">
                                 <div class="row" >
-                                    <div class="col-4">
+                                    <div class="col-5" style="background-color: red !important;" >
 <!--                                        <img style="max-height: 45px;" alt="Logo" src='/web/binary/company_logo'/>-->
                                         <img  alt="Logo" t-att-src="'/presupuesto_airovac/static/src/img/logog.png'"
                                                style="max-height: 45px;"/>
 
                                     </div><!-- DIV 2 IZQUIERDO-->
-                                    <div class="col-2">
+                                    <div class="col-2" style="background-color: blue !important;">
 <!--                                        <img style="max-height: 45px;" alt="Logo" src='/web/binary/company_logo'/>-->
 
                                     </div><!-- DIV 2 MEDIO-->
-                                    <div class="col-4" style="background-color: red !important;">
+                                    <div class="col-5" style="background-color: red !important;">
                                         <div>
                                             <address class="mb-0" itemscope="itemscope" >
                                                 <div>
