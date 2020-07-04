@@ -58,28 +58,17 @@
 
                             <div class="header o_company_1_layout">
                                 <div class="row" >
-                                    <div class="col-4 mb4">
+                                    <div class="col-4">
 <!--                                        <img style="max-height: 45px;" alt="Logo" src='/web/binary/company_logo'/>-->
-                                        <img  alt="Logo" t-att-src="'/presupuesto_airovac/static/src/img/logog.png'" class="rectangulo"/>
+                                        <img  alt="Logo" t-att-src="'/presupuesto_airovac/static/src/img/logog.png'"
+                                              style="background-color: red !important; height: 90%;"/>
 
-                                    </div>
-                                    <div class="col-2 mb4">
+                                    </div><!-- DIV 2 IZQUIERDO-->
+                                    <div class="col-2">
 <!--                                        <img style="max-height: 45px;" alt="Logo" src='/web/binary/company_logo'/>-->
 
-                                    </div>
-                                    <div class="col-4 mb4">
-                                        <img  alt="Logo" t-att-src="'/presupuesto_airovac/static/src/img/logog.png'" class="rectangulo"/>
-                                    </div>
-
-                                </div>
-                                <div class="row zero_min_height">
-                                    <div class="col-12">
-                                        <div style="border-bottom: 1px solid black;"></div>
-                                    </div>
-                                </div>
-                                <div class="row">
-
-                                    <div class="col-6" name="company_address" style="background-color: red !important;">
+                                    </div><!-- DIV 2 MEDIO-->
+                                    <div class="col-4" style="background-color: red !important;">
                                         <div>
                                             <address class="mb-0" itemscope="itemscope" >
                                                 <div>
@@ -103,9 +92,9 @@
                                                 </div>
                                             </address>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
+                                    </div> <!-- DIV 4 DERECHO-->
+                                </div> <!-- ROW -->
+                            </div> <!-- HEADER -->
 
 
                             <div class="article o_report_layout_standard o_company_1_layout" data-oe-model="sale.order" data-oe-id="18" data-oe-lang="es_ES">
