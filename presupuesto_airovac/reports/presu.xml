@@ -61,7 +61,7 @@
                                     <div class="col-4">
 <!--                                        <img style="max-height: 45px;" alt="Logo" src='/web/binary/company_logo'/>-->
                                         <img  alt="Logo" t-att-src="'/presupuesto_airovac/static/src/img/logog.png'"
-                                              style="background-color: red !important; height: 90%;"/>
+                                               style="max-height: 45px;"/>
 
                                     </div><!-- DIV 2 IZQUIERDO-->
                                     <div class="col-2">
