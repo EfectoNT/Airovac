@@ -57,7 +57,7 @@
                         <div  class="example-css-class" >
 
                             <div class="header o_company_1_layout">
-                                <div class="row" style="height: 300px !important;">
+                                <div class="row" style="height: 105px !important;">
                                     <div class="col-5 text-center" style="background-color: pink !important;" >
 <!--                                        <img style="max-height: 45px;" alt="Logo" src='/web/binary/company_logo'/>-->
                                         <img  alt="Logo" t-att-src="'/presupuesto_airovac/static/src/img/logog.png'"
