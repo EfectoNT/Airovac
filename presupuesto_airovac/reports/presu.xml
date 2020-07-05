@@ -57,11 +57,11 @@
                         <div  class="example-css-class" >
 
                             <div class="header o_company_1_layout">
-                                <div class="row" >
+                                <div class="row" style="height: 10%;">
                                     <div class="col-5 text-center" style="background-color: red !important;" >
 <!--                                        <img style="max-height: 45px;" alt="Logo" src='/web/binary/company_logo'/>-->
                                         <img  alt="Logo" t-att-src="'/presupuesto_airovac/static/src/img/logog.png'"
-                                               style="max-height: 45px;" class="rounded mx-auto d-block"/>
+                                                class="img-fluid"/>
 
                                     </div><!-- DIV 2 IZQUIERDO-->
                                     <div class="col-2" style="background-color: blue !important;">
