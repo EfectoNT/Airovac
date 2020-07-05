@@ -52,13 +52,13 @@
 
                     </style>
 <!--                    <link t-att-href="'/presupuesto_airovac/static/src/css/cotizacion.css'" rel="stylesheet"/>-->
-                    <body >
+                    <body  style="height: 100%;">
 
                         <div  class="example-css-class" >
 
                             <div class="header o_company_1_layout">
                                 <div class="row" style="height: 10%;">
-                                    <div class="col-5 text-center" style="background-color: red !important;" >
+                                    <div class="col-5 text-center" style="background-color: pink !important;" >
 <!--                                        <img style="max-height: 45px;" alt="Logo" src='/web/binary/company_logo'/>-->
                                         <img  alt="Logo" t-att-src="'/presupuesto_airovac/static/src/img/logog.png'"
                                                 class="img-fluid"/>
