@@ -61,34 +61,32 @@
                                     <div class="col-5 text-center" style="background-color: pink !important;" >
 <!--                                        <img style="max-height: 45px;" alt="Logo" src='/web/binary/company_logo'/>-->
                                         <img  alt="Logo" t-att-src="'/presupuesto_airovac/static/src/img/logog.png'"
-                                                class="img-fluid"/>
+                                                class="img-fluid" style="vertical-align:middle !importan;"/>
 
                                     </div><!-- DIV 2 IZQUIERDO-->
                                     <div class="col-2" style="background-color: blue !important;">
 <!--                                        <img style="max-height: 45px;" alt="Logo" src='/web/binary/company_logo'/>-->
 
                                     </div><!-- DIV 2 MEDIO-->
-                                    <div class="col-5 text-right" style="font-family: verdana !important;font-weight: normal !important; font-size: 24px;!important">
+                                    <div class="col-5" style="background-color: pink !important; font-family: verdana !important;font-weight: normal !important; font-size: 24px;!important">
                                         <div>
-                                            <address class="mb-0" itemscope="itemscope" >
+                                            <address class="text-right" itemscope="itemscope">
                                                 <div>
                                                     <span itemprop="name" t-field="doc.company_id.name"></span>
                                                 </div>
                                                 <div itemprop="address" itemscope="itemscope" >
-                                                    <div class="d-flex align-items-baseline">
-
-                                                        <div class="w-100" itemprop="streetAddress">
-                                                            <t t-esc ="doc.company_id.street_name" />
-                                                            <t t-esc ="doc.company_id.street_number" />
-                                                            <t t-esc ="doc.company_id.street_number2" /><br/>
-                                                            <t t-esc ="doc.company_id.zip" />
-                                                            <t t-esc ="doc.company_id.city" />,
-                                                            <t t-esc ="doc.company_id.state_id.code" /><br/>
-                                                            <t t-sec ="doc.company_id.country_id"></t>
-
-                                                            <!--                                                    Membrillo 302 <br/>02820 Ciudad de México, DIF<br/>México -->
+                                                        <div itemprop="streetAddress">
+                                                            <p  class="text-right">
+                                                                <t t-esc ="doc.company_id.street_name" />
+                                                                <t t-esc ="doc.company_id.street_number" />
+                                                                <t t-esc ="doc.company_id.street_number2" />
+                                                                <br/>
+                                                                 <t t-esc ="doc.company_id.zip" />
+                                                                <t t-esc ="doc.company_id.city" />,
+                                                                <t t-esc ="doc.company_id.state_id.code" />
+                                                                <t t-sec ="doc.company_id.country_id"></t>
+                                                            </p>
                                                         </div>
-                                                    </div>
                                                 </div>
                                             </address>
                                         </div>
