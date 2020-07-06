@@ -180,10 +180,10 @@
                                                             <span style="font-family: verdana !important;font-weight: bold !important; font-size: 10pt !important;" t-field="line.e_partida"></span>
                                                         </div>
                                                         <div class="row">
-                                                            <t t-if = "product_template_id.image_1920 != False" >
+                                                            <t t-if = "line.product_template_id.image_1920 != False" >
                                                                 <img class="img-fluid" t-att-src="'data:image/png;base64,%s' % to_text(line.product_template_id.image_1920)"/>
                                                             </t>
-                                                            <t t-if = "product_template_id.image_1920 == False" >
+                                                            <t t-if = "line.product_template_id.image_1920 == False" >
                                                                 <img class="img-fluid" t-att-src="'/presupuesto_airovac/static/src/img/caja.jpg'" />
                                                             </t>
                                                         </div>
