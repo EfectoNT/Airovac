@@ -60,8 +60,7 @@
                                 <div class="row" style="height: 105px !important;">
                                     <div class="col-5 text-center" style="background-color: pink !important;" >
 <!--                                        <img style="max-height: 45px;" alt="Logo" src='/web/binary/company_logo'/>-->
-                                        <img  alt="Logo" t-att-src="'/presupuesto_airovac/static/src/img/logog.png'"
-                                                class="img-fluid" style="vertical-align:middle !importan;"/>
+                                        <img  alt="Logo" t-att-src="'/presupuesto_airovac/static/src/img/logog.png'"/>
 
                                     </div><!-- DIV 2 IZQUIERDO-->
                                     <div class="col-2" style="background-color: blue !important;">
@@ -80,8 +79,7 @@
                                                                 <t t-esc ="doc.company_id.street_name" />
                                                                 <t t-esc ="doc.company_id.street_number" />
                                                                 <t t-esc ="doc.company_id.street_number2" />
-                                                                <br/>
-                                                                 <t t-esc ="doc.company_id.zip" />
+                                                                <t t-esc ="doc.company_id.zip" />
                                                                 <t t-esc ="doc.company_id.city" />,
                                                                 <t t-esc ="doc.company_id.state_id.code" />
                                                                 <t t-sec ="doc.company_id.country_id"></t>
