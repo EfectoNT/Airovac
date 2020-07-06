@@ -210,11 +210,28 @@
                                                         <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;"  t-field="line.product_uom_qty"></span>
                                                     </td>
                                                     <td name="td_priceunit" class="text-center" style="vertical-align:middle">
-                                                        <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" t-field="line.price_unit"></span>
+                                                        <t t-if = "doc.breakdown == True" >
+                                                              <span t-field="doc.currency_id.symbol" style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;"  />  <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" t-field="line.price_unit"></span>
+                                                        </t>
+                                                        <t t-if = "doc.breakdown != True" >
+                                                            <t t-if = "(line.principal == 1) or (line.grupo == 0 and line.principal == 0) " >
+                                                               <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" t-field="line.e_p_unit_a"></span>
+                                                            </t>
+                                                        </t>
+
                                                     </td>
                                                      <td name="td_subtotal" class="text-center o_price_total" style="vertical-align:middle">
+
+                                                       <t t-if = "doc.breakdown == True" >
                                                         <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" class="oe_currency_value" t-field="line.price_subtotal"></span>
+                                                       </t>
+                                                         <t t-if = "doc.breakdown != True" >
+                                                            <t t-if = "(line.principal == 1) or (line.grupo == 0 and line.principal == 0) " >
+                                                               <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" t-field="line.e_subtotal_no_des"></span>
+                                                            </t>
+                                                         </t>
                                                     </td>
+
                                                     <td name="td_e_t_e" class="text-center" style="vertical-align:middle">
                                                         <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" t-field="line.e_t_e"></span>
                                                     </td>
