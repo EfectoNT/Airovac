@@ -58,17 +58,17 @@
 
                             <div class="header o_company_1_layout">
                                 <div class="row" style="height: 105px !important;">
-                                    <div class="col-5 text-center" style="background-color: pink !important;" >
+                                    <div class="col-5 text-center"  >
 <!--                                        <img style="max-height: 45px;" alt="Logo" src='/web/binary/company_logo'/>-->
                                         <img  alt="Logo" t-att-src="'/presupuesto_airovac/static/src/img/logog.png'"
                                                 class="img-fluid" style="vertical-align:middle !important;"/>
 
                                     </div><!-- DIV 2 IZQUIERDO-->
-                                    <div class="col-2" style="background-color: blue !important;">
+                                    <div class="col-2" >
 <!--                                        <img style="max-height: 45px;" alt="Logo" src='/web/binary/company_logo'/>-->
 
                                     </div><!-- DIV 2 MEDIO-->
-                                    <div class="col-5" style="background-color: pink !important; font-family: verdana !important;font-weight: normal !important; font-size: 10px !important;">
+                                    <div class="col-5" style="font-family: verdana !important;font-weight: normal !important; font-size: 10px !important;">
                                         <div>
                                             <address class="text-right" itemscope="itemscope">
                                                 <div>
@@ -98,7 +98,7 @@
                                 <div class="address row">
                                     <div  class="col-6">
                                         <div class="oe_structure"></div>
-                                        <h2 style="font-family: verdana !important;font-weight: bold !important; font-size: 18px;!important">
+                                        <h2 style="font-family: verdana !important;font-weight: bold !important; font-size: 18pt;!important">
                                             <span>Cotización # </span>
                                             <span t-field="doc.name"></span>
                                         </h2>
@@ -138,20 +138,20 @@
 
                                 <div class="row mt32 mb32" id="informations">
                                     <div class="col-auto mw-100 mb-2">
-                                        <span style="font-family: verdana !important;font-weight: bold !important; font-size: 11px;!important" >Fecha de cotización:</span>
+                                        <span style="font-family: verdana !important;font-weight: bold !important; font-size: 11pt !important;" >Fecha de cotización:</span>
                                         <p class="m-0" style="font-family: verdana !important;font-weight: normal !important; font-size: 10px !important;" >
                                             <span t-field="doc.date_order" t-options='{"format": "dd/MM/yyyy"}'  ></span>
                                         </p>
                                     </div>
                                     <div class="col-auto mw-100 mb-2">
-                                        <span style="font-family: verdana !important;font-weight: bold !important; font-size: 11px;!important" >Fecha de expiración:</span>
-                                        <p class="m-0" style="font-family: verdana !important;font-weight: normal !important; font-size: 1opx;!important">
+                                        <span style="font-family: verdana !important;font-weight: bold !important; font-size: 11pt !important;" >Fecha de expiración:</span>
+                                        <p  style="font-family: verdana !important;font-weight: normal !important; font-size: 10px !important;">
                                             <span t-field="doc.validity_date"   ></span>
                                         </p>
                                     </div>
                                     <div class="col-auto mw-100 mb-2">
-                                        <strong>Comercial:</strong>
-                                        <p class="m-0"><span t-field="doc.create_uid.name"></span></p>
+                                        <span style="font-family: verdana !important;font-weight: bold !important; font-size: 11pt !important;" >Comercial:</span>
+                                        <p style="font-family: verdana !important;font-weight: normal !important; font-size: 10px !important;" ><span t-field="doc.create_uid.name"></span></p>
                                     </div>
                                 </div>
 
