@@ -68,7 +68,7 @@
 <!--                                        <img style="max-height: 45px;" alt="Logo" src='/web/binary/company_logo'/>-->
 
                                     </div><!-- DIV 2 MEDIO-->
-                                    <div class="col-5" style="font-family: verdana !important;font-weight: normal !important; font-size: 10px !important; vertical-align:middle !important;">
+                                    <div class="col-5">
                                         <div class="oe_structure"></div>
                                         <h2 style="font-family: verdana !important;font-weight: bold !important; font-size: 18pt;!important">
                                             <span>Cotización # </span>
@@ -171,21 +171,27 @@
                                     <div class="col-3">
 
                                     </div>
-                                    <div class="col-3 text-left" style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important; vertical-align: text-top !important;">
-
+                                    <div class="col-3 " style="vertical-align: text-top !important;">
+                                        <p class="text-left" style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important; ">
                                              <span itemprop="name" t-field="doc.partner_id.parent_id.name"></span><br/>
                                              <span itemprop="name" t-field="doc.partner_id.name"></span><br/>
                                             <t t-if = "doc.partner_id.phone != True" >
                                                  <span itemprop="name" t-field="doc.partner_id.phone"></span><br/>
                                             </t>
                                              <span itemprop="name" t-field="doc.partner_id.email"></span>
-
+                                        </p>
                                     </div>
                                 </div><!--row fechas y comercial-->
 
+                                <div class="row m-10"><!--row fechas y comercial-->
+                                    <p style="font-color:black; font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important;" >
+                                        Estimado(a),
+                                        En respuesta a su amable solicitud, presento la siguiente cotización
+                                    </p>
+                                </div><!--row fechas y comercial-->
                                 <!--Tabla-->
                                 <table class="table table-sm o_main_table">
-                                    <thead style="font-family: verdana !important;font-weight: normal !important; font-size: 11pt !important;">
+                                    <thead style="font-color:black; font-family: verdana !important;font-weight: normal !important; font-size: 11pt !important;">
                                         <tr>
                                             <th width="16%" name="th_partida" class="text-center" style="vertical-align:middle">Partida</th>
                                             <th width="30%" name="th_description" class="text-center" style="vertical-align:middle">Descripción</th>
