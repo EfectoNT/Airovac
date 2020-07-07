@@ -72,10 +72,11 @@
                                         <div class="oe_structure"></div>
                                         <h2 style="font-family: verdana !important;font-weight: bold !important; font-size: 18pt;!important">
                                             <span>Cotización # </span>
-                                            <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important; vertical-align:middle !important;" t-field="doc.name"></span>
+                                            <span  t-field="doc.name"></span>
                                         </h2>
 
-                                        <span t-field="doc.e_desciption"></span>
+                                        <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important; vertical-align:middle !important;" t-field="doc.e_desciption">
+                                        </span>
 
 <!--                                        <div>-->
 <!--                                            <address class="text-right" itemscope="itemscope">-->
@@ -181,19 +182,21 @@
                                 </div><!--row fechas y comercial-->
 
                                 <div class="row"><!--row fechas y comercial-->
-                                    <p style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important;" >
-                                        Estimado(a),
+                                    <span style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important;" >
+                                        Estimado(a),</span><br/>
+                                    <span style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important;" >
                                         En respuesta a su amable solicitud, presento la siguiente cotización
-                                    </p>
+                                    </span>
+
                                 </div><!--row fechas y comercial-->
                                 <!--Tabla-->
                                 <table class="table table-sm o_main_table">
                                     <thead style="color:black !important; font-family: verdana !important;font-weight: normal !important; font-size: 11pt !important;">
                                         <tr>
-                                            <th width="16%" name="th_partida" class="text-center" style="vertical-align:middle">Partida</th>
-                                            <th width="30%" name="th_description" class="text-center" style="vertical-align:middle">Descripción</th>
-                                            <th width="10%" name="th_etiqueta_a" class="text-center" style="vertical-align:middle"><span  t-field="doc.e_etiqueta_title_a" /></th>
-                                            <th width="10%" name="th_etiqueta_b" class="text-center" style="vertical-align:middle"><span  t-field="doc.e_etiqueta_title_b" /></th>
+                                            <th width="14%" name="th_partida" class="text-center" style="vertical-align:middle">Partida</th>
+                                            <th width="32%" name="th_description" class="text-center" style="vertical-align:middle">Descripción</th>
+                                            <th width="10%" name="th_etiqueta_a" class="text-center" style="vertical-align:middle: font-size: 10pt !important;" ><span  t-field="doc.e_etiqueta_title_a" /></th>
+                                            <th width="10%" name="th_etiqueta_b" class="text-center" style="vertical-align:middle: font-size: 10pt !important;"><span  t-field="doc.e_etiqueta_title_b" /></th>
                                             <th width="8%" name="th_quantity" class="text-center" style="vertical-align:middle">Cantidad</th>
                                             <th width="8%" name="th_priceunit" class="text-center" style="vertical-align:middle">Precio unitario</th>
                                             <th width="8%" name="th_subtotal" class="text-center" style="vertical-align:middle">Subtotal  <![CDATA[&nbsp;]]> <t t-esc="doc.pricelist_id.currency_id.name"></t></th>
@@ -207,8 +210,10 @@
                                             <t t-if = "line.display_type == False" >
                                                 <tr class="">
                                                     <td name="td_partida" class="text-center">
-                                                        <div class="row text-center" >
+                                                        <div class="row" >
+                                                            <di class="col-12 text-center">
                                                             <span style="font-family: verdana !important;font-weight: bold !important; font-size: 10pt !important;" t-field="line.e_partida"></span>
+                                                            </di>
                                                         </div>
                                                         <div class="row">
                                                             <t t-if = "line.product_template_id.image_1920 != False" >
@@ -222,14 +227,14 @@
                                                     </td>
                                                     <td name="th_description">
                                                         <strong><span style="font-family: verdana !important;font-weight: bold !important; font-size: 10pt !important;" t-field="line.product_template_id.default_code"></span></strong><br/>
+                                                        <p style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt;!important; line-height: 90% !important;">
                                                         <t t-if = "line.product_template_id.description_sale != False" >
-
-                                                            <span style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt;!important" t-field="line.product_template_id.description_sale"></span>
+                                                             <t t-esc ="line.product_template_id.description_sale" />
                                                         </t>
                                                         <t t-if = "line.product_template_id.description_sale == False" >
-                                                            <span style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt;!important" t-field="line.product_template_id.name"></span>
+                                                            <t t-esc ="line.product_template_id.name" />
                                                         </t>
-
+                                                        </p>
                                                     </td>
                                                     <td name="td_etiqueta_a" class="text-center" style="vertical-align:middle">
                                                         <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;"  t-field="line.e_etiqueta_line_a"></span>
