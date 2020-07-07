@@ -68,96 +68,123 @@
 <!--                                        <img style="max-height: 45px;" alt="Logo" src='/web/binary/company_logo'/>-->
 
                                     </div><!-- DIV 2 MEDIO-->
-                                    <div class="col-5" style="font-family: verdana !important;font-weight: normal !important; font-size: 10px !important;">
-                                        <div>
-                                            <address class="text-right" itemscope="itemscope">
-                                                <div>
-                                                    <span itemprop="name" t-field="doc.company_id.name"></span>
-                                                </div>
-                                                <div itemprop="address" itemscope="itemscope" >
-                                                        <div itemprop="streetAddress">
-                                                            <p  class="text-right">
-                                                                <t t-esc ="doc.company_id.street_name" />
-                                                                <t t-esc ="doc.company_id.street_number" />
-                                                                <t t-esc ="doc.company_id.street_number2" /><br/>
-                                                                CP <t t-esc ="doc.company_id.zip" />
-                                                                <t t-esc ="doc.company_id.city" />,
-                                                                <t t-esc ="doc.company_id.state_id.code" />
-                                                                <t t-sec ="doc.company_id.country_id"></t>
-                                                            </p>
-                                                        </div>
-                                                </div>
-                                            </address>
-                                        </div>
+                                    <div class="col-5" style="font-family: verdana !important;font-weight: normal !important; font-size: 10px !important; vertical-align:middle !important;">
+                                        <div class="oe_structure"></div>
+                                        <h2 style="font-family: verdana !important;font-weight: bold !important; font-size: 18pt;!important">
+                                            <span>Cotización # </span>
+                                            <span t-field="doc.name"></span>
+                                        </h2>
+
+                                        <span t-field="doc.e_desciption"></span>
+
+<!--                                        <div>-->
+<!--                                            <address class="text-right" itemscope="itemscope">-->
+<!--                                                <div>-->
+<!--                                                    <span itemprop="name" t-field="doc.company_id.name"></span>-->
+<!--                                                </div>-->
+<!--                                                <div itemprop="address" itemscope="itemscope" >-->
+<!--                                                        <div itemprop="streetAddress">-->
+<!--                                                            <p  class="text-right">-->
+<!--                                                                <t t-esc ="doc.company_id.street_name" />-->
+<!--                                                                <t t-esc ="doc.company_id.street_number" />-->
+<!--                                                                <t t-esc ="doc.company_id.street_number2" /><br/>-->
+<!--                                                                CP <t t-esc ="doc.company_id.zip" />-->
+<!--                                                                <t t-esc ="doc.company_id.city" />,-->
+<!--                                                                <t t-esc ="doc.company_id.state_id.code" />-->
+<!--                                                                <t t-sec ="doc.company_id.country_id"></t>-->
+<!--                                                            </p>-->
+<!--                                                        </div>-->
+<!--                                                </div>-->
+<!--                                            </address>-->
+<!--                                        </div>-->
+
+
+
                                     </div> <!-- DIV 4 DERECHO-->
                                 </div> <!-- ROW -->
                             </div> <!-- HEADER -->
 
 
                             <div class="article o_report_layout_standard o_company_1_layout" data-oe-model="sale.order" data-oe-id="18" data-oe-lang="es_ES">
-                                <div class="address row">
-                                    <div  class="col-6">
-                                        <div class="oe_structure"></div>
-                                        <h2 style="font-family: verdana !important;font-weight: bold !important; font-size: 18pt;!important">
-                                            <span>Cotización # </span>
-                                            <span t-field="doc.name"></span>
-                                        </h2>
-                                    </div>
-                                    <div name="address" class="col-6">
-                                        <div>
-                                            <address class="mb-0" itemscope="itemscope" >
-                                                <div>
+<!--                                <div class="address row">-->
+<!--                                    <div  class="col-6">-->
 
-                                                    <span itemprop="name" t-field="doc.partner_id.parent_id.name"></span><br/>
-                                                    <span itemprop="name" t-field="doc.partner_id.name"></span>
-                                                </div>
-                                                <div itemprop="address" itemscope="itemscope" >
-                                                    <div class="d-flex align-items-baseline">
-                                                        <div class="w-100" itemprop="streetAddress">
-                                                            <t t-esc ="doc.partner_id.street_name" />
-                                                            <t t-esc ="doc.partner_id.street_number" />
-                                                            <t t-if = "doc.partner_id.street_number2">
-                                                                /<t t-esc ="doc.partner_id.street_number2" /><br/>
-                                                            </t>
-                                                            <t t-esc ="doc.partner_id.zip" />
-                                                            <t t-esc ="doc.partner_id.city_id.name" />
-                                                            <t t-if = "doc.partner_id.state_id.code">
-                                                                , <t t-esc ="doc.partner_id.state_id.code" />
-                                                            </t>
 
-                                                            <br/>
-                                                            <t t-sec ="doc.partner_id.country_id"></t>
-                                                        </div>
 
-                                                    </div>
-                                                </div>
-                                            </address>
-                                        </div>
-                                    </div>
-                                </div>
+<!--                                        <div class="oe_structure"></div>-->
+<!--                                        <h2 style="font-family: verdana !important;font-weight: bold !important; font-size: 18pt;!important">-->
+<!--                                            <span>Cotización # </span>-->
+<!--                                            <span t-field="doc.name"></span>-->
+<!--                                        </h2>-->
+<!--                                    </div>-->
+<!--                                    <div name="address" class="col-6">-->
+<!--                                        <div>-->
+<!--                                            <address class="mb-0" itemscope="itemscope" >-->
+<!--                                                <div>-->
+
+<!--                                                    <span itemprop="name" t-field="doc.partner_id.parent_id.name"></span><br/>-->
+<!--                                                    <span itemprop="name" t-field="doc.partner_id.name"></span>-->
+<!--                                                </div>-->
+<!--                                                <div itemprop="address" itemscope="itemscope" >-->
+<!--                                                    <div class="d-flex align-items-baseline">-->
+<!--                                                        <div class="w-100" itemprop="streetAddress">-->
+<!--                                                            <t t-esc ="doc.partner_id.street_name" />-->
+<!--                                                            <t t-esc ="doc.partner_id.street_number" />-->
+<!--                                                            <t t-if = "doc.partner_id.street_number2">-->
+<!--                                                                /<t t-esc ="doc.partner_id.street_number2" /><br/>-->
+<!--                                                            </t>-->
+<!--                                                            <t t-esc ="doc.partner_id.zip" />-->
+<!--                                                            <t t-esc ="doc.partner_id.city_id.name" />-->
+<!--                                                            <t t-if = "doc.partner_id.state_id.code">-->
+<!--                                                                , <t t-esc ="doc.partner_id.state_id.code" />-->
+<!--                                                            </t>-->
+
+<!--                                                            <br/>-->
+<!--                                                            <t t-sec ="doc.partner_id.country_id"></t>-->
+<!--                                                        </div>-->
+
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </address>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
 
                                 <div class="row" ><!--row fechas y comercial-->
-                                    <div class="col-4">
-                                        <span style="font-family: verdana !important;font-weight: bold !important; font-size: 11pt !important;" >Fecha de cotización:</span>
-                                        <p class="m-0" style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" >
-                                            <span t-field="doc.date_order" t-options='{"format": "dd/MM/yyyy"}'  ></span>
-                                        </p>
+                                    <div class="col-3">
+                                        <p  style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important;" >
+                                            <span>Contacto:</span><br/>
+                                            <span>Fecha de cotización:</span><br/>
+                                            <span>Fecha de expiración:</span><br/>
+                                            <span>Condiciones:</span>
+                                         </p>
                                     </div>
                                     <div class="col-4">
-                                        <span style="font-family: verdana !important;font-weight: bold !important; font-size: 11pt !important;" >Fecha de expiración:</span>
-                                        <p  style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;">
-                                            <span t-field="doc.validity_date"   ></span>
+                                        <p  style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important;" >
+                                            <span t-field="doc.date_order" t-options='{"format": "dd/MM/yyyy"}'  ></span><br/>
+                                            <span t-field="doc.validity_date"   ></span><br/>
+                                            <span t-field="doc.create_uid.name"></span><br/>
+                                            <span t-field="doc.payment_term_id.name"></span>
                                         </p>
                                     </div>
-                                    <div class="col-4 ">
-                                        <span style="font-family: verdana !important;font-weight: bold !important; font-size: 11pt !important;" >Comercial:</span>
-                                        <p style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" ><span t-field="doc.create_uid.name"></span></p>
+                                    <div class="col-3">
+
+                                    </div>
+                                    <div class="col-3" style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;">
+
+                                             <span itemprop="name" t-field="doc.partner_id.parent_id.name"></span><br/>
+                                             <span itemprop="name" t-field="doc.partner_id.name"></span><br/>
+                                            <t t-if = "doc.partner_id.phone != True" >
+                                                 <span itemprop="name" t-field="doc.partner_id.phone"></span><br/>
+                                            </t>
+                                             <span itemprop="name" t-field="doc.partner_id.email"></span>
+
                                     </div>
                                 </div><!--row fechas y comercial-->
 
                                 <!--Tabla-->
                                 <table class="table table-sm o_main_table">
-                                    <thead style="font-family: verdana !important;font-weight: normal !important; font-size: 10px !important;">
+                                    <thead style="font-family: verdana !important;font-weight: normal !important; font-size: 11pt !important;">
                                         <tr>
                                             <th width="16%" name="th_partida" class="text-center" style="vertical-align:middle">Partida</th>
                                             <th width="30%" name="th_description" class="text-center" style="vertical-align:middle">Descripción</th>
