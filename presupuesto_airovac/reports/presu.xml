@@ -151,7 +151,7 @@
 <!--                                </div>-->
 
                                 <div class="row" ><!--row fechas y comercial-->
-                                    <div class="col-3 text-left">
+                                    <div class="col-2 text-left">
                                         <p  style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important;" >
                                             <span>Contacto:</span><br/>
                                             <span>Fecha de cotización:</span><br/>
@@ -159,7 +159,7 @@
                                             <span>Condiciones:</span>
                                          </p>
                                     </div>
-                                    <div class="col-4 text-left">
+                                    <div class="col-5 text-left">
                                         <p  style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important;" >
                                             <span t-field="doc.create_uid.name"></span><br/>
                                             <span t-field="doc.date_order" t-options='{"format": "dd/MM/yyyy"}'  ></span><br/>
@@ -168,10 +168,7 @@
 
                                         </p>
                                     </div>
-                                    <div class="col-3">
-
-                                    </div>
-                                    <div class="col-3 " style="vertical-align: text-top !important;">
+                                    <div class="col-5 " style="vertical-align: text-top !important;">
                                         <p class="text-left" style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important; ">
                                              <span itemprop="name" t-field="doc.partner_id.parent_id.name"></span><br/>
                                              <span itemprop="name" t-field="doc.partner_id.name"></span><br/>
@@ -183,15 +180,15 @@
                                     </div>
                                 </div><!--row fechas y comercial-->
 
-                                <div class="row m-10"><!--row fechas y comercial-->
-                                    <p style="font-color:black; font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important;" >
+                                <div class="row"><!--row fechas y comercial-->
+                                    <p style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important;" >
                                         Estimado(a),
                                         En respuesta a su amable solicitud, presento la siguiente cotización
                                     </p>
                                 </div><!--row fechas y comercial-->
                                 <!--Tabla-->
                                 <table class="table table-sm o_main_table">
-                                    <thead style="font-color:black; font-family: verdana !important;font-weight: normal !important; font-size: 11pt !important;">
+                                    <thead style="color:black !important; font-family: verdana !important;font-weight: normal !important; font-size: 11pt !important;">
                                         <tr>
                                             <th width="16%" name="th_partida" class="text-center" style="vertical-align:middle">Partida</th>
                                             <th width="30%" name="th_description" class="text-center" style="vertical-align:middle">Descripción</th>
