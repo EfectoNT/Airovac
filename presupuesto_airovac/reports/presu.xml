@@ -109,11 +109,14 @@
 
                                 <div class="row"><!--row fechas y comercial-->
                                      <div class="col-12 text-left">
-                                        <span style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important;" >
-                                            Estimado(a),</span>
-                                        <span style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important;" >
+                                      <p style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important; line-height: 90% !important;" >
+                                        <span >
+                                            Estimado(a),
+                                        </span> <br/>
+                                        <span >
                                             En respuesta a su amable solicitud, presento la siguiente cotización
                                         </span>
+                                         </p>
                                      </div>
                                 </div><!--row fechas y comercial-->
                                 <!--Tabla-->
@@ -154,7 +157,7 @@
                                                         </div>
 
                                                     </td>
-                                                    <td name="th_description">
+                                                    <td name="th_description" style="line-height: 100% !important;">
                                                         <strong><span style="font-family: verdana !important;font-weight: bold !important; font-size: 10pt !important;" t-field="line.product_template_id.default_code"></span></strong>
                                                         <br/>
                                                         <p style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt;!important; line-height: 90% !important;">
