@@ -109,10 +109,8 @@
 
                                 <div class="row m-3"><!--row fechas y comercial-->
                                      <div class="col-12 text-left">
-                                      <p style="font-family: verdana !important;font-weight: normal !important;" >
-                                        <span >Estimado(a),</span> <br/>
-                                        <span >En respuesta a su amable solicitud, presento la siguiente cotización</span>
-                                      </p>
+                                        <span style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important;" >Estimado(a),</span> <br/>
+                                        <span style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important;"> En respuesta a su amable solicitud, presento la siguiente cotización</span>
                                      </div>
                                 </div><!--row fechas y comercial-->
                                 <!--Tabla-->
@@ -121,8 +119,8 @@
                                         <tr>
                                             <th width="14%" name="th_partida" class="text-center" style="vertical-align:middle">Partida</th>
                                             <th width="32%" name="th_description" class="text-center" style="vertical-align:middle">Descripción</th>
-                                            <th width="10%" name="th_etiqueta_a" class="text-center" style="vertical-align:middle: font-size: 10pt !important;" ><span  t-field="doc.e_etiqueta_title_a" /></th>
-                                            <th width="10%" name="th_etiqueta_b" class="text-center" style="vertical-align:middle: font-size: 10pt !important;"><span  t-field="doc.e_etiqueta_title_b" /></th>
+                                            <th width="10%" name="th_etiqueta_a" class="text-center" style="vertical-align:middle; font-size: 10pt !important;" ><span  t-field="doc.e_etiqueta_title_a" /></th>
+                                            <th width="10%" name="th_etiqueta_b" class="text-center" style="vertical-align:middle; font-size: 10pt !important;"><span  t-field="doc.e_etiqueta_title_b" /></th>
                                             <th width="8%" name="th_quantity" class="text-center" style="vertical-align:middle">Cantidad</th>
                                             <th width="8%" name="th_priceunit" class="text-center" style="vertical-align:middle">Precio unitario</th>
                                             <th width="8%" name="th_subtotal" class="text-center" style="vertical-align:middle">Subtotal  <![CDATA[&nbsp;]]> <t t-esc="doc.pricelist_id.currency_id.name"></t></th>
@@ -153,9 +151,8 @@
                                                         </div>
 
                                                     </td>
-                                                    <td name="th_description" style="line-height: 100% !important text-align: justify !important ;">
+                                                    <td name="th_description" style="text-align: justify !important ;">
                                                         <strong><span style="font-family: verdana !important;font-weight: bold !important; font-size: 10pt !important;" t-field="line.product_template_id.default_code"></span></strong>
-                                                        <br/>
                                                         <br/>
                                                         <p style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt;!important; line-height: 90% !important;">
                                                         <t t-if = "line.product_template_id.description_sale != False" >
