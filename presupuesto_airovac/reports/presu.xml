@@ -133,6 +133,7 @@
                                     E5E5E5 platinum
                                     95B8D1 palera cerulean
                                     93C6D6 darkky
+                                    F0F3F9 -> Colored 1
                                     -->
                                     <t t-set="i" t-value="0"/>
                                     <tbody class="sale_tbody">
@@ -148,7 +149,7 @@
                                                           <t t-set="i" t-value="i+1"/>
                                                     </t>
                                                 <t t-if = "i%2 == 0" >
-                                                    <tr style="background-color:#A8F0E8;">
+                                                    <tr style="background-color:#EEFCFA;">
                                                         <td name="td_partida" class="text-center">
                                                             <div class="row" >
                                                                 <div class="col-12  text-center">
