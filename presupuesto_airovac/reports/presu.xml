@@ -148,7 +148,7 @@
                                                           <t t-set="i" t-value="i+1"/>
                                                     </t>
                                                 <t t-if = "i%2 == 0" >
-                                                    <tr style="background-color:#93C6D6;">
+                                                    <tr style="background-color:#A6CFD5;">
                                                         <td name="td_partida" class="text-center">
                                                             <div class="row" >
                                                                 <div class="col-12  text-center">
@@ -169,13 +169,15 @@
                                                         </td>
                                                         <td name="th_description" style="text-align: justify !important ;">
                                                             <a href="https://airovac-airovactest-1135560.dev.odoo.com"><strong><span style="font-family: verdana !important;font-weight: bold !important; font-size: 10pt !important;" t-field="line.product_template_id.default_code"></span></strong></a>
-                                                                <br/>
                                                             <p style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt;!important; line-height: 90% !important;">
                                                                 <t t-if = "line.product_template_id.description_sale != False" >
+                                                                     <t t-foreach="line.product_id.product_template_attribute_value_ids" t-as="va">
+                                                                        <t t-esc ="va.name" ></t>
+                                                                    </t>
                                                                     <t t-esc ="line.product_template_id.description_sale" />
                                                                 </t>
                                                                 <t t-if = "line.product_template_id.description_sale == False" >
-                                                                    <t t-esc ="line.product_template_id.name" />
+                                                                    <t t-esc ="line.name" />
                                                                 </t>
                                                             </p>
                                                         </td>
@@ -190,7 +192,7 @@
                                                         </td>
                                                         <td name="td_priceunit" class="text-center" style="vertical-align:middle">
                                                             <t t-if = "doc.breakdown == True" >
-                                                                <span t-field="doc.currency_id.symbol" style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;"  />  <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" t-field="line.price_unit"></span>
+                                                                  <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" t-field="line.price_unit"  t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" ></span>
                                                             </t>
                                                             <t t-if = "doc.breakdown != True" >
                                                                 <t t-if = "(line.principal == 1) or (line.grupo == 0 and line.principal == 0) " >
@@ -243,11 +245,15 @@
                                                                 <br/>
                                                             <br/>
                                                             <p style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt;!important; line-height: 90% !important;">
+
                                                                 <t t-if = "line.product_template_id.description_sale != False" >
+                                                                    <t t-foreach="line.product_id.product_template_attribute_value_ids" t-as="va">
+                                                                        <t t-esc ="va.name" ></t>
+                                                                    </t>
                                                                     <t t-esc ="line.product_template_id.description_sale" />
                                                                 </t>
                                                                 <t t-if = "line.product_template_id.description_sale == False" >
-                                                                    <t t-esc ="line.product_template_id.name" />
+                                                                    <t t-esc ="line.name" />
                                                                 </t>
                                                             </p>
                                                         </td>
@@ -262,7 +268,7 @@
                                                         </td>
                                                         <td name="td_priceunit" class="text-center" style="vertical-align:middle">
                                                             <t t-if = "doc.breakdown == True" >
-                                                                <span t-field="doc.currency_id.symbol" style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;"  />  <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" t-field="line.price_unit"></span>
+                                                                 <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" t-field="line.price_unit" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"></span>
                                                             </t>
                                                             <t t-if = "doc.breakdown != True" >
                                                                 <t t-if = "(line.principal == 1) or (line.grupo == 0 and line.principal == 0) " >
@@ -352,7 +358,7 @@
 
                                 <div style="margin-top:5px;"  class="col-12 text-left" name="information_block">
                                     <h2 style="font-family: verdana !important;font-weight: bold !important; font-size: 11pt;!important" > Condiciones Generales:</h2>
-                                    <p style="font-family: verdana !important;font-weight: bold !important; font-size: 11pt;!important text-align: justify !important ;" >
+                                    <p style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt;!important text-align: justify !important ;" >
                                         <t t-esc ="doc.note" />
                                     </p>
                                 </div>
@@ -369,14 +375,16 @@
                                             Col
                                             <t t-esc ="doc.company_id.l10n_mx_edi_colony" />
                                             <t t-esc ="doc.company_id.l10n_mx_edi_colony_code" />
-                                            <t t-esc ="doc.company_id.l10n_mx_edi_locality_id" />,
+                                            <t t-esc ="doc.company_id.l10n_mx_edi_locality_id.name" />,
                                             <t t-esc ="doc.company_id.city" />
-                                            <t t-sec ="doc.company_id.state_id" />
+                                            <t t-sec ="doc.company_id.state_id.name" />
                                             <t t-sec ="doc.company_id.zip" />
-                                            <t t-sec ="doc.company_id.country_id" /><br/>
-                                            RFC: RIA031208EU4,
-                                            <t t-esc ="doc.company_id.phone" />,
-                                            <t t-esc ="doc.company_id.email" />
+                                            <t t-sec ="doc.company_id.country_id.name" /><br/>
+                                            <t t-sec ="doc.company_id.vat" />
+                                            RFC: <t t-esc ="doc.company_id.phone" />,
+                                            <t t-esc ="doc.company_id.email" /><br/>
+                                            <br/>
+                                            <a href="doc.company_id.website"><t t-esc ="doc.company_id.website" /> </a>
                                         </p>
                                         <p class="text-right">
                                             Página <span class="page"/> / <span class="topage"/>

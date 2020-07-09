@@ -345,7 +345,6 @@ class SaleOrderLineInherit(models.Model):
     e_mult_min = fields.Float(digits=(10, 4),default = 1, string="Mult. Min", help="e_mult_min")
     e_exwork = fields.Monetary( string="Cost Exwork",store=True, help="P.L x Exwork mult")
     e_marca = fields.Char(String='Marca', related='product_id.e_product_class.name')
-
     #price_subtotal = fields.Monetary(Default=0, string="Subtutal",compute='_compute_subtotal',
      #                                   help="Subtutal")
 
