@@ -148,7 +148,7 @@
                                                           <t t-set="i" t-value="i+1"/>
                                                     </t>
                                                 <t t-if = "i%2 == 0" >
-                                                    <tr style="background-color:#F0F5F9;">
+                                                    <tr style="background-color:#F0F3F9;">
                                                         <td name="td_partida" class="text-center">
                                                             <div class="row" >
                                                                 <div class="col-12  text-center">
