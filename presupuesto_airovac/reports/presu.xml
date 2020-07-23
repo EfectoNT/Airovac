@@ -364,7 +364,7 @@
                                     </p>
                                 </div>
                                 <div class="row">
-                                    <div class="col-4" style="display: flex; text-center">
+                                    <div class="col-4" style="display: flex; text-center;  float: left; clear: none;">
                                         <div class="col-5" >
                                              <img style="max-height: 50px;" alt="Logo" src='/web/binary/company_logo'/>
                                          </div>
