@@ -35,7 +35,8 @@
         'views/sale_view_order_form_inherith.xml',
         'views/product_inherit.xml',
         'views/product_supplierinfo_inherit.xml',
-        'views/optional_product_items_inherit.xml',
+        #'views/sale_portal_templates_inherit.xml'
+        #'views/optional_product_items_inherit.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

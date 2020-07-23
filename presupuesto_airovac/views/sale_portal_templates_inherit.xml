@@ -1,55 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <odoo>
+    <template id="sale_order_portal_content_airovac" inherit_id="sale.sale_order_portal_content">
 
 
-    <report
-            id="ventas_presupuesto"
-            model="sale.order"
-            string="(en desarrollo)"
-            report_type="qweb-pdf"
-            name="presupuesto_airovac.report_ventas_presupuesto"
-            file="presupuesto_airovac.report_ventas_presupuesto"
-            print_report_name="'Cotización - %s' % (object.name)"
-            attachment_use="True"
-    />
+        <xpath expr="//div[@id='introduction']" position="replace" >
+         <div id="introduction" t-attf-class="pb-2 pt-3 #{'card-header bg-white' if report_type == 'html' else ''}">
 
-
-    <!-- Formato de papel -->
-    <record id="paperformat_ventas_presupuesto" model="report.paperformat">
-        <field name="name">Formato para ventas presupuesto pedido</field>
-        <field name="default" eval="True"/>
-        <field name="format">A4</field>
-        <field name="page_height">0</field>
-        <field name="page_width">0</field>
-        <field name="orientation">Portrait</field>
-        <field name="margin_top">33</field>
-        <field name="margin_bottom">28</field>
-        <field name="margin_left">7</field>
-        <field name="margin_right">7</field>
-        <field name="header_line" eval="False" />
-        <field name="header_spacing">30</field>
-        <field name="dpi">90</field>
-    </record>
-
-
-
-    <!-- Formato ligado al reporte -->
-    <!--        <record id="presupuesto_airovac.ventas_presupuesto" model="ir.actions.report">-->
-    <!--            <field name="paperformat_id" ref="presupuesto_airovac.paperformat_ventas_presupuesto" />-->
-    <!--        </record>-->
-
-
-
-
-    <template id="report_ventas_presupuesto">
-        <t t-call="web.html_container">
-            <t t-foreach="docs" t-as="doc">
-                <div class="page">
-                    <body  >
-
-                        <div  class="example-css-class" >
-
-                            <div class="header o_company_1_layout">
-                                <div class="row" style="height: 105px !important;">
+                <div class="row" style="height: 105px !important;">
                                     <div class="col-5 text-center"  >
                                         <!--                                        <img style="max-height: 45px;" alt="Logo" src='/web/binary/company_logo'/>-->
                                         <img  alt="Logo" t-att-src="'/presupuesto_airovac/static/src/img/logog.png'"
@@ -64,66 +22,31 @@
                                         <div class="oe_structure"></div>
                                         <h2 style="font-family: verdana !important;font-weight: bold !important; font-size: 18pt;!important">
                                             <span>Cotización # </span>
-                                            <span  t-field="doc.name"></span>
+                                            <span  t-field="sale_order.name"></span>
                                         </h2>
 
                                         <p style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important; vertical-align:middle !important;" >
-                                            Proyecto: <span  t-field="doc.e_desciption"></span>
+                                            Proyecto: <span  t-field="sale_order.e_desciption"></span>
                                         </p>
 
                                     </div> <!-- DIV 4 DERECHO-->
                                 </div> <!-- ROW -->
-                            </div> <!-- HEADER -->
+        </div>
 
+        </xpath>
 
-                            <div class="article o_report_layout_standard o_company_1_layout" data-oe-model="sale.order" data-oe-id="18" data-oe-lang="es_ES">
-                                <div class="row" ><!--row fechas y comercial-->
-                                    <div class="col-2 text-left">
-                                        <p  style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important;" >
-                                            <span>Contacto:</span><br/>
-                                            <span>Fecha de cotización:</span><br/>
-                                            <span>Fecha de expiración:</span><br/>
-                                            <span>Condiciones:</span>
-                                        </p>
-                                    </div>
-                                    <div class="col-5 text-left">
-                                        <p  style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important;" >
-                                            <span t-field="doc.create_uid.name"></span><br/>
-                                            <span t-field="doc.date_order" t-options='{"format": "dd/MM/yyyy"}'  ></span><br/>
-                                            <span t-field="doc.validity_date" ></span><br/>
-                                            <span t-field="doc.payment_term_id.name"></span>
-
-                                        </p>
-                                    </div>
-                                    <div class="col-5 " style="vertical-align: text-top !important;">
-                                        <p class="text-left" style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important; ">
-                                            <span itemprop="name" t-field="doc.partner_id.parent_id.name"></span><br/>
-                                            <span itemprop="name" t-field="doc.partner_id.name"></span><br/>
-                                            <t t-if = "doc.partner_id.phone != True" >
-                                                <span itemprop="name" t-field="doc.partner_id.phone"></span><br/>
-                                            </t>
-                                            <span itemprop="name" t-field="doc.partner_id.email"></span>
-                                        </p>
-                                    </div>
-                                </div><!--row fechas y comercial-->
-
-                                <div class="row mt-2 mb-2"><!--row fechas y comercial-->
-                                    <div class="col-12 text-left">
-                                        <span style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important;" >Estimado(a),</span> <br/>
-                                        <span style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important;"> En respuesta a su amable solicitud, presento la siguiente cotización</span>
-                                    </div>
-                                </div><!--row fechas y comercial-->
-                                <!--Tabla-->
-                                <table class="table table-sm o_main_table">
+        <xpath expr="//section[@id='details']" position="replace" >
+            <section>
+                <table class="table table-sm o_main_table">
                                     <thead style="color:black !important; font-family: verdana !important;font-weight: normal !important; font-size: 11pt !important;">
                                         <tr>
                                             <th width="14%" name="th_partida" class="text-center" style="vertical-align:middle">Partida</th>
                                             <th width="32%" name="th_description" class="text-center" style="vertical-align:middle">Descripción</th>
-                                            <th width="10%" name="th_etiqueta_a" class="text-center" style="vertical-align:middle; font-size: 10pt !important;" ><span  t-field="doc.e_etiqueta_title_a" /></th>
-                                            <th width="10%" name="th_etiqueta_b" class="text-center" style="vertical-align:middle; font-size: 10pt !important;"><span  t-field="doc.e_etiqueta_title_b" /></th>
+                                            <th width="10%" name="th_etiqueta_a" class="text-center" style="vertical-align:middle; font-size: 10pt !important;" ><span  t-field="sale_order.e_etiqueta_title_a" /></th>
+                                            <th width="10%" name="th_etiqueta_b" class="text-center" style="vertical-align:middle; font-size: 10pt !important;"><span  t-field="sale_order.e_etiqueta_title_b" /></th>
                                             <th width="8%" name="th_quantity" class="text-center" style="vertical-align:middle">Cantidad</th>
                                             <th width="8%" name="th_priceunit" class="text-center" style="vertical-align:middle">Precio unitario</th>
-                                            <th width="8%" name="th_subtotal" class="text-center" style="vertical-align:middle">Subtotal  <![CDATA[&nbsp;]]> <t t-esc="doc.pricelist_id.currency_id.name"></t></th>
+                                            <th width="8%" name="th_subtotal" class="text-center" style="vertical-align:middle">Subtotal  <![CDATA[&nbsp;]]> <t t-esc="sale_order.pricelist_id.currency_id.name"></t></th>
                                             <th width="10%" name="th_e_t_e" class="text-center" style="vertical-align:middle">T.E</th>
                                         </tr>
                                     </thead>
@@ -137,15 +60,15 @@
                                     -->
                                     <t t-set="i" t-value="0"/>
                                     <tbody class="sale_tbody">
-                                        <t t-foreach="doc.order_line" t-as="line">
+                                        <t t-foreach="sale_order.order_line" t-as="line">
 
                                             <t t-if = "line.display_type == False" >
-                                                    <t t-if = "doc.breakdown != True" >
+                                                    <t t-if = "sale_order.breakdown != True" >
                                                         <t t-if = "(line.principal == 1) or (line.grupo == 0 and line.principal == 0) " >
                                                             <t t-set="i" t-value="i+1"/>
                                                         </t>
                                                     </t>
-                                                    <t t-if = "doc.breakdown == True" >
+                                                    <t t-if = "sale_order.breakdown == True" >
                                                           <t t-set="i" t-value="i+1"/>
                                                     </t>
                                                 <t t-if = "i%2 == 0" >
@@ -193,10 +116,10 @@
                                                             <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;"  t-field="line.product_uom_qty"></span>
                                                         </td>
                                                         <td name="td_priceunit" class="text-center" style="vertical-align:middle">
-                                                            <t t-if = "doc.breakdown == True" >
-                                                                  <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" t-field="line.price_unit"  t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" ></span>
+                                                            <t t-if = "sale_order.breakdown == True" >
+                                                                  <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" t-field="line.price_unit"  t-options="{'widget': 'monetary', 'display_currency': sale_order.currency_id}" ></span>
                                                             </t>
-                                                            <t t-if = "doc.breakdown != True" >
+                                                            <t t-if = "sale_order.breakdown != True" >
                                                                 <t t-if = "(line.principal == 1) or (line.grupo == 0 and line.principal == 0) " >
                                                                     <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" t-field="line.e_p_unit_a"></span>
                                                                 </t>
@@ -205,10 +128,10 @@
                                                         </td>
                                                         <td name="td_subtotal" class="text-center o_price_total" style="vertical-align:middle">
 
-                                                            <t t-if = "doc.breakdown == True" >
+                                                            <t t-if = "sale_order.breakdown == True" >
                                                                 <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" class="oe_currency_value" t-field="line.price_subtotal"></span>
                                                             </t>
-                                                            <t t-if = "doc.breakdown != True" >
+                                                            <t t-if = "sale_order.breakdown != True" >
                                                                 <t t-if = "(line.principal == 1) or (line.grupo == 0 and line.principal == 0) " >
                                                                     <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" t-field="line.e_subtotal_no_des"></span>
                                                                 </t>
@@ -268,10 +191,10 @@
                                                             <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;"  t-field="line.product_uom_qty"></span>
                                                         </td>
                                                         <td name="td_priceunit" class="text-center" style="vertical-align:middle">
-                                                            <t t-if = "doc.breakdown == True" >
-                                                                 <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" t-field="line.price_unit" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"></span>
+                                                            <t t-if = "sale_order.breakdown == True" >
+                                                                 <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" t-field="line.price_unit" t-options="{'widget': 'monetary', 'display_currency': sale_order.currency_id}"></span>
                                                             </t>
-                                                            <t t-if = "doc.breakdown != True" >
+                                                            <t t-if = "sale_order.breakdown != True" >
                                                                 <t t-if = "(line.principal == 1) or (line.grupo == 0 and line.principal == 0) " >
                                                                     <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" t-field="line.e_p_unit_a"></span>
                                                                 </t>
@@ -280,10 +203,10 @@
                                                         </td>
                                                         <td name="td_subtotal" class="text-center o_price_total" style="vertical-align:middle">
 
-                                                            <t t-if = "doc.breakdown == True" >
+                                                            <t t-if = "sale_order.breakdown == True" >
                                                                 <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" class="oe_currency_value" t-field="line.price_subtotal"></span>
                                                             </t>
-                                                            <t t-if = "doc.breakdown != True" >
+                                                            <t t-if = "sale_order.breakdown != True" >
                                                                 <t t-if = "(line.principal == 1) or (line.grupo == 0 and line.principal == 0) " >
                                                                     <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" t-field="line.e_subtotal_no_des"></span>
                                                                 </t>
@@ -318,102 +241,14 @@
                                         </t><!--for-->
                                     </tbody>
                                 </table>
+                <h1>
+                    replace section
+                </h1>
 
-                                <div class="clearfix" name="so_total_summary">
-                                    <div id="total" class="row" name="total">
-                                        <div class="col-8">
+            </section>
+        </xpath>
 
-                                        </div>
-                                        <div class="col-4">
-                                            <table class="table table-sm">
-                                                <tbody><tr class="border-black o_subtotal" style="">
-                                                    <td name="td_amount_untaxed_label"><span style="font-family: verdana !important;font-weight: bold !important; font-size: 10pt !important;">Subtotal <![CDATA[&nbsp;]]> <t t-esc="doc.pricelist_id.currency_id.name"></t> </span></td>
-                                                    <td name="td_amount_untaxed" class="text-right">
-                                                        <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" ><span class="oe_currency_value" t-field="doc.amount_untaxed"></span></span>
-                                                    </td>
-                                                </tr>
-
-                                                    <tr class="border-black o_total" style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;">
-
-                                                        <td name="td_amount_by_group_label">
-                                                            <span>IVA 16% </span>
-                                                        </td>
-                                                        <td  class="text-right o_price_total">
-                                                            <span data-oe-type="monetary" ><span class="oe_currency_value" t-field="doc.amount_tax"></span></span>
-                                                        </td>
-
-                                                    </tr>
-
-                                                    <tr class="border-black o_total">
-                                                        <td name="td_amount_total_label"><span style="font-family: verdana !important;font-weight: bold !important; font-size: 10pt !important;">Total  <![CDATA[&nbsp;]]> <t t-esc="doc.pricelist_id.currency_id.name"></t> </span></td>
-                                                        <td name="td_amount_total" class="text-right">
-                                                            <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" ><span class="oe_currency_value" t-field="doc.amount_total"></span></span>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="oe_structure"></div>
-
-                                <div style="margin-top:5px;"  class="col-12 text-left" name="information_block">
-                                    <h2 style="font-family: verdana !important;font-weight: bold !important; font-size: 11pt;!important" > Condiciones Generales:</h2>
-                                    <p style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt;!important text-align: justify !important ;" >
-                                        <t t-esc ="doc.note" />
-                                    </p>
-                                </div>
-                                <div class="row">
-                                    <div class="col-4" style="display: flex; text-center">
-                                        <div class="col-5" >
-                                             <img style="max-height: 50px;" alt="Logo" src='/web/binary/company_logo'/>
-                                         </div>
-                                        <div class="col-6">
-                                            <span><t t-esc="doc.create_uid.name" />  </span><br/>
-                                            <span><t t-esc="doc.create_uid.function" /></span>
-                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="footer">
-                                <div class="row">
-                                    <div class="col-12" style="border-top: 1px solid black; font-size: 8pt;">
-                                        <p class="text-center" >
-                                            Representaciones Internacionales AIR SA de CV <br/>
-                                            <t t-esc ="doc.company_id.street_name" />
-                                            <t t-esc ="doc.company_id.street_number" />
-                                            <t t-esc ="doc.company_id.street_number2" />
-                                            Col
-                                            <t t-esc ="doc.company_id.l10n_mx_edi_colony" />
-                                            <t t-esc ="doc.company_id.l10n_mx_edi_colony_code" />
-                                            <t t-esc ="doc.company_id.l10n_mx_edi_locality_id.name" />,
-                                            <t t-esc ="doc.company_id.city" />
-                                            <t t-sec ="doc.company_id.state_id.name" />
-                                            <t t-sec ="doc.company_id.zip" />
-                                            <t t-sec ="doc.company_id.country_id.name" /><br/>
-                                            <t t-sec ="doc.company_id.vat" />
-                                            RFC: <t t-esc ="doc.company_id.phone" />,
-                                            <t t-esc ="doc.company_id.email" /><br/>
-                                            <br/>
-                                            <a href="doc.company_id.website"><t t-esc ="doc.company_id.website" /> </a>
-                                        </p>
-                                        <p class="text-right">
-                                            Página <span class="page"/> / <span class="topage"/>
-                                        </p>
-                                    </div>
-                                </div><!--row -->
-                            </div>
-                        </div>
-                    </body>
-                </div><!--page-->
-
-            </t>
-        </t>
     </template>
 
-
-
-
-
 </odoo>
+
