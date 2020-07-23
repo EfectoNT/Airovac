@@ -304,9 +304,9 @@
                  </div>
                  <div class="row">
                      <div class="col-2" >
-                         <img style="max-height: 100px;" alt="Logo" src='/web/binary/company_logo'/>
+                         <img style="max-height: 75px;" alt="Logo" src='/web/binary/company_logo'/>
                      </div>
-                     <div class="col-6 text-left">
+                     <div class="col-6 text-left" style="vertical-align:middle !important;">
                          <span><t t-esc="sale_order.create_uid.name" />  </span><br/>
                          <span><t t-esc="sale_order.create_uid.function" /></span>
                      </div>
@@ -377,6 +377,10 @@
                     </p>
                 </div>
             </div>
+        </xpath>
+
+        <xpath expr="//div[2]/section[5]" position="replace" >
+           prueba
         </xpath>
 
 
