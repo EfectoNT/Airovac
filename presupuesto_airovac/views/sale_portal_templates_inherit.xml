@@ -246,9 +246,9 @@
                         <!-- Should be replaced in master by t-call="sale.sale_order_portal_content_totals_table" -->
                             <table class="table table-sm">
                                 <tbody><tr class="border-black o_subtotal" style="">
-                                    <td name="td_amount_untaxed_label"><span style="font-family: verdana !important;font-weight: bold !important; font-size: 10pt !important;">Subtotal <![CDATA[&nbsp;]]> <t t-esc="doc.pricelist_id.currency_id.name"></t> </span></td>
+                                    <td name="td_amount_untaxed_label"><span style="font-family: verdana !important;font-weight: bold !important; font-size: 10pt !important;">Subtotal <![CDATA[&nbsp;]]> <t t-esc="sale_order.pricelist_id.currency_id.name"></t> </span></td>
                                     <td name="td_amount_untaxed" class="text-right">
-                                        <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" ><span class="oe_currency_value" t-field="doc.amount_untaxed"></span></span>
+                                        <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" ><span class="oe_currency_value"></span> <t t-esc="sale_order.amount_untaxed" />    </span>
                                     </td>
                                 </tr>
 
@@ -258,15 +258,15 @@
                                             <span>IVA 16% </span>
                                         </td>
                                         <td  class="text-right o_price_total">
-                                            <span data-oe-type="monetary" ><span class="oe_currency_value" t-field="doc.amount_tax"></span></span>
+                                            <span data-oe-type="monetary" ><span class="oe_currency_value"></span><t t-esc="sale_order.amount_tax"/></span>
                                         </td>
 
                                     </tr>
 
                                     <tr class="border-black o_total">
-                                        <td name="td_amount_total_label"><span style="font-family: verdana !important;font-weight: bold !important; font-size: 10pt !important;">Total  <![CDATA[&nbsp;]]> <t t-esc="doc.pricelist_id.currency_id.name"></t> </span></td>
+                                        <td name="td_amount_total_label"><span style="font-family: verdana !important;font-weight: bold !important; font-size: 10pt !important;">Total  <![CDATA[&nbsp;]]> <t t-esc="sale_order.pricelist_id.currency_id.name"></t> </span></td>
                                         <td name="td_amount_total" class="text-right">
-                                            <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" ><span class="oe_currency_value" t-field="doc.amount_total"></span></span>
+                                            <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" ><span class="oe_currency_value"></span><t t-esc="sale_order.amount_total"/> </span>
                                         </td>
                                     </tr>
                                 </tbody>
