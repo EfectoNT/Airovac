@@ -277,14 +277,23 @@
         </xpath>
 
          <xpath expr="//section[@id='terms']" position="replace" >
-            <section id="terms" class="mt-5" t-if="sale_order.note">
-                <div   class="col-12 text-left" name="information_block">
-                    <h2 style="font-family: verdana !important;font-weight: bold !important; font-size: 11pt;!important" > Condiciones Generales:</h2>
-                    <p style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt;!important text-align: justify !important ;" >
-                        <t t-esc ="sale_order.note" />
-                    </p>
-                </div>
-            </section>
+             <section id="terms" class="mt-5" t-if="sale_order.note">
+                 <div   class="col-12 text-left" name="information_block">
+                     <h2 style="font-family: verdana !important;font-weight: bold !important; font-size: 11pt;!important" > Condiciones Generales:</h2>
+                     <p style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt;!important text-align: justify !important ;" >
+                         <t t-esc ="sale_order.note" />
+                     </p>
+                 </div>
+                 <div >
+                     <div class="col-1" >
+                         <img class="img-fluid" alt="Logo" src='/web/binary/company_logo'/>
+                     </div>
+                     <div class="col-6 text-left">
+                         <span><t t-esc="sale_order.create_uid.name" />  </span><br/>
+                         <span><t t-esc="sale_order.create_uid.function" /></span>
+                     </div>
+                 </div>
+             </section>
         </xpath>
 
     </template>
