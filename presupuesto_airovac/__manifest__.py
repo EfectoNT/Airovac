@@ -24,7 +24,8 @@
 
     # always loaded
     'data': [
-        'reports/presu.xml'
+        'reports/presu.xml',
+        'views/sale_portal_templates_inherit.xml'
     ],
     # only loaded in demonstration mode
     'installable': True,
