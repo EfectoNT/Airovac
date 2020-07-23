@@ -303,12 +303,14 @@
                      </p>
                  </div>
                  <div class="row">
-                     <div class="col-2" >
+                     <div class="col-1" style="background-color:red">
                          <img style="max-height: 75px;" alt="Logo" src='/web/binary/company_logo'/>
                      </div>
                      <div class="col-6 text-left" style="vertical-align:middle !important;">
-                         <span><t t-esc="sale_order.create_uid.name" />  </span><br/>
-                         <span><t t-esc="sale_order.create_uid.function" /></span>
+                         <p style="font-family: verdana !important;font-weight: bold !important; font-size: 10pt;!important">
+                            <t t-esc="sale_order.create_uid.name" /> <br/>
+                            <t t-esc="sale_order.create_uid.function" />
+                         </p>
                      </div>
                  </div>
              </section>
@@ -380,7 +382,7 @@
         </xpath>
 
         <xpath expr="//div[2]/section[4]" position="replace" >
-           prueba
+
         </xpath>
 
 
