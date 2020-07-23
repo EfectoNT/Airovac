@@ -159,10 +159,10 @@
                                                             <div class="row">
                                                                 <div class="col-12  text-center">
                                                                     <t t-if = "line.product_template_id.image_1920 != False" >
-                                                                        <img class="img-fluid" t-att-src="'data:image/png;base64,%s' % to_text(line.product_template_id.image_1920)" style="max-height: 50px;"/>
+                                                                        <img class="img-fluid" t-att-src="'data:image/png;base64,%s' % to_text(line.product_template_id.image_1920)" style="max-height: 250px;"/>
                                                                     </t>
                                                                     <t t-if = "line.product_template_id.image_1920 == False" >
-                                                                        <img class="img-fluid" t-att-src="'/presupuesto_airovac/static/src/img/caja.jpg'" style="max-height: 250px;" />
+                                                                        <img class="img-fluid" t-att-src="'/presupuesto_airovac/static/src/img/caja.png'" style="max-height: 250px;" />
                                                                     </t>
                                                                 </div>
                                                             </div>
@@ -233,10 +233,10 @@
                                                             <div class="row">
                                                                 <div class="col-12  text-center">
                                                                     <t t-if = "line.product_template_id.image_1920 != False" >
-                                                                        <img class="img-fluid" t-att-src="'data:image/png;base64,%s' % to_text(line.product_template_id.image_1920)" style="max-height: 50px;"/>
+                                                                        <img class="img-fluid" t-att-src="'data:image/png;base64,%s' % to_text(line.product_template_id.image_1920)" style="max-height: 250px;"/>
                                                                     </t>
                                                                     <t t-if = "line.product_template_id.image_1920 == False" >
-                                                                        <img class="img-fluid" t-att-src="'/presupuesto_airovac/static/src/img/caja.jpg'" style="max-height: 250px;" />
+                                                                        <img class="img-fluid" t-att-src="'/presupuesto_airovac/static/src/img/caja.png'" style="max-height: 250px;" />
                                                                     </t>
                                                                 </div>
                                                             </div>
@@ -364,15 +364,13 @@
                                     </p>
                                 </div>
                                 <div class="row">
-                                    <div class="col-4" style="display: flex; text-center;  float: left; clear: none;">
-                                        <div class="col-5" >
+                                        <div class="col-2" >
                                              <img style="max-height: 50px;" alt="Logo" src='/web/binary/company_logo'/>
                                          </div>
-                                        <div class="col-6">
+                                        <div class="col-6 text-left">
                                             <span><t t-esc="doc.create_uid.name" />  </span><br/>
                                             <span><t t-esc="doc.create_uid.function" /></span>
                                          </div>
-                                    </div>
                                 </div>
                             </div>
 
