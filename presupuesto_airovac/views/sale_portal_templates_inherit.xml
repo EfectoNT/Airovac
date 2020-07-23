@@ -233,6 +233,7 @@
                                 <t t-if = "'line_note' in line.display_type" >
                                     <tr  class="font-italic o_line_note">
                                         <td name="td_note_line" colspan="99">
+
                                             <span t-field="line.name"></span>
                                         </td>
                                     </tr>
@@ -277,15 +278,32 @@
         </xpath>
 
          <xpath expr="//section[@id='terms']" position="replace" >
-             <section id="terms" class="mt-5" t-if="sale_order.note">
+             <section id="terms" class="mt-5">
                  <div   class="col-12 text-left" name="information_block">
                      <h2 style="font-family: verdana !important;font-weight: bold !important; font-size: 11pt;!important" > Condiciones Generales:</h2>
+
+                         <t t-if="sale_order.note != True" >
+                             <p style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt;!important text-align: justify !important ;" >
+                                LOS EQUIPOS SE COTIZAN LAB » Nuestro almacén en Monterrey
+                                Los precios son en dólares americanos y se cobrarán en dólares, ó al tipo de cambio de venta bancario vigente a la fecha del pago
+                                Los precios no incluyen el 16% de I.V.A.
+                                Todos los pedidos de productos "made to order", especiales ó configurables, tales como válvulas de mariposa, válvulas superiores a 2.5", UMAS, o cualquier otro producto que se indique lo requiera, deberán colocarse con anticipo, sin excepción, aún si las condiciones de pago de esta cotización no lo indican.
+                                La entrega del material ó embarque, se realizará una vez confirmado el pago en firme en nuestras cuentas bancarias.
+                                Cuentas Bancarias AiroVAC
+                                En caso que esta cotización se exprese LAB en una ubicación distinta a nuestras instalaciones, el tiempo de entrega será de 1 a 5 días hábiles adicionales a lo expresado en cada partida,
+                                y requeriremos la confirmación por escrito, de que en dicha obra ó almacén, cuentan con los elementos necesarios para la descarga segura del material en cuestión.
+                                Toda solicitud de cambio logístico que sea solicitada por parte del cliente, será cotizada por parte de AiroVAC, y ejecutada, previa autorización y pago por parte del cliente.
+                                Tiempos de entrega: los indicados en cada partida, salvo previa venta; y son a partir de la recepción de su Orden de Compra y Anticipo
+                                Las estas existencias de esta propuesta, pudieran no estar disponibles al momento de su compra; en dado caso, se indicará el tiempo de entrega una vez colocado el pedido al fabricante.
+                                La garantía de los equipos depende de la marca y modelo, y va desde 1 hasta 2 años a patir de la entrega.
+                             </p>
+                         </t>
                      <p style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt;!important text-align: justify !important ;" >
                          <t t-esc ="sale_order.note" />
                      </p>
                  </div>
-                 <div >
-                     <div class="col-1" >
+                 <div class="row">
+                     <div class="col-2" >
                          <img class="img-fluid" alt="Logo" src='/web/binary/company_logo'/>
                      </div>
                      <div class="col-6 text-left">
@@ -298,34 +316,61 @@
 
 
         <xpath expr="//div[@id='so_date']" position="replace" >
-            <div class="row" id="so_date">
-                <div class="col-4 text-left">
-                    <p  style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important;" >
-                        <span>Contacto:</span><br/>
-                        <t t-if="sale_order.state == 'draft'">
-                            Quotation Date:
+            <div class="row" id="so_date" style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important;">
+                <div class="col-6 text-left">
+                    <div class="row">
+                        <div class="col-6">
+                            <span>Contacto:</span>
+                        </div>
+                        <div class="col-6">
+                            <span><t t-esc="sale_order.create_uid.name"></t></span><br/>
+                            <t t-if = "sale_order.create_uid.phone != False" >
+                                <span><t t-esc="sale_order.create_uid.phone"></t></span><br/>
+                            </t>
+                            <t t-if = "sale_order.create_uid.email != False" >
+                                <span><t t-esc="sale_order.create_uid.email"></t></span><br/>
+                            </t>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <t t-if="sale_order.state == 'draft'">
+                                <span> Quotation Date: </span>
                         </t>
                         <t t-if="sale_order.state in ['sale', 'done', 'cancel']">
-                            Order Date:
+                            <span>Order Date:</span>
                         </t>
-                        <span>Fecha de expiración:</span><br/>
-                        <span>Condiciones:</span>
-                    </p>
-                </div>
-                <div class="col-2 text-left">
-                    <p  style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important;" >
-                        <span t-field="sale_order.create_uid.name"></span><br/>
-                        <span t-field="sale_order.date_order" t-options='{"format": "dd/MM/yyyy"}'  ></span><br/>
-                        <span t-field="sale_order.validity_date" ></span><br/>
-                        <span t-field="sale_order.payment_term_id.name"></span>
-
-                    </p>
+                        </div>
+                        <div class="col-6">
+                             <span t-field="sale_order.date_order" t-options='{"format": "dd/MM/yyyy"}'  />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <span>Fecha de expiración:</span>
+                        </div>
+                        <div class="col-6">
+                            <span t-field="sale_order.date_order" t-options='{"format": "dd/MM/yyyy"}'  ></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <span>Condiciones:</span>
+                        </div>
+                        <div class="col-6">
+                             <span><t t-esc="sale_order.payment_term_id.name"></t></span>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-6 " style="vertical-align: text-top !important;">
                     <p class="text-left" style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important; ">
-                        <span itemprop="name" t-field="sale_order.partner_id.parent_id.name"></span><br/>
-                        <span itemprop="name" t-field="sale_order.partner_id.name"></span><br/>
-                        <t t-if = "sale_order.partner_id.phone != True" >
+                        <t t-if = "sale_order.partner_id.parent_id.name != False" >
+                            <span itemprop="name" t-field="sale_order.partner_id.parent_id.name"></span><br/>
+                        </t>
+                        <t t-if = "sale_order.partner_id.name != False" >
+                             <span itemprop="name" t-field="sale_order.partner_id.name"></span><br/>
+                        </t>
+                        <t t-if = "sale_order.partner_id.phone != False" >
                             <span itemprop="name" t-field="sale_order.partner_id.phone"></span><br/>
                         </t>
                         <span itemprop="name" t-field="sale_order.partner_id.email"></span>
