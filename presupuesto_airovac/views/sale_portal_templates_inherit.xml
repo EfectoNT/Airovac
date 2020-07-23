@@ -379,7 +379,7 @@
             </div>
         </xpath>
 
-        <xpath expr="//div[2]/section[5]" position="replace" >
+        <xpath expr="//div[2]/section[4]" position="replace" >
            prueba
         </xpath>
 
