@@ -35,6 +35,10 @@
 
         </xpath>
 
+        <xpath expr="//div[2]/section[4]" position="replace">
+
+        </xpath>
+
         <xpath expr="//section[@id='details']" position="replace" >
             <section>
                 <table class="table table-sm o_main_table">
@@ -371,9 +375,13 @@
             </div>
         </xpath>
 
-        <xpath expr="//div[2]/section[4]" position="replace" >
+<!--        <xpath expr="//div[2]/section[4]" position="replace" >-->
 
-        </xpath>
+<!--        </xpath>-->
+
+<!--        <xpath expr="//div[2]/div[1]/div" position="replace" >-->
+
+<!--        </xpath>-->
 
 
     </template>
