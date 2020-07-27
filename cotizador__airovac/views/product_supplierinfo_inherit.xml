@@ -10,7 +10,7 @@
                     <field name="e_mult_std"/>
                   </xpath>
                   <xpath expr="//field[@name='price']" position="attributes">
-                    <attribute name="attrs">{}</attribute>
+<!--                    <attribute name="attrs">{}</attribute>-->
                     <!--<attribute name="readonly">1</attribute>-->
                     <attribute name="string">Precio de Lista</attribute>
                   </xpath>
@@ -25,11 +25,11 @@
                 <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='order_line']/tree[1]/field[@name='product_qty']" position="after">
                     <field name="e_mult_std"/>
                   </xpath>
-                  <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='order_line']/tree[1]/field[@name='price_unit']" position="attributes">
-                    <attribute name="string">P . L</attribute>
+                  <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='order_line']/tree[1]/field[@name='price_unit']" position="before">
+                    <field name="e_precio_lista"/>
                   </xpath>
-                  <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='order_line']/tree[1]/field[@name='price_unit']" position="after">
-                    <field name="e_cost_exwork"/>
+                  <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='order_line']/tree[1]/field[@name='price_unit']" position="attributes">
+                      <attribute name="string">Precio ExWork</attribute>
                   </xpath>
                   <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='order_line']/tree[1]/field[@name='taxes_id']" position="attributes">
                     <attribute name="optional">hide</attribute>
