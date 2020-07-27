@@ -248,24 +248,6 @@ class productTemplateInherit(models.Model):
                 pesos = self.product_id.e_precio_de_lista / (dolars.rate * 1)
                 return pesos * otra_moneda.rate
 
-
-
-
-
-
-
-class productSupplierinfoInherit(models.Model):
-    _inherit = 'product.supplierinfo'
-
-    e_mult_std = fields.Float(Default=1, digits=(1,4), string="Mult STD", help="Multiplicador solicitado al proveedor")
-
-    @api.onchange('product_tmpl_id')
-    def _default_precio_lista(self):
-        print('Default mul')
-        print(self.product_tmpl_id,self.product_tmpl_id.name,self.product_tmpl_id.e_igi)
-        self.price = self.product_tmpl_id.e_precio_de_lista
-
-
 class ProductuEClass(models.Model):
     _name = 'producte.class'
     _description = "Marca del producto"

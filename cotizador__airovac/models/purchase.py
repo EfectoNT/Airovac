@@ -9,39 +9,42 @@ class purchaseOrderLineInherit(models.Model):
 
     e_mult_std =  fields.Float(digits=(1,4), string="Mult STD", help="Multiplicador solicitado al proveedor" )
     #fields.Float(digits=(1,4), string="Mult STD", help="Multiplicador solicitado al proveedor")
-    e_cost_exwork = fields.Float(digits=(10, 2),string="Precio ExWork", help="Precio de Lista X Mult STD")
-    @api.onchange('product_qty','e_mult_std','price_unit')
-    def _onchange_mult_std(self):
-         self.e_cost_exwork = self.e_mult_std * self.price_unit
-         print("update e_cost_exwork")
+    e_precio_lista = fields.Monetary(digits=(10, 2),string="P.L", help="Precio de Lista X Mult STD")
 
-    @api.onchange('product_id')
+
+    @api.onchange('product_qty','e_mult_std')
+    def _onchange_mult_std(self):
+         self.price_unit = (self.e_mult_std * self.e_precio_lista )
+
+
+    @api.onchange('product_id','partner_id')
     def _default_mult(self):
-        print('Default mul')
-        for x in self.product_id.seller_ids:
-            if x.name == self.partner_id:
-                print(x.name, self.partner_id)
-                print('en el if')
-                self.e_mult_std = x.e_mult_std
-                print(x.e_mult_std)
+        print(self.price_unit,'price unit')
+        print(self.partner_id.id, self.partner_id.name)
+        for proveedor in self.product_id.seller_ids:
+            print(proveedor.name,proveedor.id, self.partner_id.name,self.partner_id.id)
+            if proveedor.id == self.partner_id.id:
+                print('iguales',proveedor.id, self.partner_id.id)
+                self.e_mult_std = proveedor.e_mult_std
+                print(proveedor.e_mult_std)
                 return
-        print('Ceros')
+        self.e_mult_std = 1
+
         return
 
-    @api.depends('product_qty', 'price_unit', 'taxes_id')
-    def _compute_amount(self):
-        for line in self:
-            vals = line._prepare_compute_all_values()
-            taxes = line.taxes_id.compute_all(
-                vals['price_unit'],
-                vals['currency_id'],
-                vals['product_qty'],
-                vals['product'],
-                vals['partner'])
-            line.update({
-                'price_tax': sum(
-                    t.get('amount', 0.0) for t in taxes.get('taxes', [])),
-                'price_total': taxes['total_included'],
-                'price_subtotal': taxes['total_excluded'] * line.e_mult_std,
-            })
+    @api.onchange('product_qty', 'product_uom')
+    def _onchange_quantity(self):
+        super(purchaseOrderLineInherit,self)._onchange_quantity()
+        self.e_precio_lista = self.price_unit
 
+
+class productSupplierinfoInherit(models.Model):
+    _inherit = 'product.supplierinfo'
+
+    e_mult_std = fields.Float(Default=1, digits=(1,4), string="Mult STD", help="Multiplicador solicitado al proveedor")
+
+    @api.onchange('product_tmpl_id')
+    def _default_precio_lista(self):
+        print('Default mul')
+        print(self.product_tmpl_id,self.product_tmpl_id.name,self.product_tmpl_id.e_igi)
+        self.price = self.product_tmpl_id.e_precio_de_lista
