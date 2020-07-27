@@ -12,7 +12,7 @@ class purchaseOrderLineInherit(models.Model):
     e_precio_lista = fields.Monetary(digits=(10, 2),string="P.L", help="Precio de Lista X Mult STD")
 
 
-    @api.onchange('product_qty','e_mult_std')
+    @api.onchange('product_qty','e_mult_std','e_precio_lista')
     def _onchange_mult_std(self):
          self.price_unit = (self.e_mult_std * self.e_precio_lista )
 
