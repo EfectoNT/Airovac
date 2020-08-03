@@ -32,9 +32,9 @@
 
 
 
-<!--     Formato ligado al reporte -->
-            <record id="presupuesto_avac.ventas_presupuestoiro" model="ir.actions.report">
-                <field name="paperformat_id" ref="presupuesto_airovac.paperformat_ventas_presupuesto" />
+
+            <record id="ventas_presupuesto" model="ir.actions.report">
+                <field name="paperformat_id" ref="paperformat_ventas_presupuesto" />
             </record>
 
 
