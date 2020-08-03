@@ -78,7 +78,7 @@
 
                             <div class="article o_report_layout_standard o_company_1_layout" data-oe-model="sale.order" data-oe-id="18" data-oe-lang="es_ES">
                                 <div class="row" ><!--nuevos-->
-                                    <div class="col-6 text-left">
+                                    <div class="col-6 text-left" style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important;">
                                         <div class="row">
                                             <div class="col-6">
                                                 <span>Contacto:</span>
@@ -139,8 +139,8 @@
                                 </div><!--row nuevosl-->
 
 
-                                <div class="row" ><!--row fechas y comercial-->
-                                    <div class="col-2 text-left">
+                                <!--<div class="row" >row fechas y comercial-->
+                                   <!-- <div class="col-2 text-left">
                                         <p  style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important;" >
                                             <span>Contacto:</span><br/>
                                             <span>Fecha de cotización:</span><br/>
@@ -167,7 +167,7 @@
                                             <span itemprop="name" t-field="doc.partner_id.email"></span>
                                         </p>
                                     </div>
-                                </div><!--row fechas y comercial-->
+                                </div>--><!--row fechas y comercial-->
 
                                 <div class="row mt-2 mb-2"><!--row fechas y comercial-->
                                     <div class="col-12 text-left">
