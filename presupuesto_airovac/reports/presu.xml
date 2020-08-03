@@ -85,14 +85,29 @@
                                             </div>
                                             <div class="col-6" >
                                                 <span><t t-esc="doc.create_uid.name"></t></span><br/>
-                                                <t t-if = "doc.create_uid.phone != False" >
-                                                    <span><t t-esc="doc.create_uid.phone"></t></span><br/>
-                                                </t>
-                                                <t t-if = "doc.create_uid.email != False" >
-                                                    <span><t t-esc="doc.create_uid.email"></t></span><br/>
-                                                </t>
                                             </div>
                                         </div>
+
+                                        <t t-if = "doc.create_uid.phone != False" >
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <span> Teléfono: </span>
+                                                </div>
+                                                <div class="col-6">
+                                                   <span><t t-esc="doc.create_uid.phone"></t></span>
+                                                </div>
+                                            </div>
+                                        </t>
+                                        <t t-if = "doc.create_uid.email != False" >
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <span> Correo: </span>
+                                                </div>
+                                                <div class="col-6">
+                                                   <span><t t-esc="doc.create_uid.email"></t></span>
+                                                </div>
+                                            </div>
+                                        </t>
                                         <div class="row">
                                             <div class="col-6">
                                                     <span> Fecha de cotización: </span>
@@ -118,7 +133,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-2">
+                                    <div class="col-1">
                                     </div>
                                     <div class="col-4 " style="vertical-align: text-top !important;">
                                         <p class="text-left" style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important; ">
