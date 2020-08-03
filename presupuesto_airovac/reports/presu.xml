@@ -84,23 +84,21 @@
                                                 <span>Contacto:</span>
                                             </div>
                                             <div class="col-6" >
-                                                <span><t t-esc="sale_order.create_uid.name"></t></span><br/>
-                                                <t t-if = "sale_order.create_uid.phone != False" >
-                                                    <span><t t-esc="sale_order.create_uid.phone"></t></span><br/>
+                                                <span><t t-esc="doc.create_uid.name"></t></span><br/>
+                                                <t t-if = "doc.create_uid.phone != False" >
+                                                    <span><t t-esc="doc.create_uid.phone"></t></span><br/>
                                                 </t>
-                                                <t t-if = "sale_order.create_uid.email != False" >
-                                                    <span><t t-esc="sale_order.create_uid.email"></t></span><br/>
+                                                <t t-if = "doc.create_uid.email != False" >
+                                                    <span><t t-esc="doc.create_uid.email"></t></span><br/>
                                                 </t>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-6">
                                                     <span> Fecha de cotización: </span>
-                                                    <span>Order Date:</span>
-
                                             </div>
                                             <div class="col-6">
-                                                <span t-field="sale_order.date_order" t-options='{"format": "dd/MM/yyyy"}'  />
+                                                <span t-field="doc.date_order" t-options='{"format": "dd/MM/yyyy"}'  />
                                             </div>
                                         </div>
                                         <div class="row">
@@ -108,7 +106,7 @@
                                                 <span>Fecha de expiración:</span>
                                             </div>
                                             <div class="col-6">
-                                                <span t-field="sale_order.date_order" t-options='{"format": "dd/MM/yyyy"}'  ></span>
+                                                <span t-field="doc.date_order" t-options='{"format": "dd/MM/yyyy"}'  ></span>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -116,7 +114,7 @@
                                                 <span>Condiciones:</span>
                                             </div>
                                             <div class="col-6">
-                                                <span><t t-esc="sale_order.payment_term_id.name"></t></span>
+                                                <span><t t-esc="doc.payment_term_id.name"></t></span>
                                             </div>
                                         </div>
                                     </div>
@@ -124,16 +122,16 @@
                                     </div>
                                     <div class="col-4 " style="vertical-align: text-top !important;">
                                         <p class="text-left" style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important; ">
-                                            <t t-if = "sale_order.partner_id.parent_id.name != False" >
-                                                <span itemprop="name" t-field="sale_order.partner_id.parent_id.name"></span><br/>
+                                            <t t-if = "doc.partner_id.parent_id.name != False" >
+                                                <span itemprop="name" t-field="doc.partner_id.parent_id.name"></span><br/>
                                             </t>
-                                            <t t-if ="sale_order.partner_id.name != False" >
-                                                <span itemprop="name" t-field="sale_order.partner_id.name"></span><br/>
+                                            <t t-if ="doc.partner_id.name != False" >
+                                                <span itemprop="name" t-field="doc.partner_id.name"></span><br/>
                                             </t>
-                                            <t t-if = "sale_order.partner_id.phone != False" >
-                                                <span itemprop="name" t-field="sale_order.partner_id.phone"></span><br/>
+                                            <t t-if = "doc.partner_id.phone != False" >
+                                                <span itemprop="name" t-field="doc.partner_id.phone"></span><br/>
                                             </t>
-                                            <span itemprop="name" t-field="sale_order.partner_id.email"></span>
+                                            <span itemprop="name" t-field="doc.partner_id.email"></span>
                                         </p>
                                     </div>
 
