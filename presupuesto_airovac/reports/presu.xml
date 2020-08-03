@@ -109,7 +109,7 @@
 
                                 <div class="row mt-2 mb-2"><!--row fechas y comercial-->
                                     <div class="col-12 text-left">
-                                        <span style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important;" >Estimado(a), <t t-esc=""></t></span> <br/>
+                                        <span style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important;" >Estimado(a), <t t-esc="doc.partner_id.name"></t></span> <br/>
                                         <span style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important;"> En respuesta a su amable solicitud, presento la siguiente cotización</span>
                                     </div>
                                 </div><!--row fechas y comercial-->
