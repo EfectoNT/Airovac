@@ -32,10 +32,10 @@
 
 
 
-    <!-- Formato ligado al reporte -->
-    <!--        <record id="presupuesto_airovac.ventas_presupuesto" model="ir.actions.report">-->
-    <!--            <field name="paperformat_id" ref="presupuesto_airovac.paperformat_ventas_presupuesto" />-->
-    <!--        </record>-->
+<!--     Formato ligado al reporte -->
+            <record id="presupuesto_avac.ventas_presupuestoiro" model="ir.actions.report">
+                <field name="paperformat_id" ref="presupuesto_airovac.paperformat_ventas_presupuesto" />
+            </record>
 
 
 
@@ -109,7 +109,7 @@
 
                                 <div class="row mt-2 mb-2"><!--row fechas y comercial-->
                                     <div class="col-12 text-left">
-                                        <span style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important;" >Estimado(a),</span> <br/>
+                                        <span style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important;" >Estimado(a), <t t-esc=""></t></span> <br/>
                                         <span style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt !important;"> En respuesta a su amable solicitud, presento la siguiente cotización</span>
                                     </div>
                                 </div><!--row fechas y comercial-->
