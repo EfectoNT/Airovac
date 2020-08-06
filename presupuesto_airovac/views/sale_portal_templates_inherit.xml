@@ -7,14 +7,14 @@
         <xpath expr="//div[@id='introduction']" position="replace" >
             <div id="introduction" t-attf-class="pb-2 pt-3 #{'card-header bg-white' if report_type == 'html' else ''}">
 
-                <div class="row" style="height: 105px !important;">
-                    <div class="col-5 text-center"  >
+                <div class="row " >
+                    <div class="col-5"  >
                         <!--                                        <img style="max-height: 45px;" alt="Logo" src='/web/binary/company_logo'/>-->
                         <img  alt="Logo" t-att-src="'/presupuesto_airovac/static/src/img/logog.png'"
-                              class="img-fluid" style="vertical-align:middle !important;"/>
+                              class="img-fluid" style="vertical-align:middle !important; " />
 
                     </div><!-- DIV 2 IZQUIERDO-->
-                    <div class="col-2" >
+                    <div class="col-1"  >
                         <!--                                        <img style="max-height: 45px;" alt="Logo" src='/web/binary/company_logo'/>-->
 
                     </div><!-- DIV 2 MEDIO-->
@@ -121,7 +121,7 @@
                                         </td>
                                         <td name="td_priceunit" class="text-center" style="vertical-align:middle" t-attf-class="text-right {{ 'd-none d-sm-table-cell' if report_type == 'html' else '' }}">
                                             <t t-if = "sale_order.breakdown == True" >
-                                                <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" t-field="line.price_unit"  t-options="{'widget': 'monetary', 'display_currency': sale_order.currency_id}" ></span>
+                                                <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" t-field="line.e_punto_venta"  t-options="{'widget': 'monetary', 'display_currency': sale_order.currency_id}" ></span>
                                             </t>
                                             <t t-if = "sale_order.breakdown != True" >
                                                 <t t-if = "(line.principal == 1) or (line.grupo == 0 and line.principal == 0) " >
@@ -196,7 +196,7 @@
                                         </td>
                                         <td name="td_priceunit" class="text-center" style="vertical-align:middle" t-attf-class="text-right {{ 'd-none d-sm-table-cell' if report_type == 'html' else '' }}">
                                             <t t-if = "sale_order.breakdown == True" >
-                                                <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" t-field="line.price_unit" t-options="{'widget': 'monetary', 'display_currency': sale_order.currency_id}"></span>
+                                                <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" t-field="line.e_punto_venta" t-options="{'widget': 'monetary', 'display_currency': sale_order.currency_id}"></span>
                                             </t>
                                             <t t-if = "sale_order.breakdown != True" >
                                                 <t t-if = "(line.principal == 1) or (line.grupo == 0 and line.principal == 0) " >
@@ -346,7 +346,7 @@
                             <span>Fecha de expiración:</span>
                         </div>
                         <div class="col-6">
-                            <span t-field="sale_order.date_order" t-options='{"format": "dd/MM/yyyy"}'  ></span>
+                            <span t-field="sale_order.validity_date"  ></span>
                         </div>
                     </div>
                     <div class="row">

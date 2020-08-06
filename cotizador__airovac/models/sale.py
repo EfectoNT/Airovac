@@ -420,10 +420,9 @@ class SaleOrderLineInherit(models.Model):
         if (self.e_multiplicador < self.e_mult_min and flag) or (
                 (resul < espe) and flag):
                     print("Ofrece por debajo del minimo")
-                    self.price_unit({'price_unit': self.e_multiplicador * self.e_precio_de_lista,
+                    self.update({'price_unit': self.e_multiplicador * self.e_precio_de_lista,
                                      'e_punto_venta': self.e_multiplicador * self.e_precio_de_lista *  (
-                     1 - (self.discount / 100))
-                                        , 'e_por_debajo' : 1})
+                     1 - (self.discount / 100)) , 'e_por_debajo' : 1})
                     return {
                         'warning': {
                             'title': "Cuidado",
@@ -453,7 +452,7 @@ class SaleOrderLineInherit(models.Model):
 
         if (self.e_multiplicador < self.e_mult_min and flag) or (
                 (resul < espe) and flag):
-            self.price_unit(
+            self.update(
                 {'price_unit': self.e_multiplicador * self.e_precio_de_lista,
                  'e_punto_venta': self.e_multiplicador * self.e_precio_de_lista * (
                          1 - (self.discount / 100))
