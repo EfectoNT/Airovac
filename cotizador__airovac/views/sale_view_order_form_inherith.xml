@@ -113,8 +113,13 @@
 
 
 
-                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='price_unit']" position="replace">
-                    <field name="price_unit" string="P.Venta" help = "P.L * Multiplicador * (1 - Descuento)" readonly="1" force_save="1"    options='{"bg_color": "Pink:e_por_debajo == 1 "}' />
+                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='price_unit']" position="attributes">
+                    <attribute name="optional">hide</attribute>
+                    <attribute name="options">{"bg_color": "Pink:e_por_debajo == 1 "}</attribute>
+                </xpath>
+
+                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='price_subtotal']" position="before">
+                     <field name="e_punto_venta" readonly="1" force_save="1"   attrs="{'column_invisible': [('parent.breakdown', '=', False)]}" options='{"bg_color": "LightCyan:colored == 1 and principal == 1 ;  LightYellow:colored == 2 and principal == 1 "}'  />
                 </xpath>
 
 

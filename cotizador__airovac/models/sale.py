@@ -135,7 +135,8 @@ class SaleOrderInherit(models.Model):
                             line.write({'e_multiplicador': mult.e_multiplicador,'price_unit' : mult.e_multiplicador * line.e_precio_de_lista * (1 - (line.discount / 100)),'e_por_debajo': 1})
                         else:
                             line.write({'e_multiplicador': mult.e_multiplicador,
-                                        'price_unit': mult.e_multiplicador * line.e_precio_de_lista * (
+                                        'price_unit': mult.e_multiplicador * line.e_precio_de_lista ,
+                                        'e_punto_venta':mult.e_multiplicador * line.e_precio_de_lista * (
                                                     1 - (line.discount / 100)),
                                         'e_por_debajo': 0})
                         #print(line)
@@ -146,12 +147,14 @@ class SaleOrderInherit(models.Model):
                         espe = 1 * line.e_precio_de_lista
                         if resul < espe:
                             line.write({'e_multiplicador': 1,
-                                        'price_unit': 1 * line.e_precio_de_lista * (
-                                                    1 - (line.discount / 100)),
+                                        'price_unit': mult.e_multiplicador * line.e_precio_de_lista,
+                                        'e_punto_venta': mult.e_multiplicador * line.e_precio_de_lista * (
+                                                1 - (line.discount / 100)),
                                         'e_por_debajo': 1})
                         else:
                             line.write({'e_multiplicador': 1,
-                                        'price_unit': 1 * line.e_precio_de_lista * (
+                                        'price_unit': mult.e_multiplicador * line.e_precio_de_lista,
+                                        'e_punto_venta': mult.e_multiplicador * line.e_precio_de_lista * (
                                                 1 - (line.discount / 100)),
                                         'e_por_debajo': 0})
                         #print('return multi')
@@ -180,7 +183,7 @@ class SaleOrderInherit(models.Model):
             total = 0.0
             for line in order.order_line:
                 costo_total += line.e_costo_total
-                total += line.price_unit * line.product_uom_qty
+                total += line.e_punto_venta * line.product_uom_qty
             #print(e_g_m_p)
             if total != 0:
                 order.write({'e_g_m_p': 1 - (costo_total/total)})
@@ -247,7 +250,7 @@ class SaleOrderInherit(models.Model):
                             div = line.product_uom_qty
                             #print('Asignando Aux',aux.id,total_group)
 
-                        total_group += line.price_unit * line.product_uom_qty
+                        total_group += line.e_punto_venta * line.product_uom_qty
                         line.write({'grupo': grupo,'colored': colored,'e_p_unit_a': 0,'e_subtotal_no_des':0 })
 
 
@@ -279,7 +282,7 @@ class SaleOrderInherit(models.Model):
                             #print(contador, 'D', line.e_asociar, grupo, sigue)
                     else:
                         if sigue:
-                            total_group += line.price_unit * line.product_uom_qty
+                            total_group += line.e_punto_venta * line.product_uom_qty
                             #print('En sige Aux id',aux.id,aux.grupo, total_group, line.price_subtotal)
                             #if line.e_p_unit_a > 0 and line.principal > 0:
                             #    line.write({'grupo': grupo, 'colored': colored})
@@ -289,9 +292,9 @@ class SaleOrderInherit(models.Model):
                         else:
                             if line.e_p_unit_a > 0 or line.principal > 0:
                                 line.write({'grupo': 0, 'colored': 0,
-                                            'e_p_unit_a': line.price_unit, 'principal': 0,'e_subtotal_no_des':line.price_subtotal})
+                                            'e_p_unit_a': line.e_punto_venta, 'principal': 0,'e_subtotal_no_des':line.price_subtotal})
                             else:
-                                line.write({'grupo': 0, 'colored': 0,'e_p_unit_a': line.price_unit,'e_subtotal_no_des':line.price_subtotal})
+                                line.write({'grupo': 0, 'colored': 0,'e_p_unit_a': line.e_punto_venta,'e_subtotal_no_des':line.price_subtotal})
                             #print(contador, 'F', line.e_asociar, grupo, sigue,line.colored)
                     #lista.append(line)
 
@@ -317,7 +320,6 @@ class SaleOrderLineInherit(models.Model):
     e_precio_de_lista = fields.Monetary(digits=(10, 2),readonly=True,string="P.L.", help="Precio de lista")
     e_multiplicador = fields.Float(digits=(10, 4),default=0, string="Mult.", help="Multiplicador, si no exite 1")
     e_descuento = fields.Integer(string="Des %")
-    #price_unit =fields.Float(digits=(10, 2),readonly=True, string="P . V",help="P.L * Multiplicador * (1 - Descuento)")
     e_costo_total =fields.Monetary(string="Costo Total",readonly=True)
 
     e_costo_unitario = fields.Monetary(digits=(10, 2),Default = 0,store=True,readonly=True, string="Costo Unitario", help="(1 + IGI + Impotación) * (PL * Mult. STD)")
@@ -327,11 +329,11 @@ class SaleOrderLineInherit(models.Model):
     e_estimado_pro_l = fields.Float(digits=(10, 3), Default=0,readonly = True, store=True, string="% STP", help="% Sobre total de propuesta")
     e_asociar = fields.Boolean( Default=False,string="G.",help="Asocia productos con accesorios cada dos checkboxes")
     e_p_unit_a = fields.Monetary(Default=0,readonly=True,string="P.U con Accesorios",help="Precio unitario con accesorios")
-    e_subtotal_no_des = fields.Monetary(Default=0,string="Subtutal",help="Sub tutal no desglosado")
+    e_subtotal_no_des = fields.Monetary(Default=0,string="Subtotal",help="Sub total no desglosado")
     e_t_e = fields.Char(string="T.E.",
                                         help="Tiempo estimado de entrega")
     e_por_debajo = fields.Integer(Default=0)
-    discount = fields.Integer(Default=0,string = "Descuento %")
+    #Discount = fields.Integer(Default=0,string = "Descuento %")
 
     #campos no visibles, usados para el calculo de productos con accesorios :3
     sequence = fields.Integer("Sequence")
@@ -345,17 +347,20 @@ class SaleOrderLineInherit(models.Model):
     e_mult_min = fields.Float(digits=(10, 4),default = 1, string="Mult. Min", help="e_mult_min")
     e_exwork = fields.Monetary( string="Cost Exwork",store=True, help="P.L x Exwork mult")
     e_marca = fields.Char(String='Marca', related='product_id.e_product_class.name')
+    e_punto_venta = fields.Monetary(digits=(10, 2),readonly=True, string="P . V",help="P.L * Multiplicador * (1 - Descuento)")
+
+    # price_unit =fields.Float(digits=(10, 2),readonly=True, string="P . V",help="P.L * Multiplicador * (1 - Descuento)")
     #price_subtotal = fields.Monetary(Default=0, string="Subtutal",compute='_compute_subtotal',
      #                                   help="Subtutal")
 
 
 
 
-    @api.onchange('price_subtotal')
-    def _compute_subtotal(self):
-        for line in self:
-            #print("Semurio2?")
-            line.write({'price_subtotal':line.price_unit * line.product_uom_qty})
+    # @api.onchange('price_subtotal')
+    # def _compute_subtotal(self):
+    #     for line in self:
+    #         #print("Semurio2?")
+    #         line.write({'price_subtotal':line.price_unit * line.product_uom_qty})
 
 
 
@@ -395,78 +400,170 @@ class SaleOrderLineInherit(models.Model):
         #print('No hubo ningun cambio')
         return False
 
+    @api.onchange('e_multiplicador')
+    def change_e_multiplicador(self):
+        print("cambia el multiplicador")
+        if  self.e_multiplicador < 0:
+            raise UserError(
+                'El multiplicador no puede ser negativo')
 
-
-
-    @api.onchange('e_multiplicador', 'discount','e_precio_de_lista')
-    def change_price_unit(self):
-
-        # El descuento no puede ser del 100%
-
-        if self.discount >= 100:
-            self.write({
-                            'price_unit': self.e_multiplicador * self.e_precio_de_lista * (
-                                    1 - (self._origin.discount / 100)),
-                            'e_por_debajo': 0,'discount' :self._origin.discount})
-            return {
-                'warning': {
-                    'title': "Cuidado",
-                    'message': "El Descuento no puede ser más del 100%",
-                    'type': 'notification'
-                }
-            }
-
-        # El multiplicador no puede ser negativo
-
-        if self.e_multiplicador < 0:
-            self.write({
-                            'price_unit': self._origin.e_multiplicador * self.e_precio_de_lista * (
-                                    1 - (self.discount / 100)),
-                            'e_por_debajo': 0,'e_multiplicador' : self._origin.e_multiplicador})
-            return {
-                'warning': {
-                    'title': "Cuidado",
-                    'message': "El Multiplicador no puede ser menor que 0",
-                    'type': 'notification'
-                }
-            }
-
-
-
-        flag = self.env['res.users'].has_group('cotizador__airovac.group_nom_options')
+        flag = self.env['res.users'].has_group(
+            'cotizador__airovac.group_nom_options')
         resul = self.e_multiplicador * self.e_precio_de_lista * (
-                1 - (self.discount / 100))
+                     1 - (self.discount / 100))
         espe =  self.e_mult_min * self.e_precio_de_lista
 
-        if (self.e_multiplicador < self.e_mult_min and not flag) or ((resul < espe)  and not flag):
+        if (self.e_multiplicador < self.e_mult_min and not flag) or ((resul < espe)  and not flag) :
+            raise UserError(
+                'El multiplicador tiene que ser mayor que el multiplicador mínimo')
 
-                self.write({'e_multiplicador' : self._set_mul_default(),
-                             'e_por_debajo' : 0,'discount':self._origin.discount
-                            })
-                return {
-                    'warning': {
-                        'title': "Cuidado",
-                        'message': "No puedes ofrecer un producto por debajo de su (multiplicador) precio mínimo",
-                        'type': 'notification'
+        if (self.e_multiplicador < self.e_mult_min and flag) or (
+                (resul < espe) and flag):
+                    print("Ofrece por debajo del minimo")
+                    self.price_unit({'price_unit': self.e_multiplicador * self.e_precio_de_lista,
+                                     'e_punto_venta': self.e_multiplicador * self.e_precio_de_lista *  (
+                     1 - (self.discount / 100))
+                                        , 'e_por_debajo' : 1})
+                    return {
+                        'warning': {
+                            'title': "Cuidado",
+                            'message': "Has ofrecido el producto por debajo de su precio mínimo",
+                            'type': 'notification'
+                        }
                     }
+        print("Update multiplicador")
+        self.update({
+            'price_unit': self.e_multiplicador * self.e_precio_de_lista,
+            'e_punto_venta': self.e_multiplicador * self.e_precio_de_lista * (
+                    1 - (self.discount / 100))
+            , 'e_por_debajo': 0
+        })
+
+    @api.onchange('discount')
+    def change_discount_airovac(self):
+        if self.discount > 100:
+            raise UserError(
+                "El Descuento no puede ser más del 100%")
+
+        flag = self.env['res.users'].has_group(
+            'cotizador__airovac.group_nom_options')
+        resul = self.e_multiplicador * self.e_precio_de_lista * (
+                1 - (self.discount / 100))
+        espe = self.e_mult_min * self.e_precio_de_lista
+
+        if (self.e_multiplicador < self.e_mult_min and flag) or (
+                (resul < espe) and flag):
+            self.price_unit(
+                {'price_unit': self.e_multiplicador * self.e_precio_de_lista,
+                 'e_punto_venta': self.e_multiplicador * self.e_precio_de_lista * (
+                         1 - (self.discount / 100))
+                    , 'e_por_debajo': 1})
+            return {
+                'warning': {
+                    'title': "Cuidado",
+                    'message': "Has ofrecido el producto  por debajo de su precio mínimo",
+                    'type': 'notification'
                 }
+            }
+        if (self.e_multiplicador < self.e_mult_min and not flag) or ((resul < espe)  and not flag) :
+            raise UserError(
+                'No puedes dar un producto por debajo de su precio mínimo')
 
-        if (self.e_multiplicador < self.e_mult_min and  flag) or  ((resul < espe)  and  flag):
+        self.update({
+            'price_unit': self.e_multiplicador * self.e_precio_de_lista,
+            'e_punto_venta': self.e_multiplicador * self.e_precio_de_lista * (
+                    1 - (self.discount / 100))
+            , 'e_por_debajo': 0
+        })
 
-                self.write({'price_unit': self.e_multiplicador * self.e_precio_de_lista * (
-                                        1 - (self.discount / 100)), 'e_por_debajo' : 1})
 
-                return {
-                    'warning': {
-                        'title': "Cuidado",
-                        'message': "Has ofrecido el producto  por debajo de su precio mínimo",
-                        'type': 'notification'
-                    }
-                }
+    #
+    #         self.update({
+    #                         'e_punto_venta': self.price_unit * 1 - (
+    #                         self._origin.discount / 100),
+    #                         'e_por_debajo': 0,'discount' :self._origin.discount})
+    #         return {
+    #             'warning': {
+    #                 'title': "Cuidado",
+    #                 'message': "El Descuento no puede ser más del 100%",
+    #                 'type': 'notification'
+    #             }
+    #         }
 
-        #print("cambiando subtotal")
-        self.write({'price_unit': self.e_multiplicador * self.e_precio_de_lista * (
-                                    1 - (self.discount / 100)),'e_por_debajo' : 0})
+
+
+
+
+    # @api.onchange('e_multiplicador', 'discount','e_precio_de_lista')
+    # def asing_punto_venta(self):
+    #
+    #     # El descuento no puede ser del 100%
+    #
+    #     if self.discount >= 100:
+    #
+    #         self.update({
+    #                         'e_punto_venta': self.price_unit * 1 - (
+    #                         self._origin.discount / 100),
+    #                         'e_por_debajo': 0,'discount' :self._origin.discount})
+    #         return {
+    #             'warning': {
+    #                 'title': "Cuidado",
+    #                 'message': "El Descuento no puede ser más del 100%",
+    #                 'type': 'notification'
+    #             }
+    #         }
+    #
+    #     # El multiplicador no puede ser negativo
+    #
+    #     if self.e_multiplicador < 0:
+    #         self.write({
+    #                         'e_punto_venta': self._origin.e_multiplicador * self.e_precio_de_lista * (
+    #                                 1 - (self.discount / 100)),
+    #                         'e_por_debajo': 0,'e_multiplicador' : self._origin.e_multiplicador})
+    #         return {
+    #             'warning': {
+    #                 'title': "Cuidado",
+    #                 'message': "El Multiplicador no puede ser menor que 0",
+    #                 'type': 'notification'
+    #             }
+    #         }
+    #
+    #
+    #
+    #     flag = self.env['res.users'].has_group('cotizador__airovac.group_nom_options')
+    #     resul = self.e_multiplicador * self.e_precio_de_lista * (
+    #             1 - (self.discount / 100))
+    #     espe =  self.e_mult_min * self.e_precio_de_lista
+    #
+    #     if (self.e_multiplicador < self.e_mult_min and not flag) or ((resul < espe)  and not flag):
+    #
+    #             self.write({'e_multiplicador' : self._set_mul_default(),
+    #                          'e_por_debajo' : 0,'discount':self._origin.discount
+    #                         })
+    #             return {
+    #                 'warning': {
+    #                     'title': "Cuidado",
+    #                     'message': "No puedes ofrecer un producto por debajo de su (multiplicador) precio mínimo",
+    #                     'type': 'notification'
+    #                 }
+    #             }
+    #
+    #     if (self.e_multiplicador < self.e_mult_min and  flag) or  ((resul < espe)  and  flag):
+    #
+    #             self.write({'price_unit': self.e_multiplicador * self.e_precio_de_lista * (
+    #                                     1 - (self.discount / 100)), 'e_por_debajo' : 1})
+    #
+    #             return {
+    #                 'warning': {
+    #                     'title': "Cuidado",
+    #                     'message': "Has ofrecido el producto  por debajo de su precio mínimo",
+    #                     'type': 'notification'
+    #                 }
+    #             }
+    #
+    #     #print("cambiando subtotal")
+    #     self.write({'price_unit': self.e_multiplicador * self.e_precio_de_lista * (
+    #                                 1 - (self.discount / 100)),'e_por_debajo' : 0})
 
     @api.onchange('product_id')
     def product_id_change(self):
@@ -513,12 +610,12 @@ class SaleOrderLineInherit(models.Model):
                     'e_importation' : (self.product_id.e_importation * 100),
                     'e_t_e': self.product_id.e_tiempo_estimado,
                     'e_mult_min': self.product_id.e_mult_min,
-                    'e_multiplicador' :  self._set_mul_default()
+                    'e_multiplicador' :  self._set_mul_default(),
+                    'price_unit': convertido,
+                    'e_punto_venta':convertido
                     })
         if self.product_id:
             self.write({'e_partida' : str(len(self.order_id.order_line)-1)})
-
-
 
         return res
 
