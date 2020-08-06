@@ -121,7 +121,7 @@
                                                 <span>Fecha de expiración:</span>
                                             </div>
                                             <div class="col-6">
-                                                <span t-field="doc.date_order" t-options='{"format": "dd/MM/yyyy"}'  ></span>
+                                                <span t-field="doc.sale_order.validity_date"  ></span>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -271,7 +271,7 @@
                                                         </td>
                                                         <td name="td_priceunit" class="text-center" style="vertical-align:middle">
                                                             <t t-if = "doc.breakdown == True" >
-                                                                  <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" t-field="line.price_unit"  t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" ></span>
+                                                                  <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" t-field="line.e_punto_venta"  t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" ></span>
                                                             </t>
                                                             <t t-if = "doc.breakdown != True" >
                                                                 <t t-if = "(line.principal == 1) or (line.grupo == 0 and line.principal == 0) " >
@@ -346,7 +346,7 @@
                                                         </td>
                                                         <td name="td_priceunit" class="text-center" style="vertical-align:middle">
                                                             <t t-if = "doc.breakdown == True" >
-                                                                 <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" t-field="line.price_unit" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"></span>
+                                                                 <span style="font-family: verdana !important;font-weight: normal !important; font-size: 10pt !important;" t-field="line.e_punto_venta" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"></span>
                                                             </t>
                                                             <t t-if = "doc.breakdown != True" >
                                                                 <t t-if = "(line.principal == 1) or (line.grupo == 0 and line.principal == 0) " >
