@@ -121,7 +121,7 @@
                                                 <span>Fecha de expiración:</span>
                                             </div>
                                             <div class="col-6">
-                                                <span t-field="doc.sale_order.validity_date"  ></span>
+                                                <span t-field="doc.validity_date"  ></span>
                                             </div>
                                         </div>
                                         <div class="row">
