@@ -25,5 +25,5 @@ from odoo.addons.l10n_mx_edi.tools.run_after_commit import run_after_commit
 class AccountMoveFree(models.Model):
     _inherit = 'account.move'
 
-    l10n_mx_edi_cfdi_name = fields.Char(string='CFDI name', copy=False,
+    l10n_mx_edi_cfdi_name = fields.Char(string='CFDI name', copy=False, readonly=False,
                                         help='The attachment name of the CFDI editado.')
