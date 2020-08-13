@@ -23,7 +23,8 @@
     'depends': ['base',
                 'product',
                 'purchase',
-                'sale'],
+                'sale',
+                'account'],
 
     # always loaded
     'data': [
