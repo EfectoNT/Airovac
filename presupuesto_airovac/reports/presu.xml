@@ -439,18 +439,22 @@
                                         <t t-esc ="doc.note" />
                                     </p>
                                 </div>
-                                <div class="row">
-                                        <div class="col-1" >
-                                             <img class="img-fluid" alt="Logo" src='/web/binary/company_logo'/>
-                                         </div>
-                                        <div class="col-6 text-left">
-                                            <span><t t-esc="doc.create_uid.name" />  </span><br/>
-                                            <span><t t-esc="doc.create_uid.function" /></span>
-                                         </div>
-                                </div>
                             </div>
 
                             <div class="footer">
+                                <div class="last-page">
+                                    <div class="row">
+                                        <div class="col-1" >
+                                            <img class="img-fluid" alt="Logo" src='/web/binary/company_logo'/>
+                                        </div>
+                                        <div class="col-6 text-left">
+                                            <span><t t-esc="doc.create_uid.name" />  </span><br/>
+                                            <span><t t-esc="doc.create_uid.function" /></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
                                 <div class="row">
                                     <div class="col-12" style="border-top: 1px solid black; font-size: 8pt;">
                                         <p class="text-center" >
