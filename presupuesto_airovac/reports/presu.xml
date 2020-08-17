@@ -434,25 +434,26 @@
                                 </div>
 
                              <div class="last-page">
-                               <div style="background-color:red; min-height: 700px !important; margin-top:auto !important;">
+
                                 <div style="margin-top:5px;"  class="col-12 text-left" name="information_block">
                                     <h2 style="font-family: verdana !important;font-weight: bold !important; font-size: 11pt;!important" > Condiciones Generales:</h2>
                                     <p style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt;!important text-align: justify !important ;" >
                                         <t t-esc ="doc.note" />
                                     </p>
                                 </div>
-
-                                <div class="row mb-1">
+                             </div>
+                             <div class="last-page">
+                                <div class="row mb">
                                         <div class="col-1" >
-                                            <img style="height: 50px !important;" alt="Logo" src='/web/binary/company_logo' />
+                                            <img style="height: 75px !important;" alt="Logo" src='/web/binary/company_logo' />
                                         </div>
                                         <div class="col-6 text-left">
                                             <span><t t-esc="doc.create_uid.name" />  </span><br/>
                                             <span><t t-esc="doc.create_uid.function" /></span>
                                         </div>
-                                    </div>
                                 </div>
-                              </div>
+                             </div>
+
                             </div>
 
                             <div class="footer">
