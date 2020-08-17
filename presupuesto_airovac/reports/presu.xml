@@ -445,7 +445,7 @@
                             <div class="footer">
 
                                 <div class="last-page">
-                                    <div class="row mb-3" style="max-height: 100px;">
+                                    <div class="row mb-3" style="height: 100px !important;">
                                         <div class="col-1" >
                                             <img class="img-fluid" alt="Logo" src='/web/binary/company_logo' />
                                         </div>
