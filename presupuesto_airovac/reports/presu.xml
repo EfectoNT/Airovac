@@ -445,9 +445,9 @@
                             <div class="footer">
 
                                 <div class="last-page">
-                                    <div class="row mb-3">
+                                    <div class="row mb-1">
                                         <div class="col-1" >
-                                            <img style="height: 100px !important;" alt="Logo" src='/web/binary/company_logo' />
+                                            <img style="height: 50px !important;" alt="Logo" src='/web/binary/company_logo' />
                                         </div>
                                         <div class="col-6 text-left">
                                             <span><t t-esc="doc.create_uid.name" />  </span><br/>
