@@ -26,6 +26,7 @@
     'data': [
         # 'security/ir.model.access.csv',
         'views/fix_qr_sello.xml',
+        'views/num_pedimento_invoice.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
