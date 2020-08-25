@@ -9,17 +9,19 @@
     </template>
 
     <template id="num_pedimento_invoice" inherit_id="account.report_invoice_document">
-        <xpath expr="//table[@name='invoice_line_table']/tbody//tr[1]" position="inside" >
-             <t t-if="line.l10n_mx_edi_customs_number">
-                <td colspan="99">
+        <xpath expr="//table[@name='invoice_line_table']/tbody//tr[1]" position="after" >
+            <t t-if="line.l10n_mx_edi_customs_number">
+                <tr class="font-italic o_line_note">
+                    <td colspan="99">
 
-                        <br/>Customs:
-                        <ul>
-                            <t t-foreach="line.l10n_mx_edi_customs_number.split(',') if line.l10n_mx_edi_customs_number else []" t-as="pedimento">
-                                <li><span t-esc="pedimento"/></li>
-                            </t>
-                        </ul>
-               </td>
+                            <br/>Customs:
+                            <ul>
+                                <t t-foreach="line.l10n_mx_edi_customs_number.split(',') if line.l10n_mx_edi_customs_number else []" t-as="pedimento">
+                                    <li><span t-esc="pedimento"/></li>
+                                </t>
+                            </ul>
+                   </td>
+                </tr>
             </t>
         </xpath>
     </template>
