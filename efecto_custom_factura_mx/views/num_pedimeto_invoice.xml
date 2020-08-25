@@ -13,8 +13,7 @@
             <t t-if="line.l10n_mx_edi_customs_number">
                 <tr class="font-italic o_line_note">
                     <td colspan="99">
-
-                            <br/>Customs:
+                        Pedimentos:
                             <ul>
                                 <t t-foreach="line.l10n_mx_edi_customs_number.split(',') if line.l10n_mx_edi_customs_number else []" t-as="pedimento">
                                     <li><span t-esc="pedimento"/></li>

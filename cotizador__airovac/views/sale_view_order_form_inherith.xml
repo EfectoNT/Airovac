@@ -8,7 +8,7 @@
 
                 <!--Botones detalles y marcar como perdido -->
                 <xpath expr="//header" pogitsition='inside'>
-                    <button string="Marcar como perido" type="object" name="marcar_perido" states="draft,sent,sale" />
+                    <button string="Marcar como perdido" type="object" name="marcar_perido" states="draft,sent,sale" />
                     <button string="ver detalles" type="object" name="mostrar_detalles"  attrs="{'invisible': [('hide_fields', '=', True)]}" groups="cotizador__airovac.group_nom_options" />
                     <button string="ocultar detalles" type="object" name="mostrar_detalles"   attrs="{'invisible': [('hide_fields', '=', False)]}" groups="cotizador__airovac.group_nom_options" />
                 </xpath>
