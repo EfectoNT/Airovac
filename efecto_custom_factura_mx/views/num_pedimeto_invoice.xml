@@ -8,7 +8,7 @@
         </xpath>
     </template>
 
-    <template id="num_pedimento_invoice" inherit_id="report_invoice_document">
+    <template id="num_pedimento_invoice" inherit_id="account.report_invoice_document">
         <xpath expr="//table[@name='invoice_line_table']/tbody" position="inside" >
              <t t-if="line.l10n_mx_edi_customs_number">
                 <td colspan="99">
