@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
+from odoo.exceptions import UserError
 
 from odoo import models, fields, api
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
@@ -17,25 +18,45 @@ class purchaseOrderLineInherit(models.Model):
          self.price_unit = (self.e_mult_std * self.e_precio_lista )
 
 
-    @api.onchange('product_id','partner_id')
+    @api.onchange('product_id')
     def _default_mult(self):
-        print(self.price_unit,'price unit')
-        print(self.partner_id.id, self.partner_id.name)
-        for proveedor in self.product_id.seller_ids:
-            print(proveedor.name,proveedor.id, self.partner_id.name,self.partner_id.id)
-            if proveedor.id == self.partner_id.id:
-                print('iguales',proveedor.id, self.partner_id.id)
-                self.e_mult_std = proveedor.e_mult_std
-                print(proveedor.e_mult_std)
-                return
-        self.e_mult_std = 1
+        if not self.order_id.currency_id:
+            raise UserError(
+                'ELIJA UNA TARIFA')
+        #print(self.order_id.currency_id.name)
 
+        moneda_usar = self.order_id
+        convertido = 0
+
+        if moneda_usar.currency_id.name == 'USD':
+            convertido = self.product_id.e_precio_de_lista
+            print('Son usd')
+        if moneda_usar.currency_id.name == 'MXN':
+            dolars = self.env['res.currency'].search(
+                [('name', '=', 'USD')],
+                limit=1)
+            convertido = self.product_id.e_precio_de_lista / (dolars.rate * 1)
+        else:
+            dolars = self.env['res.currency'].search(
+                [('name', '=', 'USD')],
+                limit=1)
+
+            otra_moneda = self.env['res.currency'].search(
+                [('name', '=', self.order_id.currency_id.name)],
+                limit=1)
+
+            pesos = self.product_id.e_precio_de_lista / (dolars.rate * 1)
+            convertido = pesos * otra_moneda.rate
+
+        #print("convertido bebe",convertido)
+
+        self.write({'e_precio_lista': convertido,
+                    'e_mult_std':1})
+
+        #print(self.e_precio_lista)
         return
 
-    @api.onchange('product_qty', 'product_uom')
-    def _onchange_quantity(self):
-        super(purchaseOrderLineInherit,self)._onchange_quantity()
-        self.e_precio_lista = self.price_unit
+
 
 
 class productSupplierinfoInherit(models.Model):
