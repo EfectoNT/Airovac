@@ -10,12 +10,16 @@ class purchaseOrderLineInherit(models.Model):
 
     e_mult_std =  fields.Float(digits=(1,4), string="Mult STD", help="Multiplicador solicitado al proveedor" )
     #fields.Float(digits=(1,4), string="Mult STD", help="Multiplicador solicitado al proveedor")
-    e_precio_lista = fields.Monetary(digits=(10, 2),string="P.L", help="Precio de Lista X Mult STD")
+    e_precio_lista = fields.Monetary(digits=(10, 2),string="P.L", help="Precio de Lista X Mult STD",readonly="True")
 
 
     @api.onchange('e_mult_std','e_precio_lista')
     def _onchange_mult_std(self):
         self.write({'price_unit': (self.e_mult_std * self.e_precio_lista) })
+
+    @api.onchange('product_qty','e_mult_std','e_precio_lista')
+    def _onchange_product_std(self):
+        self.write({'price_subtotal':(self.e_mult_std * self.e_precio_lista*self.product_qty)})
 
 
     @api.onchange('product_id')
