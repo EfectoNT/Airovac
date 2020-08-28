@@ -62,10 +62,11 @@ class purchaseOrderLineInherit(models.Model):
 class productSupplierinfoInherit(models.Model):
     _inherit = 'product.supplierinfo'
 
-    e_mult_std = fields.Float(Default=1, digits=(1,4), string="Mult STD", help="Multiplicador solicitado al proveedor")
+    #e_mult_std = fields.Float(Default=1, digits=(1,4), string="Mult STD", help="Multiplicador solicitado al proveedor")
 
     @api.onchange('product_tmpl_id')
     def _default_precio_lista(self):
         print('Default mul')
         print(self.product_tmpl_id,self.product_tmpl_id.name,self.product_tmpl_id.e_igi)
         self.price = self.product_tmpl_id.e_precio_de_lista
+
