@@ -15,7 +15,7 @@ class purchaseOrderLineInherit(models.Model):
 
     @api.onchange('product_qty','e_mult_std','e_precio_lista')
     def _onchange_mult_std(self):
-         self.price_unit = (self.e_mult_std * self.e_precio_lista )
+         self.price_unit = (self.e_mult_std * self.e_precio_lista * self.product_qty)
 
 
     @api.onchange('product_id')
