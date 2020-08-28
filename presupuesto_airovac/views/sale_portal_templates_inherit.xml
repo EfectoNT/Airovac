@@ -286,9 +286,9 @@
                  <div   class="col-12 text-left" name="information_block">
                      <h2 style="font-family: verdana !important;font-weight: bold !important; font-size: 11pt;!important" > Condiciones Generales:</h2>
 
-                     <p style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt;!important text-align: justify !important ;" >
-                         <t t-esc ="sale_order.note" />
-                     </p>
+                     <div style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt;!important text-align: justify !important ;" >
+                         <t t-raw ="sale_order.note" />
+                     </div>
                  </div>
 
                  <div class="container">
