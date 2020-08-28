@@ -23,7 +23,14 @@
                 </tr>
             </t>
         </xpath>
+        <xpath expr="//p[@name='comment']" position="replace" >
+            <div t-if="o.narration" name="comment">
+                        <t t-raw ="o.narration"/>
+            </div>
+        </xpath>
     </template>
+
+
 
 
 </odoo>
