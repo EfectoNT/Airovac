@@ -24,9 +24,9 @@
             </t>
         </xpath>
         <xpath expr="//p[@name='comment']" position="replace" >
-            <div t-if="o.narration" name="comment">
+            <p t-if="o.narration" name="comment" style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt;!important text-align: justify !important ;" >
                         <t t-raw ="o.narration"/>
-            </div>
+            </p>
         </xpath>
     </template>
 
