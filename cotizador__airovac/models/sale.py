@@ -670,12 +670,12 @@ class SaleOrderLineInherit(models.Model):
         #print(self.e_g_m_l)
 
 
-    @api.onchange('e_provedor')
-    def _onchange_e_mult_std(self):
-        self.write({'e_mult_std' : self.e_provedor.e_mult_std})
-
-
-    @api.onchange('e_mult_std')
-    def _onchange_e_mult_stf(self):
-        self.write({'e_exwork': self.e_mult_std * self.e_precio_de_lista})
+    # @api.onchange('e_provedor')
+    # def _onchange_e_mult_std(self):
+    #     self.write({'e_mult_std' : self.e_provedor.e_mult_std})
+    #
+    # 
+    # @api.onchange('e_mult_std')
+    # def _onchange_e_mult_stf(self):
+    #     self.write({'e_exwork': self.e_mult_std * self.e_precio_de_lista})
 
