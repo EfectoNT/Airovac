@@ -63,7 +63,8 @@ class AccountMoveLineEfecto(models.Model):
             convertido = pesos * otra_moneda.rate
 
         #print("convertido bebe",convertido)
-
+        raise UserError(
+            convertido)
         self.update({'price_unit': convertido})
 
         #print(self.e_precio_lista)
