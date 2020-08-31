@@ -28,4 +28,47 @@ class AccountMoveFree(models.Model):
     l10n_mx_edi_cfdi_name = fields.Char(string='CFDI name', copy=False, readonly=False,
                                         help='The attachment name of the CFDI editado.')
 
+class AccountMoveLineEfecto(models.Model):
+    _inherit = "account.move.line"
+
+    @api.onchange('product_id')
+    def _onchange_product_id_convert(self):
+
+        #print(self.order_id.currency_id.name)
+
+        moneda_usar = self.account_id.currency_id
+        convertido = 0
+
+        if moneda_usar.name == 'USD':
+            convertido = self.product_id.e_precio_de_lista
+            print('Son usd')
+        if moneda_usar.name == 'MXN':
+            dolars = self.env['res.currency'].search(
+                [('name', '=', 'USD')],
+                limit=1)
+            if(self.product_id.e_precio_de_lista == 0):
+                convertido = 1
+            else:
+                convertido = self.product_id.e_precio_de_lista / (dolars.rate * 1)
+        else:
+            dolars = self.env['res.currency'].search(
+                [('name', '=', 'USD')],
+                limit=1)
+
+            otra_moneda = self.env['res.currency'].search(
+                [('name', '=', self.account_id.currency_id.name)],
+                limit=1)
+
+            pesos = self.product_id.e_precio_de_lista / (dolars.rate * 1)
+            convertido = pesos * otra_moneda.rate
+
+        #print("convertido bebe",convertido)
+
+        self.update({'price_unit': convertido})
+
+        #print(self.e_precio_lista)
+        return
+
+
+
 
