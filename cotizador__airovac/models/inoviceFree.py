@@ -64,7 +64,7 @@ class AccountMoveLineEfecto(models.Model):
 
         #print("convertido bebe",convertido)
 
-        self.write({'price_unit': convertido})
+
 
         #print(self.e_precio_lista)
         return
