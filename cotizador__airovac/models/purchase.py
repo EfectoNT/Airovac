@@ -55,7 +55,7 @@ class purchaseOrderLineInherit(models.Model):
         #print("convertido bebe",convertido)
 
         self.write({'e_precio_lista': convertido,
-                    'e_mult_std':self.product_id.mult_std})
+                    'e_mult_std':self.product_id.e_mult_std})
 
         #print(self.e_precio_lista)
         return
