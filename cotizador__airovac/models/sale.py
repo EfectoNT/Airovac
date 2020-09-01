@@ -609,6 +609,7 @@ class SaleOrderLineInherit(models.Model):
                     'e_importation' : (self.product_id.e_importation * 100),
                     'e_t_e': self.product_id.e_tiempo_estimado,
                     'e_mult_min': self.product_id.e_mult_min,
+                    'e_mult_std': self.product_id.e_product_class.e_mult_std,
                     'e_multiplicador' :  self._set_mul_default(),
                     'price_unit': convertido,
                     'e_punto_venta':convertido
@@ -674,8 +675,9 @@ class SaleOrderLineInherit(models.Model):
     # def _onchange_e_mult_std(self):
     #     self.write({'e_mult_std' : self.e_provedor.e_mult_std})
     #
-    #
-    # @api.onchange('e_mult_std')
-    # def _onchange_e_mult_stf(self):
-    #     self.write({'e_exwork': self.e_mult_std * self.e_precio_de_lista})
+
+
+    @api.onchange('e_mult_std')
+    def _onchange_e_mult_stf(self):
+        self.write({'e_exwork': self.e_mult_std * self.e_precio_de_lista})
 

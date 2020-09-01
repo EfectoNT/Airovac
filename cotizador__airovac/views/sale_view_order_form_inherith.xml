@@ -94,7 +94,7 @@
                     <field name="e_estimado_pro_l" readonly="1" force_save="1" />
                     <field name="e_marca" readonly="1" />
                     <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='tax_id']" position="move"/>
-                    <field name="e_provedor" domain = "[('product_tmpl_id', '=', product_id )]" optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="cotizador__airovac.group_nom_options" />
+<!--                    <field name="e_provedor" domain = "[('product_tmpl_id', '=', product_id )]" optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="cotizador__airovac.group_nom_options" />-->
                     <field name="e_mult_std" optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="cotizador__airovac.group_nom_options"/>
                     <field name="e_exwork" optional="hide" readonly="1" force_save="1" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="cotizador__airovac.group_nom_options"/>
                     <field name="e_importation"   optional="hide" attrs="{'column_invisible': [('parent.hide_fields', '=', False)]}" groups="cotizador__airovac.group_nom_options" />
