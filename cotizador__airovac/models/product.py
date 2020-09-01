@@ -260,6 +260,10 @@ class ProductuEClass(models.Model):
 
     e_num_products = fields.Integer(compute='_calculate_products')
     e_revision_p_l = fields.Char(string="Revisión de P.L")
+    e_mult_min = fields.Float(digits=(1, 4),default=1, string="Multiplicador mínimo", help="Multiplicador, si no existe el multiplicador default 1")
+    e_mult_std = fields.Float(digits=(1, 4), default=1,
+                              string="Multiplicador solicitado",
+                              help="Multiplicador solicitado por marca, si no existe el multiplicador default 1")
 
 
     @api.onchange('e_mult_min')
