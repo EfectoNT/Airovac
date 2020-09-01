@@ -246,13 +246,17 @@
 
                                                         </td>
                                                         <td name="th_description" style="text-align: justify !important ;">
+                                                            <t t-set="variables" t-value="1"/>
+                                                                <t t-foreach="line.product_id.product_template_attribute_value_ids" t-as="va">
+<!--                                                                    <t t-esc ="va.name" ></t>-->
+                                                                    <p>va.name</p>
+                                                                    <t t-set="variables" t-value="variables + va.name"/>
+                                                                </t>
+                                                            <span><t t-esc="variables"/> </span>
                                                             <a href="https://airovac-airovactest-1135560.dev.odoo.com"><strong><span style="font-family: verdana !important;font-weight: bold !important; font-size: 10pt !important;" t-field="line.product_template_id.default_code"></span></strong></a>
                                                             <br/>
                                                             <p style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt;!important; line-height: 94% !important;">
                                                                 <t t-if = "line.product_template_id.description_sale != False" >
-                                                                     <t t-foreach="line.product_id.product_template_attribute_value_ids" t-as="va">
-                                                                        <t t-esc ="va.name" ></t>
-                                                                    </t>
                                                                     <t t-esc ="line.product_template_id.description_sale" />
                                                                 </t>
                                                                 <t t-if = "line.product_template_id.description_sale == False" >
@@ -303,6 +307,13 @@
                                                     <tr class="">
                                                         <td name="td_partida" class="text-center">
                                                             <div class="row" >
+                                                                 <t t-set="variables" t-value="1"/>
+                                                                <t t-foreach="line.product_id.product_template_attribute_value_ids" t-as="va">
+<!--                                                                    <t t-esc ="va.name" ></t>-->
+                                                                    <p>va.name</p>
+                                                                    <t t-set="variables" t-value="variables + va.name"/>
+                                                                </t>
+                                                                <span><t t-esc="variables"/> </span>
                                                                 <div class="col-12  text-center">
                                                                     <span style="font-family: verdana !important;font-weight: bold !important; font-size: 10pt !important;" t-field="line.e_partida"></span>
                                                                 </div>

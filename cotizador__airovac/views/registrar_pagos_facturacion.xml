@@ -1,0 +1,16 @@
+<odoo>
+<!--    <data>-->
+<!--        <record model="ir.ui.view" id="view_account_reg_payment_tipo_cambio">-->
+<!--        <field name="name">view.account.reg.payment.form.tipo_cambio</field>-->
+<!--        <field name="model">account.payment.register</field>-->
+<!--        <field name="inherit_id" ref="account.view_account_payment_form_multi"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <data>-->
+<!--                <xpath expr="//field[@name='journal_id']" position="attributes">-->
+<!--                    <attribute name="string">Hola</attribute>-->
+<!--                </xpath>-->
+<!--            </data>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    </data>-->
+</odoo>
