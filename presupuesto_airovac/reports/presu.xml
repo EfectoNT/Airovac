@@ -246,7 +246,7 @@
 
                                                         </td>
                                                         <td name="th_description" style="text-align: justify !important ;">
-                                                            <t t-set="variables" t-value=" "/>
+                                                            <t t-set="variables" t-value="" />
                                                                 <t t-foreach="line.product_id.product_template_attribute_value_ids" t-as="va">
 <!--                                                                    <t t-esc ="va.name" ></t>-->
                                                                     <p>va.name</p>
@@ -307,7 +307,7 @@
                                                     <tr class="">
                                                         <td name="td_partida" class="text-center">
                                                             <div class="row" >
-                                                                 <t t-set="variables" t-value=" "/>
+                                                                 <t t-set="variables" t-value=""/>
                                                                 <t t-foreach="line.product_id.product_template_attribute_value_ids" t-as="va">
 <!--                                                                    <t t-esc ="va.name" ></t>-->
                                                                     <p>va.name</p>
