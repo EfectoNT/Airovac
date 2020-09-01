@@ -25,6 +25,8 @@ class productTemplateInherit(models.Model):
 
     e_revision_p_l = fields.Char(string="Revisión de P.L")
     e_link_full = fields.Char()
+    e_mult_std = fields.Float(digits=(10, 4), default=1, string="Mult. solicitado",
+                              help="e_mult_std")
 
     @api.onchange('e_te_max')
     def e_change_e_te_max(self):
@@ -49,7 +51,8 @@ class productTemplateInherit(models.Model):
     @api.onchange('e_product_class')
     def _e_product_class(self):
         print('onchangue')
-        self.write({'e_mult_min': self.e_product_class.e_mult_min})
+        self.write({'e_mult_min': self.e_product_class.e_mult_min,
+                    'e_mult_min': self.e_product_class.e_mult_std})
 
     @api.onchange('e_mult_min')
     def _change_mult_min(self):
@@ -60,6 +63,18 @@ class productTemplateInherit(models.Model):
                 'warning': {
                     'title': "Cuidado",
                     'message': "El multiplicador mínimo debe ser mayor que 0.0",
+                }
+            }
+
+    @api.onchange('e_mult_std')
+    def _change_mult_min(self):
+        print('onchangue emult')
+        if self.e_mult_std < 0:
+            self.write({'e_mult_std': self._origin.e_mult_std})
+            return {
+                'warning': {
+                    'title': "Cuidado",
+                    'message': "El multiplicador solicitado debe ser mayor que 0.0",
                 }
             }
 
@@ -274,6 +289,17 @@ class ProductuEClass(models.Model):
                 'warning': {
                     'title': "Cuidado",
                     'message': "El multiplicador mínimo debe ser mayor que 0.0",
+                }
+            }
+
+    @api.onchange('e_mult_std')
+    def _onchange_(self):
+        if self.e_mult_std < 0:
+            self.write({'e_mult_std': self._origin.e_mult_std})
+            return {
+                'warning': {
+                    'title': "Cuidado",
+                    'message': "El multiplicador solicitado debe ser mayor que 0.0",
                 }
             }
 

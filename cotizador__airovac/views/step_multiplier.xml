@@ -98,6 +98,7 @@
                                 <group>
                                     <field name="name"/>
                                     <field name="e_mult_min"/>
+                                    <field name="e_mult_std"/>
                                 </group>
 
 <!--                                <notebook>-->
@@ -123,6 +124,7 @@
                 <tree string="Marcas / Multiplicadores mínimos" >
                     <field name="name"/>
                     <field name="e_mult_min"/>
+                    <field name="e_mult_std"/>
                 </tree>
             </field>
         </record>
