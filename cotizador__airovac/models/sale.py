@@ -612,7 +612,8 @@ class SaleOrderLineInherit(models.Model):
                     'e_mult_std': self.product_id.e_mult_std,
                     'e_multiplicador' :  self._set_mul_default(),
                     'price_unit': convertido,
-                    'e_punto_venta':convertido
+                    'e_punto_venta':convertido,
+                    'e_exwork': self.product_id.e_mult_std * self.convertido
                     })
         if self.product_id:
             self.write({'e_partida' : str(len(self.order_id.order_line)-1)})
@@ -650,7 +651,7 @@ class SaleOrderLineInherit(models.Model):
 
     @api.onchange('product_id','e_igi','e_importation','e_exwork')
     def compute_costo_unitario(self):
-        self.e_costo_unitario =  (1 + (self.e_igi/100) + (self.e_importation/100)) *  self.e_exwork
+        self.e_costo_unitario =  (1 + (self.e_igi/100) + (self.e_importation/100)) * self.e_exwork
         #print(self.e_costo_unitario)
 
     @api.onchange('e_costo_unitario','product_uom_qty')
@@ -667,7 +668,8 @@ class SaleOrderLineInherit(models.Model):
         if self.e_costo_total == 0 or  self.e_costo_unitario == 0 or  self.product_uom_qty == 0:
             return 0
         #print(self.e_costo_total ,self.price_unit , self.product_uom_qty)
-        self.e_g_m_l = 1 - (self.e_costo_total / (self.price_unit * self.product_uom_qty))
+        self.e_g_m_l = 1 - (self.e_costo_total / (self.price_unit * self.product_uom_qty  * (
+                    1 - (self.discount / 100))))
         #print(self.e_g_m_l)
 
 
