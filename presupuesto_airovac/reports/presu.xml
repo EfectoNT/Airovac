@@ -265,7 +265,7 @@
                                                                     </t>
                                                                     <t t-set="contador" t-value="0"/>
                                                             </t>
-                                                             <a href="line.product_template_id.e_link_full">
+                                                             <a t-attf-href="{{line.product_template_id.e_link_full}}">
                                                                  <strong>
                                                                      <span style="font-family: verdana !important;font-weight: bold !important; font-size: 10pt !important;">
                                                                         <t t-esc ="line.product_template_id.default_code" />  <t t-esc="variables" />
@@ -363,7 +363,7 @@
                                                             </t>
 
 
-                                                             <a href="line.product_template_id.e_link_full">
+                                                             <a t-attf-href="{{line.product_template_id.e_link_full}}">
                                                                  <strong>
                                                                      <span style="font-family: verdana !important;font-weight: bold !important; font-size: 10pt !important;">
                                                                         <t t-esc ="line.product_template_id.default_code" ></t>  <t t-esc="variables" />
