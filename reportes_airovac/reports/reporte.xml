@@ -4,7 +4,7 @@
         <report
             id="reporte_ventas_presupuesto_pedido"
             model="sale.order"
-            string="Presupuesto / Pedido"
+            string="Presupuesto / Pedido (diseño simple)"
             report_type="qweb-pdf"
             name="reportes_airovac.reporte_ventas_presupuesto_pedido"
             file="reportes_airovac.reporte_ventas_presupuesto_pedido"
