@@ -613,7 +613,7 @@ class SaleOrderLineInherit(models.Model):
                     'e_multiplicador' :  self._set_mul_default(),
                     'price_unit': convertido,
                     'e_punto_venta':convertido,
-                    'e_exwork': self.product_id.e_mult_std * self.convertido
+                    'e_exwork': self.product_id.e_mult_std * convertido
                     })
         if self.product_id:
             self.write({'e_partida' : str(len(self.order_id.order_line)-1)})
