@@ -4,7 +4,7 @@
     <report
             id="ventas_presupuesto"
             model="sale.order"
-            string="(en desarrollo)"
+            string="Presupuesto / Pedido (Airovac)"
             report_type="qweb-pdf"
             name="presupuesto_airovac.report_ventas_presupuesto"
             file="presupuesto_airovac.report_ventas_presupuesto"
@@ -269,14 +269,14 @@
                                                                 </t>
                                                                 <t t-set="contador" t-value="0"/>
                                                             </t>
-                                                            <a t-attf-href="line.product_template_id.e_link_full">
-                                                                <strong>
-                                                                    <span style="font-family: verdana !important;font-weight: bold !important; font-size: 10pt !important;">
-                                                                        <t t-esc="line.product_template_id.default_code"/>
-                                                                        <t t-esc="variables"/>
-                                                                    </span>
-                                                                </strong>
-                                                            </a>
+
+                                                             <a t-attf-href="{{line.product_template_id.e_link_full}}">
+                                                                 <strong>
+                                                                     <span style="font-family: verdana !important;font-weight: bold !important; font-size: 10pt !important;">
+                                                                        <t t-esc ="line.product_template_id.default_code" />  <t t-esc="variables" />
+                                                                     </span>
+                                                                 </strong>
+                                                             </a>
                                                             <br/>
                                                             <p style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt;!important; line-height: 94% !important;">
                                                                 <t t-if="line.product_template_id.description_sale != False">
@@ -370,13 +370,10 @@
                                                                 </t>
                                                                 <t t-set="contador" t-value="0"/>
                                                             </t>
-
-
-                                                            <a t-attf-href="line.product_template_id.e_link_full">
-                                                                <strong>
-                                                                    <span style="font-family: verdana !important;font-weight: bold !important; font-size: 10pt !important;">
-                                                                        <t t-esc="line.product_template_id.default_code"></t>
-                                                                        <t t-esc="variables"/>
+                                                             <a t-attf-href="{{line.product_template_id.e_link_full}}">
+                                                                 <strong>
+                                                                     <span style="font-family: verdana !important;font-weight: bold !important; font-size: 10pt !important;">
+                                                                        <t t-esc ="line.product_template_id.default_code" ></t>  <t t-esc="variables" />
                                                                     </span>
                                                                 </strong>
                                                             </a>

@@ -342,8 +342,8 @@ class SaleOrderLineInherit(models.Model):
     principal = fields.Integer(default=0)
     e_partida = fields.Char(string="P.")
     e_provedor = fields.Many2one('product.supplierinfo', string="Proveedor")
-    e_mult_std = fields.Float(digits=(10, 4),default = 1.0, string="Mult std",
-                              help="Exwork mult")
+    e_mult_std = fields.Float(digits=(10, 4),default = 1.0, string="Mult Compra",
+                              help="Mult Compra por marca")
     e_mult_min = fields.Float(digits=(10, 4),default = 1, string="Mult. Min", help="e_mult_min")
     e_exwork = fields.Monetary( string="Cost Exwork",store=True, help="P.L x Exwork mult")
     e_marca = fields.Char(String='Marca', related='product_id.e_product_class.name')
@@ -609,9 +609,11 @@ class SaleOrderLineInherit(models.Model):
                     'e_importation' : (self.product_id.e_importation * 100),
                     'e_t_e': self.product_id.e_tiempo_estimado,
                     'e_mult_min': self.product_id.e_mult_min,
+                    'e_mult_std': self.product_id.e_mult_std,
                     'e_multiplicador' :  self._set_mul_default(),
                     'price_unit': convertido,
-                    'e_punto_venta':convertido
+                    'e_punto_venta':convertido,
+                    'e_exwork': self.product_id.e_mult_std * convertido
                     })
         if self.product_id:
             self.write({'e_partida' : str(len(self.order_id.order_line)-1)})
@@ -649,7 +651,7 @@ class SaleOrderLineInherit(models.Model):
 
     @api.onchange('product_id','e_igi','e_importation','e_exwork')
     def compute_costo_unitario(self):
-        self.e_costo_unitario =  (1 + (self.e_igi/100) + (self.e_importation/100)) *  self.e_exwork
+        self.e_costo_unitario =  (1 + (self.e_igi/100) + (self.e_importation/100)) * self.e_exwork
         #print(self.e_costo_unitario)
 
     @api.onchange('e_costo_unitario','product_uom_qty')
@@ -666,7 +668,8 @@ class SaleOrderLineInherit(models.Model):
         if self.e_costo_total == 0 or  self.e_costo_unitario == 0 or  self.product_uom_qty == 0:
             return 0
         #print(self.e_costo_total ,self.price_unit , self.product_uom_qty)
-        self.e_g_m_l = 1 - (self.e_costo_total / (self.price_unit * self.product_uom_qty))
+        self.e_g_m_l = 1 - (self.e_costo_total / (self.price_unit * self.product_uom_qty  * (
+                    1 - (self.discount / 100))))
         #print(self.e_g_m_l)
 
 
@@ -674,8 +677,9 @@ class SaleOrderLineInherit(models.Model):
     # def _onchange_e_mult_std(self):
     #     self.write({'e_mult_std' : self.e_provedor.e_mult_std})
     #
-    #
-    # @api.onchange('e_mult_std')
-    # def _onchange_e_mult_stf(self):
-    #     self.write({'e_exwork': self.e_mult_std * self.e_precio_de_lista})
+
+
+    @api.onchange('e_mult_std')
+    def _onchange_e_mult_stf(self):
+        self.write({'e_exwork': self.e_mult_std * self.e_precio_de_lista})
 

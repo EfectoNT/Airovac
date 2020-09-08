@@ -96,12 +96,10 @@
 
                                         </td>
                                         <td name="th_description" style="text-align: justify !important ;">
-
                                             <t t-set="contador" t-value="0"/>
                                             <t t-set="variables" t-value="''"/>
                                             <t t-if="line.product_id.product_template_attribute_value_ids != False">
-                                                <t t-foreach="line.product_id.product_template_attribute_value_ids"
-                                                   t-as="va">
+                                                <t t-foreach="line.product_id.product_template_attribute_value_ids" t-as="va">
                                                     <t t-if="contador > 0 and va.name != False">
                                                         <t t-set="variables" t-value="variables + ' , ' + va.name"/>
                                                         <t t-set="contador" t-value="contador + 1"/>
@@ -116,14 +114,13 @@
                                                 </t>
                                                 <t t-set="contador" t-value="0"/>
                                             </t>
-
-                                             <a t-attf-href="line.product_template_id.e_link_full">
-                                                 <strong>
-                                                     <span style="font-family: verdana !important;font-weight: bold !important; font-size: 10pt !important;">
+                                            <a t-attf-href="{{line.product_template_id.e_link_full}}">
+                                                <strong>
+                                                    <span style="font-family: verdana !important;font-weight: bold !important; font-size: 10pt !important;">
                                                         <t t-esc ="line.product_template_id.default_code" />  <t t-esc="variables" />
                                                     </span>
-                                                 </strong>
-                                             </a>
+                                                </strong>
+                                            </a>
                                             <br/>
                                             <p style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt;!important; line-height: 94% !important;">
                                                 <t t-if = "line.product_template_id.description_sale != False" >
@@ -194,15 +191,16 @@
 
                                         </td>
                                         <td name="th_description" style="text-align: justify !important ;">
-                                             <t t-set="contador" t-value="0"/>
+
+                                            <t t-set="contador" t-value="0"/>
                                             <t t-set="variables" t-value="''"/>
                                             <t t-if="line.product_id.product_template_attribute_value_ids != False">
-                                                <t t-foreach="line.product_id.product_template_attribute_value_ids"
-                                                   t-as="va">
+                                                <t t-foreach="line.product_id.product_template_attribute_value_ids" t-as="va">
                                                     <t t-if="contador > 0 and va.name != False">
                                                         <t t-set="variables" t-value="variables + ' , ' + va.name"/>
                                                         <t t-set="contador" t-value="contador + 1"/>
                                                     </t>
+
                                                     <t t-if="contador == 0 and va.name != False">
                                                         <t t-set="variables" t-value="va.name"/>
                                                         <t t-set="contador" t-value="contador + 1"/>
@@ -213,14 +211,13 @@
                                                 </t>
                                                 <t t-set="contador" t-value="0"/>
                                             </t>
-
-                                             <a t-attf-href="line.product_template_id.e_link_full">
-                                                 <strong>
-                                                     <span style="font-family: verdana !important;font-weight: bold !important; font-size: 10pt !important;">
+                                            <a t-attf-href="{{line.product_template_id.e_link_full}}">
+                                                <strong>
+                                                    <span style="font-family: verdana !important;font-weight: bold !important; font-size: 10pt !important;">
                                                         <t t-esc ="line.product_template_id.default_code" />  <t t-esc="variables" />
                                                     </span>
-                                                 </strong>
-                                             </a>
+                                                </strong>
+                                            </a>
                                             <br/>
                                             <p style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt;!important; line-height: 94% !important;">
                                                 <t t-if = "line.product_template_id.description_sale != False" >

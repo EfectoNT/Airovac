@@ -26,7 +26,7 @@
                     <field name="e_mult_std"/>
                   </xpath>
                   <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='order_line']/tree[1]/field[@name='price_unit']" position="before">
-                    <field name="e_precio_lista"/>
+                    <field name="e_precio_lista" readonly="1" force_save="1" />
                   </xpath>
                   <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='order_line']/tree[1]/field[@name='price_unit']" position="attributes">
                       <attribute name="string">Precio ExWork</attribute>

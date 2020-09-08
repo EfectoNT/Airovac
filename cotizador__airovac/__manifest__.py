@@ -24,7 +24,8 @@
                 'product',
                 'purchase',
                 'sale',
-                'account'],
+                'account',
+                'stock'],
 
     # always loaded
     'data': [
