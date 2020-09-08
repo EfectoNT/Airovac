@@ -25,7 +25,7 @@ class productTemplateInherit(models.Model):
 
     e_revision_p_l = fields.Char(string="Revisión de P.L")
     e_link_full = fields.Char()
-    e_mult_std = fields.Float(digits=(10, 4), default=1, string="Mult. solicitado",
+    e_mult_std = fields.Float(digits=(10, 4), default=1, string="Mult Compra",
                               help="e_mult_std")
 
     @api.onchange('e_te_max')
@@ -275,9 +275,9 @@ class ProductuEClass(models.Model):
 
     e_num_products = fields.Integer(compute='_calculate_products')
     e_revision_p_l = fields.Char(string="Revisión de P.L")
-    e_mult_min = fields.Float(digits=(1, 4),default=1, string="Multiplicador mínimo", help="Multiplicador, si no existe el multiplicador default 1")
+    e_mult_min = fields.Float(digits=(1, 4),default=1, string="Multiplicador Mínimo", help="Multiplicador, si no existe el multiplicador default 1")
     e_mult_std = fields.Float(digits=(1, 4), default=1,
-                              string="Multiplicador solicitado",
+                              string="Multiplicador Compra",
                               help="Multiplicador solicitado por marca, si no existe el multiplicador default 1")
 
 

@@ -342,8 +342,8 @@ class SaleOrderLineInherit(models.Model):
     principal = fields.Integer(default=0)
     e_partida = fields.Char(string="P.")
     e_provedor = fields.Many2one('product.supplierinfo', string="Proveedor")
-    e_mult_std = fields.Float(digits=(10, 4),default = 1.0, string="Mult std",
-                              help="Exwork mult")
+    e_mult_std = fields.Float(digits=(10, 4),default = 1.0, string="Mult Compra",
+                              help="Mult Compra por marca")
     e_mult_min = fields.Float(digits=(10, 4),default = 1, string="Mult. Min", help="e_mult_min")
     e_exwork = fields.Monetary( string="Cost Exwork",store=True, help="P.L x Exwork mult")
     e_marca = fields.Char(String='Marca', related='product_id.e_product_class.name')
