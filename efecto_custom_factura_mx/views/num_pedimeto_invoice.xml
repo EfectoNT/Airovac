@@ -2,6 +2,9 @@
 
 <odoo>
 
+
+
+
     <template id="remube_num_pedimento_mx" inherit_id="l10n_mx_edi.report_invoice_document_mx">
         <xpath expr="//table[@name='invoice_line_table']/tbody//tr[1]//td[1]//t[1]" position="replace" >
 
@@ -25,8 +28,31 @@
         </xpath>
         <xpath expr="//p[@name='comment']" position="replace" >
             <p t-if="o.narration" name="comment" style="font-family: verdana !important;font-weight: normal !important; font-size: 9pt;!important text-align: justify !important ;" >
-                        <t t-raw ="o.narration"/>
+<!--                        <t t-raw ="o.narration"/>-->
             </p>
+        </xpath>
+
+        <xpath expr="//div[@t-if='o.partner_id.vat']" position="before">
+            <t t-if="o.l10n_mx_edi_cfdi_name != False">
+                <t t-if="('RINV' not in o.l10n_mx_edi_cfdi_name) and ('INV' in o.l10n_mx_edi_cfdi_name)">
+                    <span>INGRESO</span>
+                </t>
+                <t t-if="'RINV' in o.l10n_mx_edi_cfdi_name">
+                    <span>EGRESO</span>
+                </t>
+            </t>
+        </xpath>
+
+        <xpath expr="//div[@t-if='o.partner_id.vat']" position="replace">
+            <div t-if="o.partner_id.vat" >
+                        <t t-if="o.company_id.country_id.vat_label" t-esc="o.company_id.country_id.vat_label" id="inv_tax_id_label"/>
+                        <t t-else="">Tax ID</t>: <span t-field="o.partner_id.vat"/></div>
+        </xpath>
+
+        <xpath expr="//div[@id='informations']" position="after">
+            <t t-if="o.l10n_mx_edi_origin != False">
+                <p>CFDI Origen: <t t-esc="o.l10n_mx_edi_origin" /> </p>
+            </t>
         </xpath>
     </template>
 
