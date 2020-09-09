@@ -42,9 +42,13 @@
         </xpath>
 
         <xpath expr="//div[@t-if='o.partner_id.vat']" position="replace">
-            <div t-if="o.partner_id.vat" style="background-color:red" >
+            <div t-if="o.partner_id.vat" >
                         <t t-if="o.company_id.country_id.vat_label" t-esc="o.company_id.country_id.vat_label" id="inv_tax_id_label"/>
                         <t t-else="">Tax ID</t>: <span t-field="o.partner_id.vat"/></div>
+        </xpath>
+
+        <xpath expr="//div[@id='informations']" position="after">
+            <p>CFDI Origen<t t-esc="l10n_mx_edi_origin" /> </p>
         </xpath>
     </template>
 
