@@ -33,11 +33,13 @@
         </xpath>
 
         <xpath expr="//div[@t-if='o.partner_id.vat']" position="before">
-            <t t-if="'RINV' not in o.l10n_mx_edi_cfdi_name and 'INV' in o.l10n_mx_edi_cfdi_name">
-                <span>INGRESO</span>
-            </t>
-            <t t-if="'RINV' in o.l10n_mx_edi_cfdi_name">
-                <span>EGRESO</span>
+            <t t-if="o.l10n_mx_edi_cfdi_name != False">
+                <t t-if="('RINV' not in o.l10n_mx_edi_cfdi_name) and ('INV' in o.l10n_mx_edi_cfdi_name)">
+                    <span>INGRESO</span>
+                </t>
+                <t t-if="'RINV' in o.l10n_mx_edi_cfdi_name">
+                    <span>EGRESO</span>
+                </t>
             </t>
         </xpath>
 
@@ -48,7 +50,9 @@
         </xpath>
 
         <xpath expr="//div[@id='informations']" position="after">
-            <p>CFDI Origen<t t-esc="l10n_mx_edi_origin" /> </p>
+            <t t-if="o.l10n_mx_edi_origin != False">
+                <p>CFDI Origen: <t t-esc="o.l10n_mx_edi_origin" /> </p>
+            </t>
         </xpath>
     </template>
 
