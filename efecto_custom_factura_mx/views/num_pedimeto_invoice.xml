@@ -32,9 +32,8 @@
             </p>
         </xpath>
 
-        <xpath expr="//div[1]" position="replace">
-            <p> hola bebe </p>
-
+        <xpath expr="//div[@t-if='o.partner_id.vat']" position="before">
+            <p>CDFDI</p>
         </xpath>
     </template>
 
