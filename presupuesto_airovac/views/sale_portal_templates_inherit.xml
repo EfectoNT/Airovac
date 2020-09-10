@@ -117,7 +117,7 @@
                                             <a t-attf-href="{{line.product_template_id.e_link_full}}">
                                                 <strong>
                                                     <span style="font-family: verdana !important;font-weight: bold !important; font-size: 10pt !important;">
-                                                        <t t-esc ="line.product_template_id.default_code" />  <t t-esc="variables" />
+                                                        <t t-esc ="line.product_id.default_code" />  <t t-esc="variables" />
                                                     </span>
                                                 </strong>
                                             </a>
@@ -214,7 +214,7 @@
                                             <a t-attf-href="{{line.product_template_id.e_link_full}}">
                                                 <strong>
                                                     <span style="font-family: verdana !important;font-weight: bold !important; font-size: 10pt !important;">
-                                                        <t t-esc ="line.product_template_id.default_code" />  <t t-esc="variables" />
+                                                        <t t-esc ="line.product_id.default_code" />  <t t-esc="variables" />
                                                     </span>
                                                 </strong>
                                             </a>
