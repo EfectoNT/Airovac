@@ -1,18 +1,11 @@
 # -*- coding: utf-8 -*-
 
-# from odoo import models, fields, api
+from odoo import models, fields, api
+from odoo.addons.crm.models.digest import Digest
 
 
-# class efecto_patment_type(models.Model):
-#     _name = 'efecto_patment_type.efecto_patment_type'
-#     _description = 'efecto_patment_type.efecto_patment_type'
+class efecto_patment_type(models.Model):
+    _inherit = 'account.payment'
 
-#     name = fields.Char()
-#     value = fields.Integer()
-#     value2 = fields.Float(compute="_value_pc", store=True)
-#     description = fields.Text()
-#
-#     @api.depends('value')
-#     def _value_pc(self):
-#         for record in self:
-#             record.value2 = float(record.value) / 100
+    efecto_payment_type = fields.Float(default=0,digits=10.4,string="Tipo de cambio")
+

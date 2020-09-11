@@ -5,7 +5,7 @@
         <field name="inherit_id" ref="l10n_mx_edi.view_account_payment_form_inh_l10n_mx"/>
         <field name="arch" type="xml">
                 <xpath expr="//field[@name='l10n_mx_edi_payment_method_id']" position="after">
-                    <p>Hola hermanos</p>
+                    <field name="efecto_payment_type"/>
                 </xpath>
         </field>
     </record>
