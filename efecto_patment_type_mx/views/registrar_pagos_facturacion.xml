@@ -1,14 +1,12 @@
 <odoo>
         <record model="ir.ui.view" id="view_account_reg_payment_tipo_cambio">
         <field name="name">view.account.reg.payment.form.tipo_cambio</field>
-        <field name="model">account.payment.register</field>
-        <field name="inherit_id" ref="l10n_mx_edi.view_account_reg_payment_form_inh_l10n_mx"/>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="l10n_mx_edi.view_account_payment_form_inh_l10n_mx"/>
         <field name="arch" type="xml">
-            <data>
                 <xpath expr="//field[@name='l10n_mx_edi_payment_method_id']" position="after">
                     <p>Hola hermanos</p>
                 </xpath>
-            </data>
         </field>
     </record>
 </odoo>
