@@ -1,5 +1,4 @@
 <odoo>
-    <data>
         <record model="ir.ui.view" id="view_account_reg_payment_tipo_cambio">
         <field name="name">view.account.reg.payment.form.tipo_cambio</field>
         <field name="model">account.payment.register</field>
@@ -12,5 +11,4 @@
             </data>
         </field>
     </record>
-    </data>
 </odoo>
