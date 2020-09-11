@@ -9,10 +9,10 @@ class efecto_patment_type(models.Model):
 
     efecto_payment_type = fields.Float(digits=(1, 4),default=1, string="tipo de cambio", help="tipo de cambio")
 
-    # @api.onchange('efecto_payment_type')
-    # def _onchange_amount(self):
-    #     if self.currency_id.name == 'MXN':
-    #         self.amount = self.efecto_payment_type * self.amount
+    @api.onchange('efecto_payment_type')
+    def _onchange_amount(self):
+        if self.currency_id.name == 'MXN':
+            self.amount = self.efecto_payment_type * self.amount
 
 
 
