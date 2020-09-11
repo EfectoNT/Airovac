@@ -6,8 +6,8 @@
         <field name="inherit_id" ref="l10n_mx_edi.view_account_reg_payment_form_inh_l10n_mx"/>
         <field name="arch" type="xml">
             <data>
-                <xpath expr="//field[@name='journal_id']" position="attributes">
-                    <attribute name="string">Hola</attribute>
+                <xpath expr="//field[@name='l10n_mx_edi_payment_method_id']" position="after">
+                    <p>Hola hermanos</p>
                 </xpath>
             </data>
         </field>
