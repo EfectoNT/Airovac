@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "efecto_patment_type",
+    'name': "Tipo de cambio al registrar pago",
 
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+        Tipo de cambio al registrar pago """,
 
     'description': """
-        Long description of module's purpose
+        Tipo de cambio al registrar pago
+        desarrollado por Efecto Negocio
+        Dev: Luis Enrique Rodriguez 
     """,
 
-    'author': "My Company",
-    'website': "http://www.yourcompany.com",
+    'author': "Efecto Negocio",
+    'website': "https://efectonegocio.com/odoo/",
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/13.0/odoo/addons/base/data/ir_module_category_data.xml
