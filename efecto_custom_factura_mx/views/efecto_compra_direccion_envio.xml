@@ -10,14 +10,6 @@
                         <p t-field="o.notes"/>
                     </div>
                 </t>
-                <t t-else="">
-                <t t-set="information_block">
-                    <strong>Shipping address:</strong>
-                    <div>
-                        <p t-field="o.notes"/>
-                    </div>
-                </t>
-            </t>
             </t>
         </xpath>
     </template>
