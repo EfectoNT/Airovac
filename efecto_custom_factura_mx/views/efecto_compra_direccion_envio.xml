@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <odoo>
-    <template id="efecto_compra_direccion_envio" inherit_id="purchase.report_purchaseorder_document">
-        <xpath expr="//t[@t-set='information_block']" position="replace" >
-             <t t-set="information_block">
-               <strong>Shipping address:</strong>
+    <template id="efecto_compra_direccion_envio" inherit_id="purchase_stock.report_purchaseorder_document">
+        <xpath expr="//t[@t-if='o.dest_address_id']" position="replace" >
+            <t t-if="o.dest_address_id">
+                <t t-set="information_block">
+                    <strong>Shipping address:</strong>
                     <div>
-                         <p t-field="o.notes"/>
+                        <p t-field="o.notes"/>
                     </div>
-             </t>
+                </t>
+            </t>
+            <t t-else="">
+                <t t-set="information_block">
+                    <strong>Shipping address:</strong>
+                    <div>
+                        <p t-field="o.notes"/>
+                    </div>
+                </t>
+            </t>
         </xpath>
     </template>
 
