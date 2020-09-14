@@ -27,6 +27,7 @@
         # 'security/ir.model.access.csv',
         'views/fix_qr_sello.xml',
         'views/num_pedimeto_invoice.xml',
+        'views/efecto_compra_direccion_envio.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
