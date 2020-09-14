@@ -9,6 +9,12 @@
                     </div>
             </t>
         </xpath>
+
+        <xpath expr="//div[@class='page']/p[t-field='o.notes']" position="replace" >
+        </xpath>
+
+
+
     </template>
 
     <template id="efecto_compra_direccion_envio_stock" inherit_id="purchase_stock.report_purchaseorder_document">
