@@ -28,6 +28,7 @@
         'views/templates.xml',
         'reports/reporte.xml',
         'reports/reporte_ventas_presupuesto_pedido.xml',
+        #'reports/efecto_compra_direccion_envio',
         #'reports/oficial.xml',
     ],
     # only loaded in demonstration mode
