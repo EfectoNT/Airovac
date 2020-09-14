@@ -18,7 +18,7 @@
     </template>
 
     <template id="efecto_compra_direccion_envio_stock" inherit_id="purchase_stock.report_purchaseorder_document">
-        <xpath expr="//t[@t-if='o.dest_address_id']/t[1]/t[1]/div[1]" position="replace" >
+        <xpath expr="//t[@t-set='information_block']/div[1]" position="replace" >
                     <div>
                         <p t-field="o.notes"/>
                     </div>
