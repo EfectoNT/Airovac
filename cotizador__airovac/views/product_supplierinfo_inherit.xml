@@ -6,13 +6,9 @@
             <field name="model">product.supplierinfo</field>
             <field name="inherit_id" ref="product.product_supplierinfo_form_view" />
             <field name="arch" type="xml">
-<!--                 <xpath expr="//field[@name='product_tmpl_id']" position="after">-->
-<!--                    <field name="e_mult_std"/>-->
-<!--                  </xpath>-->
-                  <xpath expr="//field[@name='price']" position="attributes">
-<!--                    <attribute name="attrs">{}</attribute>-->
-                    <!--<attribute name="readonly">1</attribute>-->
-                    <attribute name="string">Precio de Lista</attribute>
+                 <xpath expr="/form/group[1]/group[2]/div[1]" position="after">
+                    <field name="efecto_mult_std"/>
+                     <field name="efecto_price_list"/>
                   </xpath>
             </field>
          </record>
