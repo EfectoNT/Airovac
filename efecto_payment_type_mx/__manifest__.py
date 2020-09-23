@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "efecto_custom_factura_mx",
+    'name': "Tipo de cambio al registrar pago",
 
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+        Tipo de cambio al registrar pago """,
 
     'description': """
-        Long description of module's purpose
+        Tipo de cambio al registrar pago
+        desarrollado por Efecto Negocio
+        Dev: Luis Enrique Rodriguez 
     """,
 
-    'author': "My Company",
-    'website': "http://www.yourcompany.com",
+    'author': "Efecto Negocio",
+    'website': "https://efectonegocio.com/odoo/",
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/13.0/odoo/addons/base/data/ir_module_category_data.xml
@@ -20,14 +21,17 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base',
+                'account_accountant',
+                'l10n_mx_edi'
+                ],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
-        'views/fix_qr_sello.xml',
-        'views/num_pedimeto_invoice.xml',
-        'views/efecto_compra_direccion_envio.xml',
+        #'views/views.xml',
+        #'views/templates.xml',
+        'views/registrar_pagos_facturacion.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

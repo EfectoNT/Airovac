@@ -37,7 +37,6 @@
         'views/sale_view_order_form_inherith.xml',
         'views/product_inherit.xml',
         'views/product_supplierinfo_inherit.xml',
-        'views/registrar_pagos_facturacion.xml',
         #'views/sale_portal_templates_inherit.xml'
         #'views/optional_product_items_inherit.xml',
     ],

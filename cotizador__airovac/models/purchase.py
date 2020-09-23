@@ -66,11 +66,47 @@ class purchaseOrderLineInherit(models.Model):
 class productSupplierinfoInherit(models.Model):
     _inherit = 'product.supplierinfo'
 
-    #e_mult_std = fields.Float(Default=1, digits=(1,4), string="Mult STD", help="Multiplicador solicitado al proveedor")
+    efecto_mult_std = fields.Float(Default=1, digits=(2,4), string="Mult STD",
+                              help="Multiplicador solicitado al proveedor por marca")
 
-    @api.onchange('product_tmpl_id')
-    def _default_precio_lista(self):
-        print('Default mul')
-        print(self.product_tmpl_id,self.product_tmpl_id.name,self.product_tmpl_id.e_igi)
-        self.price = self.product_tmpl_id.e_precio_de_lista
+    efecto_price_list = fields.Monetary(Default=1,
+                                        string="Precio de lista",
+                                        readonly="1",
+                                        force_save="1",
+                                help="Precio de lista obtenido del producto")
+
+
+    @api.onchange('product_tmpl_id','currency_id')
+    def _efecto_oncahgue_precio_lista(self):
+        convertido = 0
+        moneda_usar = self.currency_id
+        if moneda_usar.name == 'USD':
+            convertido = self.product_tmpl_id.e_precio_de_lista
+            #print(convertido,'USD')
+        if moneda_usar.name == 'MXN':
+            dolars = self.env['res.currency'].search(
+                [('name', '=', 'USD')],
+                limit=1)
+            convertido = self.product_tmpl_id.e_precio_de_lista / dolars.rate
+            #print(convertido, 'MXN')
+        else:
+            dolars = self.env['res.currency'].search(
+                [('name', '=', 'USD')],
+                limit=1)
+
+            otra_moneda = self.env['res.currency'].search(
+                [('name', '=', moneda_usar.name)],
+                limit=1)
+
+            pesos = self.product_tmpl_id.e_precio_de_lista / (dolars.rate * 1)
+            convertido = pesos * otra_moneda.rate
+            #print(convertido, 'OTRA MONEDA')
+
+        self.efecto_price_list = convertido
+        self.efecto_mult_std = self.product_tmpl_id.e_mult_std
+
+    @api.onchange('efecto_mult_std','efecto_price_list')
+    def _efecto_oncahgue_mult_std(self):
+        self.price = self.efecto_price_list \
+                     * self.efecto_mult_std
 
