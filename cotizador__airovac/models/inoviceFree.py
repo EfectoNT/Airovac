@@ -31,6 +31,39 @@ class AccountMoveFree(models.Model):
 class AccountMoveLineEfecto(models.Model):
     _inherit = "account.move.line"
 
+    _sql_constraints = [
+        (
+            'check_accountable_required_fields',
+            "CHECK(COALESCE(display_type IN ('line_section', 'line_note'), 'f') OR account_id IS NOT NULL)",
+            "Missing required account on accountable invoice line."
+        ),
+        (
+            'check_non_accountable_fields_null',
+            "CHECK(display_type NOT IN ('line_section', 'line_note') OR (amount_currency = 0 AND debit = 0 AND credit = 0 AND account_id IS NULL))",
+            "Forbidden unit price, account and quantity on non-accountable invoice line"
+        ),
+        (
+            'check_amount_currency_balance_sign',
+            '''CHECK(
+                currency_id IS NULL
+                OR
+                company_currency_id IS NULL
+                OR
+                (
+                    (currency_id != company_currency_id)
+                    AND
+                    (
+                        (balance > 0 AND amount_currency > 0)
+                        OR (balance <= 0 AND amount_currency <= 0)
+                        OR (balance >= 0 AND amount_currency >= 0)
+                    )
+                )
+            )''',
+            "The amount expressed in the secondary currency must be positive when account is debited and negative when account is credited. Moreover, the currency field has to be left empty when the amount is expressed in the company currency."
+        ),
+    ]
+
+
 
 
     def _get_computed_price_unit(self):
