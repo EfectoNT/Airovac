@@ -33,6 +33,11 @@ class AccountMoveLineEfecto(models.Model):
 
     _sql_constraints = [
         (
+            'check_credit_debit',
+            'CHECK(credit + debit !=0 AND credit * debit !=0)',
+            'diferente de cero!'
+        ),
+        (
             'check_accountable_required_fields',
             "CHECK(COALESCE(display_type IN ('line_section', 'line_note'), 'f') OR account_id IS NOT NULL)",
             "Missing required account on accountable invoice line."
