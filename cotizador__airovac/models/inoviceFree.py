@@ -21,6 +21,18 @@ from odoo.exceptions import UserError
 from odoo.tools.float_utils import float_repr
 
 from odoo.addons.l10n_mx_edi.tools.run_after_commit import run_after_commit
+import logging
+_logger = logging.getLogger(__name__)
+
+
+class EfectoPayment(models.Model):
+    _inherit = 'account.payment'
+
+    def _set_folio_fiscal(self,folio):
+        _logger.info("nombre del pago")
+        self.write({'l10n_mx_edi_cfdi_uuid':folio})
+        _logger.info(self.name)
+
 
 class AccountMoveFree(models.Model):
     _inherit = 'account.move'
