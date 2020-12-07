@@ -517,7 +517,7 @@
                                 <div class="row">
                                     <div class="col-12" style="border-top: 1px solid black; font-size: 8pt;">
                                         <p class="text-center" >
-                                            Representaciones Internacionales AIR SA de CV <br/>
+                                            <t t-esc ="doc.company_id.name" /> <br/>
                                             <t t-esc ="doc.company_id.street_name" />
                                             <t t-esc ="doc.company_id.street_number" />
                                             <t t-esc ="doc.company_id.street_number2" />
